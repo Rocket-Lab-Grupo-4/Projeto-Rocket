@@ -1,0 +1,30 @@
+.blocoResumo {
+  display: flex;
+  align-items: center;
+  background-color: #f7f7f7;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 439px;
+}
+
+.imagem {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  margin-right: 16px;
+}
+
+.informacoes {
+  display: flex;
+  flex-direction: column;
+}
+
+.informacoes p {
+  margin: 4px 0;
+}
+
+.avaliacao {
+  font-size: 1.2em;
+  font-weight: bold;
+}
