@@ -5,10 +5,10 @@ import {
   TextField,
   Button,
   Typography,
-  Link,
   ThemeProvider,
   createTheme,
 } from "@mui/material";
+import Link from "next/link";
 
 const theme = createTheme({
   components: {
@@ -16,6 +16,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: "50px",
+          border: "1px",
           "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
             borderColor: "#00f999",
           },
@@ -24,6 +25,8 @@ const theme = createTheme({
           },
         },
         notchedOutline: {
+          border: "1px",
+
           borderColor: "#00f999",
         },
         input: {
@@ -43,9 +46,10 @@ const theme = createTheme({
             color: "black",
             transform: "translate(14px, -22px) scale(0.75)",
           },
+          transform: "translate(14px, -22px) scale(0.75)",
         },
         shrink: {
-          transform: "translate(14px, -9px) scale(0.75)",
+          transform: "translate(14px, -22px) scale(0.75)",
         },
       },
     },
@@ -68,7 +72,7 @@ export default function Login() {
           <div className={styles.inputGroup}>
             <TextField
               className={styles.loginInput}
-              label="Usuário"
+              label="Usuário:"
               variant="outlined"
               fullWidth
             />
@@ -76,7 +80,7 @@ export default function Login() {
           <div className={styles.passwordGroup}>
             <TextField
               className={styles.loginInput}
-              label="Senha"
+              label="Senha:"
               variant="outlined"
               type="password"
               fullWidth
@@ -87,8 +91,12 @@ export default function Login() {
               Entrar
             </Button>
           </div>
+          <Link href="/cadastro" className={styles.createAccount}>
+            <strong>Criar Conta</strong>
+          </Link>
           <Link href="#" className={styles.forgotPassword}>
-            Esqueceu sua senha? <strong>Clique aqui!</strong>
+            Esqueceu sua senha?{" "}
+            <strong className={styles.forgotPasswordHover}>Clique aqui!</strong>
           </Link>
         </div>
       </div>
