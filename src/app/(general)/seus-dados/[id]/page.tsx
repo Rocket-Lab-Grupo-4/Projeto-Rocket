@@ -5,13 +5,14 @@ import { UserProps } from "@/app/interfaces/user";
 import { useParams } from "next/navigation";
 import api from "@/utils/api";
 import { BlueButton, GreenButton } from '@/app/components/buttons/button';
-import { InputTextField } from '@/app/components/inputs';
 import { formatDate } from '@/utils/formatDate';
+import { InputTextField } from '@/app/components/inputs';
 
 export default function SeusDados() {
   const params = useParams();
   const [user, setUser] = useState<UserProps>({} as UserProps);
   const [updatedUser, setUpdatedUser] = useState<UserProps>({} as UserProps);
+  const [isEditing, setIsEditing] = useState(false);
 
   // get initial data
   useEffect(() => {
@@ -23,7 +24,7 @@ export default function SeusDados() {
       const response = await api.get(`/user/${params.id}`);
       const user = response.data;
       setUser(user);
-      setUpdatedUser(user); 
+      setUpdatedUser(user);
     } catch (error) {
       console.log(error);
     }
@@ -38,9 +39,14 @@ export default function SeusDados() {
     try {
       await api.patch(`/user/${params.id}`, updatedUser);
       console.log("Dados atualizados com sucesso!");
+      setIsEditing(false); // Desabilitar edição após salvar
     } catch (error) {
-      alert('Erro ao atualizar dados')
+      alert('Erro ao atualizar dados');
     }
+  };
+
+  const toggleEdit = () => {
+    setIsEditing(!isEditing);
   };
 
   return (
@@ -75,6 +81,7 @@ export default function SeusDados() {
             <InputTextField
               value={formatDate(updatedUser.dateNaissance)}
               onChange={(newValue) => handleInputChange("dateNaissance", newValue)}
+              disabled={!isEditing}
             />
           </div>
           <div>
@@ -82,6 +89,7 @@ export default function SeusDados() {
             <InputTextField
               value={updatedUser.ctps}
               onChange={(newValue) => handleInputChange("ctps", newValue)}
+              disabled={!isEditing}
             />
           </div>
           <div>
@@ -89,6 +97,7 @@ export default function SeusDados() {
             <InputTextField
               value={updatedUser.cpf}
               onChange={(newValue) => handleInputChange("cpf", newValue)}
+              disabled={!isEditing}
             />
           </div>
         </div>
@@ -100,6 +109,7 @@ export default function SeusDados() {
             <InputTextField
               value={updatedUser.rg}
               onChange={(newValue) => handleInputChange("rg", newValue)}
+              disabled={!isEditing}
             />
           </div>
 
@@ -108,6 +118,7 @@ export default function SeusDados() {
             <InputTextField
               value={updatedUser.issuingBody}
               onChange={(newValue) => handleInputChange("issuingBody", newValue)}
+              disabled={!isEditing}
             />
           </div>
 
@@ -116,6 +127,7 @@ export default function SeusDados() {
             <InputTextField
               value={updatedUser.cep}
               onChange={(newValue) => handleInputChange("cep", newValue)}
+              disabled={!isEditing}
             />
           </div>
         </div>
@@ -127,6 +139,7 @@ export default function SeusDados() {
             <InputTextField
               value={updatedUser.adress}
               onChange={(newValue) => handleInputChange("adress", newValue)}
+              disabled={!isEditing}
             />
           </div>
 
@@ -135,6 +148,7 @@ export default function SeusDados() {
             <InputTextField
               value={updatedUser.number}
               onChange={(newValue) => handleInputChange("number", newValue)}
+              disabled={!isEditing}
             />
           </div>
 
@@ -143,13 +157,14 @@ export default function SeusDados() {
             <InputTextField
               value={updatedUser.complement}
               onChange={(newValue) => handleInputChange("complement", newValue)}
+              disabled={!isEditing}
             />
           </div>
         </div>
       </div>
       <div className={styles.ButtonsContainer}>
-        <BlueButton width='108px' height='30px'>Editar</BlueButton>
-        <GreenButton width='108px' height='30px' onClick={handleSave}>Salvar</GreenButton>
+        <BlueButton width='108px' height='30px' onClick={toggleEdit}>Editar</BlueButton>
+        <GreenButton width='108px' height='30px' onClick={handleSave} disabled={!isEditing}>Salvar</GreenButton>
       </div>
     </div>
   );

@@ -6,9 +6,10 @@ import { useEffect } from 'react';
 interface Props {
   value: string;
   onChange: (value: string) => void;
+  disabled?: boolean;
 }
 
-export default function InputTextField({ value, onChange }: Props) {
+export default function InputTextField({ value, onChange, disabled }: Props) {
   const [inputValue, setInputValue] = React.useState('');
 
   useEffect(() => {
@@ -22,6 +23,7 @@ export default function InputTextField({ value, onChange }: Props) {
 
   return (
     <TextField
+      disabled={disabled}
       onChange={handleChange}
       value={inputValue}
       variant="outlined"
