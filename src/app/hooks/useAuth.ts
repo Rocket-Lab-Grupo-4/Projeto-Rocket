@@ -1,29 +1,31 @@
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useCallback } from "react";
 
 export const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
-  const router = useRouter();
 
-  const handleLogin = () => {
+  const handleLogin = useCallback(() => {
     setIsAuthenticated(true);
-  };
+  }, []);
 
-  const handleToggleForm = () => {
-    setIsRegistering(!isRegistering);
-  };
+  const handleLogout = useCallback(() => {
+    setIsAuthenticated(false);
+  }, []);
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.replace("/home");
-    }
-  }, [isAuthenticated, router]);
+  const handleToggleForm = useCallback(() => {
+    setIsRegistering((prev) => !prev);
+  }, []);
+
+  const setAuthenticated = useCallback((auth: boolean) => {
+    setIsAuthenticated(auth);
+  }, []);
 
   return {
     isAuthenticated,
     isRegistering,
     handleLogin,
+    handleLogout,
     handleToggleForm,
+    setAuthenticated,
   };
 };

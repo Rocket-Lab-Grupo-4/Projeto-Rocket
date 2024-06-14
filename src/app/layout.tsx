@@ -1,5 +1,6 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import SideBar from "./components/sideBar/SideBar";
 import "../styles/globals.scss";
 import sideStyles from "./components/sideBar/SideBar.module.scss";
@@ -12,8 +13,28 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { isAuthenticated, isRegistering, handleLogin, handleToggleForm } =
-    useAuth();
+  const {
+    isAuthenticated,
+    isRegistering,
+    handleLogin,
+    handleToggleForm,
+    setAuthenticated,
+  } = useAuth();
+  const router = useRouter();
+
+  const handleCadastroSuccess = () => {
+    setAuthenticated(true);
+  };
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      if (isRegistering) {
+        router.push("/cadastro");
+      } else {
+        router.push("/login");
+      }
+    }
+  }, [isAuthenticated, isRegistering, router]);
 
   return (
     <html lang="en">
@@ -29,7 +50,10 @@ export default function RootLayout({
           ) : (
             <>
               {isRegistering ? (
-                <Cadastro onToggleForm={handleToggleForm} />
+                <Cadastro
+                  onToggleForm={handleToggleForm}
+                  onSuccess={handleCadastroSuccess}
+                />
               ) : (
                 <Login onLogin={handleLogin} onToggleForm={handleToggleForm} />
               )}
