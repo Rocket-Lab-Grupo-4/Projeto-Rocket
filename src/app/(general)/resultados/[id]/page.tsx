@@ -7,7 +7,8 @@ import LineChartComponent from "@/app/components/charts/lineCharts";
 import PieChartComponent from "@/app/components/charts/pieCharts";
 import { LineData, PieData } from "./dataCharts";
 import { BlueButton } from "@/app/components/buttons/button";
-import { avaliation } from '@/app/interfaces/avaliation';
+import { avaliation } from "@/app/interfaces/avaliation";
+import ReportPDF from "./pdf";
 
 const certificateList = ["liderança", "soft skills", "comunicação positiva"];
 
@@ -93,7 +94,14 @@ export default function Resultados() {
                 <p className={styles.width}>{avaliation.type}</p>
                 <p className={styles.width}>{avaliation.dateRealization}</p>
                 <p className={styles.width}>{avaliation.dateClosing}</p>
-                <BlueButton width="180px" height="30px" borderRadius="8px">
+                <BlueButton
+                  width="180px"
+                  height="30px"
+                  borderRadius="8px"
+                  onClick={() => {
+                    ReportPDF();
+                  }}
+                >
                   Baixar Relatório
                 </BlueButton>
               </div>
