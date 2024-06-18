@@ -1,6 +1,9 @@
 export interface BlocoFormularioProps {
     
     title: string;
-    description: string;
-    onResponseChange: (response: number, justification: string) => void;
+    question: string;
+    questionId: string;
+    avaliationId: string;
+    answerId: string;
+    onAnswerChange: (answer: number, justificative: string) => void;
 }

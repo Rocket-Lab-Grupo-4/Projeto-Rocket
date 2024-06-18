@@ -20,8 +20,8 @@ const QuestionsPage: React.FC = () => {
     getQuestions();
   }, []);
 
-  const handleResponseChange = (response: number, justification: string) => {
-    console.log('Response:', response, 'Justification:', justification);
+  const handleAnswerChange = (answer: number, justificative: string) => {
+    console.log('Answer:', answer, 'Justificative:', justificative);
   };
 
   return (
@@ -30,9 +30,11 @@ const QuestionsPage: React.FC = () => {
         <BlocoFormulario
           key={question.id}
           title={question.title}
-          description={question.description}
-          onResponseChange={handleResponseChange}
-        />
+          question={question.question}
+          questionId={question.questionId}
+          avaliationId={question.avaliationId}
+          answerId={question.answerId}
+          onAnswerChange={handleAnswerChange}   />
       ))}
     </div>
   );
