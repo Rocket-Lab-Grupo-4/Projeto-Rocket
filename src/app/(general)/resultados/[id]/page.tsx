@@ -1,7 +1,6 @@
 "use client";
-import { Bubble, Star } from "@/app/assets";
-import React from "react";
-import Image from "next/image";
+import { Star } from "@/app/assets";
+import React, { useEffect, useState } from "react";
 import styles from "./results.module.scss";
 import LineChartComponent from "@/app/components/charts/lineCharts";
 import PieChartComponent from "@/app/components/charts/pieCharts";
@@ -10,6 +9,10 @@ import { BlueButton } from "@/app/components/buttons/button";
 import { avaliation } from "@/app/interfaces/avaliation";
 import ReportPDF from "./pdf";
 import SpeechBubble from "@/app/components/speechBubble/bubble";
+import BlocoResumo from "@/app/components/blocoResumo/BlocoResumo";
+import { useParams } from "next/navigation";
+import api from "@/utils/api";
+import { UserProps } from "@/app/interfaces/user";
 
 const certificateList = ["liderança", "soft skills", "comunicação positiva"];
 
@@ -32,12 +35,43 @@ const avaliations: avaliation[] = [
 ];
 
 export default function Resultados() {
+  const { id } = useParams();
+
+  const [user, setUser] = useState({} as UserProps);
+  const fetchUser = async () => {
+    const response = await api.get(`/user/${id}`);
+    setUser(response.data);
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  const [manager, setManager] = useState(false);
+  useEffect(() => {
+    setManager(user.manager);
+  }, [user]);
+
   return (
     <div className={styles.container}>
-      <SpeechBubble>
-        Sua média no último ciclo foi de: 5.0! Baixe o relatório para mais
-        detalhes
-      </SpeechBubble>
+      {manager ? (
+        <>
+          <h2 className={styles.title}>
+            Acompanhe a evolução da Maria Clara Santana da Cruz
+          </h2>
+          <BlocoResumo
+            nome={user.name}
+            cargo={user.office}
+            mediaAutoAvaliacao={5.0}
+            imagemUrl={user.image ?? ""}
+          />
+        </>
+      ) : (
+        <SpeechBubble>
+          Sua média no último ciclo foi de: 5.0! Baixe o relatório para mais
+          detalhes
+        </SpeechBubble>
+      )}
 
       <div className={styles.charts}>
         <div className={styles.subsection1_3}>

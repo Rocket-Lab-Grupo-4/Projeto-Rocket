@@ -13,4 +13,5 @@ export interface UserProps {
   cep: string;
   complement: string;
   manager: boolean;
+  password?: string;
 }
