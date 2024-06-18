@@ -1,0 +1,24 @@
+.baloonContainer {
+  position: relative;
+  width: fit-content;
+}
+
+.baloonImage {
+  display: block;
+}
+
+.baloonText {
+  position: absolute;
+  top: 20%; 
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: Montserrat, sans-serif;
+  color: #000; 
+
+  width: 80%;
+  
+  text-align: justify;
+  font-size: 20px;
+  font-weight: 600;
+
+}

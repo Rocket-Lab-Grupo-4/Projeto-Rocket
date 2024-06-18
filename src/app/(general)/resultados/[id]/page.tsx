@@ -9,6 +9,7 @@ import { LineData, PieData } from "./dataCharts";
 import { BlueButton } from "@/app/components/buttons/button";
 import { avaliation } from "@/app/interfaces/avaliation";
 import ReportPDF from "./pdf";
+import SpeechBubble from "@/app/components/speechBubble/bubble";
 
 const certificateList = ["liderança", "soft skills", "comunicação positiva"];
 
@@ -33,17 +34,10 @@ const avaliations: avaliation[] = [
 export default function Resultados() {
   return (
     <div className={styles.container}>
-      <div className={styles.baloonContainer}>
-        <Image
-          src={Bubble}
-          alt="Balão de fala"
-          className={styles.baloonImage}
-        />
-        <p className={styles.baloonText}>
-          Sua média no último ciclo foi de: 5.0! Baixe o relatório para mais
-          detalhes
-        </p>
-      </div>
+      <SpeechBubble>
+        Sua média no último ciclo foi de: 5.0! Baixe o relatório para mais
+        detalhes
+      </SpeechBubble>
 
       <div className={styles.charts}>
         <div className={styles.subsection1_3}>
