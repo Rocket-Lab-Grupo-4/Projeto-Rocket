@@ -24,9 +24,14 @@ const QuestionsPage: React.FC = () => {
     console.log('Answer:', answer, 'Justificative:', justificative);
   };
 
+  const criteriosComportamentais = questions.slice(0, 5);
+  const criteriosDeExecucao = questions.slice(5);
+
   return (
     <div>
-      {questions.map((question: any) => (
+    <div>
+      <h3>Critérios Comportamentais:</h3>
+      {criteriosComportamentais.map((question: any) => (
         <BlocoFormulario
           key={question.id}
           title={question.title}
@@ -36,6 +41,20 @@ const QuestionsPage: React.FC = () => {
           answerId={question.answerId}
           onAnswerChange={handleAnswerChange}   />
       ))}
+
+      <h3>Critérios de Execução:</h3>
+      {criteriosDeExecucao.map((question: any) => (
+        <BlocoFormulario
+          key={question.id}
+          title={question.title}
+          question={question.question}
+          questionId={question.questionId}
+          avaliationId={question.avaliationId}
+          answerId={question.answerId}
+          onAnswerChange={handleAnswerChange} 
+        />
+      ))}
+    </div>
     </div>
   );
 };
