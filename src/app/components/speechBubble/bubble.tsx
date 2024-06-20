@@ -15,6 +15,7 @@ function SpeechBubble({ children }: SpeechBubbleProps) {
           src={Bubble}
           alt="Balão de fala"
           className={styles.baloonImage}
+          width={500}
         />
         <p className={styles.baloonText}>{children}</p>
       </div>

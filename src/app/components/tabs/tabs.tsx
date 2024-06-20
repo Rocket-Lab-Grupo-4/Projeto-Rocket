@@ -33,7 +33,11 @@ function a11yProps(index: number) {
   };
 }
 
-export default function BasicTabs() {
+interface BasicTabsProps {
+  children: React.ReactNode[];
+}
+
+export default function BasicTabs({ children }: BasicTabsProps) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -69,12 +73,11 @@ export default function BasicTabs() {
           <Tab label="Finalizadas" {...a11yProps(1)} />
         </Tabs>
       </Box>
-      <CustomTabPanel value={value} index={0}>
-        Em aberto
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        Finalizadas
-      </CustomTabPanel>
+      {children.map((child, index) => (
+        <CustomTabPanel value={value} index={index} key={index}>
+          {child}
+        </CustomTabPanel>
+      ))}
     </Box>
   );
 }
