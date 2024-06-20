@@ -1,0 +1,85 @@
+.wrapper {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 50px;
+
+  width: 100%;
+}
+
+.sectionTitle {
+  font-family: Montserrat;
+  font-size: 20px;
+  font-weight: 600;
+  color: rgba(0, 24, 60, 1);  
+}
+
+.profileImage {
+  width: 191px;
+  height: 191px;
+
+  overflow: hidden;
+  border-radius: 50%;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.inLine {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 200px;
+}
+
+.inLineNoGap {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.ButtonsContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 24px;
+  padding-right: 15px;
+}
+
+.inColumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.title {
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.text {
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 500;
+}
