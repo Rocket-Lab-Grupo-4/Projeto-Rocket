@@ -20,20 +20,41 @@ const QuestionsPage: React.FC = () => {
     getQuestions();
   }, []);
 
-  const handleResponseChange = (response: number, justification: string) => {
-    console.log('Response:', response, 'Justification:', justification);
+  const handleAnswerChange = (answer: number, justificative: string) => {
+    console.log('Answer:', answer, 'Justificative:', justificative);
   };
+
+  const criteriosComportamentais = questions.slice(0, 5);
+  const criteriosDeExecucao = questions.slice(5);
 
   return (
     <div>
-      {questions.map((question: any) => (
+    <div>
+      <h3>Critérios Comportamentais:</h3>
+      {criteriosComportamentais.map((question: any) => (
         <BlocoFormulario
           key={question.id}
           title={question.title}
-          description={question.description}
-          onResponseChange={handleResponseChange}
+          question={question.question}
+          questionId={question.questionId}
+          avaliationId={question.avaliationId}
+          answerId={question.answerId}
+          onAnswerChange={handleAnswerChange}   />
+      ))}
+
+      <h3>Critérios de Execução:</h3>
+      {criteriosDeExecucao.map((question: any) => (
+        <BlocoFormulario
+          key={question.id}
+          title={question.title}
+          question={question.question}
+          questionId={question.questionId}
+          avaliationId={question.avaliationId}
+          answerId={question.answerId}
+          onAnswerChange={handleAnswerChange} 
         />
       ))}
+    </div>
     </div>
   );
 };
