@@ -36,10 +36,11 @@ const QuestionsPage: React.FC = () => {
           key={question.id}
           title={question.title}
           question={question.question}
-          questionId={question.questionId}
-          avaliationId={question.avaliationId}
+          questionId={question.id}
+          avaliationId='clxjt04910000tszw4t7blu6h'
           answerId={question.answerId}
-          onAnswerChange={handleAnswerChange}   />
+          onAnswerChange={handleAnswerChange}
+          />
       ))}
 
       <h3>Critérios de Execução:</h3>
@@ -48,8 +49,8 @@ const QuestionsPage: React.FC = () => {
           key={question.id}
           title={question.title}
           question={question.question}
-          questionId={question.questionId}
-          avaliationId={question.avaliationId}
+          questionId={question.id}
+          avaliationId='clxjt04910000tszw4t7blu6h'
           answerId={question.answerId}
           onAnswerChange={handleAnswerChange} 
         />
