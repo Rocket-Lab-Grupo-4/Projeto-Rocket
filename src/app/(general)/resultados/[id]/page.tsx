@@ -67,7 +67,7 @@ export default function Resultados() {
           />
         </>
       ) : (
-        <SpeechBubble>
+        <SpeechBubble >
           Sua média no último ciclo foi de: 5.0! Baixe o relatório para mais
           detalhes
         </SpeechBubble>

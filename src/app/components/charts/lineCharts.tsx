@@ -27,6 +27,7 @@ export const LineChartComponent = ({ data }: lineChartProps) => {
           <Tooltip />
           <Legend />
           <Line type="linear" dataKey="uv" stroke="#82ca9d" />
+          <Line type="linear" dataKey="pv" stroke="#82ca9d" />
         </LineChart>
       </ResponsiveContainer>
     );

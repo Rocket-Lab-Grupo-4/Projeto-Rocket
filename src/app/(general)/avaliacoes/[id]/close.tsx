@@ -3,25 +3,7 @@ import { avaliation } from "@/app/interfaces/avaliation";
 import styles from "./historico.module.scss";
 import { BlueButton, GreenButton } from "@/app/components/buttons/button";
 
-const avaliations: avaliation[] = [
-  {
-    type: "ciclo de avaliação 1",
-    dateRealization: "01/01/2021",
-    dateClosing: "01/02/2021",
-  },
-  {
-    type: "ciclo de avaliação 2",
-    dateRealization: "01/01/2021",
-    dateClosing: "01/02/2021",
-  },
-  {
-    type: "ciclo de avaliação 3",
-    dateRealization: "01/01/2021",
-    dateClosing: "01/02/2021",
-  },
-];
-
-function Avaliation() {
+function Avaliation({ avaliations }: { avaliations: avaliation[] }) {
   return (
     <div>
       <div className={styles.lineGrey}>
