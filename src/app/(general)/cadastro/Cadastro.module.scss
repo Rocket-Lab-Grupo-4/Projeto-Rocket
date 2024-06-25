@@ -6,19 +6,38 @@ $title-color: #00183c;
 $font-family: "Montserrat";
 
 .cadastroContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
   background: $background-color;
+
+  padding: 20px;
+  width: 100%;
+  height: fit-content;
+}
+
+.cadastroBox {
+  background: #ffffff;
+  border-radius: 39px;
+  padding: 40px;
+}
+
+.speechBubble {
+  width: 115px;
+  height: 115px;
+  margin: 0 auto 40px;
+  background: url("/assets/logo-side.png") no-repeat center center;
+  background-size: contain;
+}
+
+.cadastroTitle {
+  font-family: $font-family;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  color: $title-color;
+  margin-bottom: 40px;
 }
 
 .message {
-  position: absolute;
-  top: 180px;
-  left: 50%;
-  transform: translateX(-50%);
   padding: 10px 20px;
   background-color: $primary-color;
   color: $background-color;
@@ -34,50 +53,23 @@ $font-family: "Montserrat";
   background-color: red;
 }
 
-.cadastroBox {
-  position: relative;
-  width: 97%;
-  height: 95%;
-  background: #ffffff;
-  border-radius: 39px;
-  padding: 40px;
-}
-
-.cadastroTitle {
-  font-family: $font-family;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 20px;
-  left: 100px;
-  position: absolute;
-  line-height: 24px;
-  color: $title-color;
-  margin-bottom: 40px;
-}
 
 .haveAccount {
   font-family: $font-family;
   font-style: normal;
   font-size: 18px;
-  left: 100px;
-  top: 885px;
-  position: absolute;
   line-height: 24px;
   color: $title-color;
   margin-bottom: 40px;
 }
 
 .haveAccountClick {
-  position: relative;
   cursor: pointer;
 
   &:hover::after {
     content: "";
-    position: absolute;
     width: 100%;
     height: 2px;
-    bottom: -2px;
-    left: 0;
     background-color: black;
   }
 }
@@ -120,26 +112,16 @@ $font-family: "Montserrat";
   background: $background-color;
 }
 
-.speechBubble {
-  width: 159px;
-  height: 159px;
-  margin: 0 auto 40px;
-  background: url("/assets/logo-side.png") no-repeat center center;
-  background-size: contain;
-}
-
+// forms
 .fieldGroup {
-  margin-bottom: 20px;
+  // margin-bottom: 20px;
 }
 
 .gridContainer {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
-  left: 100px;
   width: 95%;
-  top: 280px;
-  position: absolute;
   margin: 0 auto;
 }
 
@@ -150,5 +132,5 @@ $font-family: "Montserrat";
 }
 
 .textFieldFull {
-  width: 40%;
+  width: 50%;
 }

@@ -9,6 +9,7 @@ import useForm from "@/app/hooks/useForm";
 import useLoading from "@/app/hooks/useLoading";
 import { UserProps } from "@/app/interfaces/user";
 import FormFields from "@/app/components/FormFields/FormFields";
+import { BlueButton, GreenButton } from "@/app/components/buttons/button";
 
 const initialFormValues: Omit<UserProps, "id" | "manager"> = {
   image: "",
@@ -78,19 +79,13 @@ const Cadastro: React.FC<CadastroProps & { onSuccess: () => void }> = ({
   return (
     <div className={styles.cadastroContainer}>
       <div className={styles.cadastroBox}>
-        <div className={styles.speechBubble}></div>
+        <div className={styles.speechBubble} />
         <div className={styles.cadastroTitle}>
           <span>É novo aqui?</span> Faça seu cadastro:
         </div>
         <div className={styles.gridContainer}>
           <FormFields formData={formData} handleChange={handleChange} />
         </div>
-        <p className={styles.haveAccount}>
-          Já possui uma conta?{" "}
-          <strong className={styles.haveAccountClick} onClick={onToggleForm}>
-            Entre aqui!
-          </strong>
-        </p>
         {message && (
           <p className={`${styles.message} ${isError ? styles.error : ""}`}>
             {message}
@@ -105,20 +100,22 @@ const Cadastro: React.FC<CadastroProps & { onSuccess: () => void }> = ({
             marginRight: "50px",
           }}
         >
-          <Button
-            className={styles.cadastroCancel}
+          <BlueButton
             onClick={onToggleForm}
             disabled={loading}
+            width="108px"
+            height="30px"
           >
             Cancelar
-          </Button>
-          <Button
-            className={styles.cadastroButton}
+          </BlueButton>
+          <GreenButton
             onClick={handleSubmit}
             disabled={loading}
+            width="108px"
+            height="30px"
           >
             {loading ? <CircularProgress size={24} /> : "Cadastrar"}
-          </Button>
+          </GreenButton>
         </div>
       </div>
     </div>

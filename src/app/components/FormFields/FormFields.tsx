@@ -27,15 +27,16 @@ const FormFields: React.FC<FormFieldsProps> = ({ formData, handleChange }) => {
         { label: "Nome completo", name: "name" },
         { label: "Data de nascimento", name: "dateNaissance" },
         { label: "N° do CPF", name: "cpf" },
-        { label: "Foto de perfil", name: "image" },
-        { label: "N° do documento de identificação com foto", name: "rg" },
         { label: "N° da Carteira de Trabalho", name: "ctps" },
-        { label: "Cargo", name: "office" },
+        { label: "N° do documento de identificação com foto", name: "rg" },
         { label: "Orgão emissor", name: "issuingBody" },
         { label: "Endereço", name: "adress" },
         { label: "CEP", name: "cep" },
         { label: "Número", name: "number" },
         { label: "Complemento", name: "complement" },
+        { label: "Foto de perfil", name: "image" },
+        { label: "Cargo", name: "office" },
+        { label: "Escolha uma senha", name: "password"}
       ].map((field, index) => (
         <div className={styles.fieldGroup} key={index}>
           <div className={styles.cadastroText}>{field.label}:</div>
