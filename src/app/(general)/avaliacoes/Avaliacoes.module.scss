@@ -1,0 +1,160 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    font-family: "Montserrat", sans-serif;
+    background-color: white;
+    position: relative; 
+    max-width: 1570px;
+    padding-bottom: 100px;
+}
+
+.headerRight {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    background-color: white;
+}
+
+.notificationIcon {
+    font-size: 26px;
+    margin-right: 26px;
+    background-color: #F6F5F5;
+    border-radius: 100%;
+    padding: 0.5rem;
+}
+
+.welcomeText {
+    display: flex;
+    align-items: center;
+    border-radius: 26px;
+    background-color: #F6F5F5;
+    padding: 0.5rem;
+}
+
+.profilePic {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-left: 10px;
+}
+
+.header {
+    background-color: white;
+    padding: 20px;
+    margin-top: 80px;
+}
+
+.header h2 {
+    margin: 0;
+    color: #00183C;
+}
+
+.header p {
+    margin: 10px 0 0 0;
+}
+
+.buttons {
+    display: flex;
+    margin-top: 20px;
+    gap: 11px;
+}
+
+.autoAvaliacao, .avaliacao360 {
+    flex: 1;
+    max-width: 162px;
+    margin-bottom: 10px;
+    font-family: "Montserrat", sans-serif;
+    text-align: center;
+    border-radius: 30px;
+    padding: 1rem;
+    cursor: pointer;
+    background-color: #00FF9D;
+    font-weight: bold;
+    height: 1px;
+    color: #00183C;
+    display: flex;
+    align-items: center;
+    border: none;
+    justify-content: center;
+  }
+
+  .autoAvaliacao, .avaliacao360:hover {
+    background-color: #00e689;
+}
+
+.content {
+    padding: 20px;
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    margin-bottom: 42px;
+    border-radius: 8px;
+}
+  
+.row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; 
+}
+  
+.exclamaPic {
+    width: 26px;
+    margin-right: 10px; 
+}
+  
+.description p {
+    margin: 0;
+    flex: 1; 
+}
+
+.footerButtons {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    margin-top: 1000px;
+}
+.cancelButton {
+    margin-left: 10px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: "Montserrat", sans-serif;
+    background-color: #0a3874;
+    color: #00f999;
+    height: 35px;
+    font-weight: bold;
+    cursor: pointer;
+    flex: 1;
+    border: none;
+}
+
+.cancelButton:hover {
+  background-color: #062144;
+}
+
+.submitButton {
+    margin-left: 10px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    width: 260px;
+    height: 35px;
+    font-family: "Montserrat", sans-serif;
+    background-color: #00f999;
+    color: #00183c;
+    font-weight: bold;
+    cursor: pointer;
+    flex: 1;
+    border: none;
+}
+
+.submitButton:hover {
+  background-color: #00e689;
+}

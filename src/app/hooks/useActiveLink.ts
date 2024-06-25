@@ -6,7 +6,8 @@ const useActiveLink = () => {
   const [activeLink, setActiveLink] = useState(pathname);
 
   useEffect(() => {
-    setActiveLink(pathname);
+    const firstSegment = pathname.split("/")[1];
+    setActiveLink(`/${firstSegment}`);
   }, [pathname]);
 
   const handleLinkClick = (path: string) => {
