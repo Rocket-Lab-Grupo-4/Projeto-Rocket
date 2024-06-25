@@ -7,19 +7,18 @@
   background: #00183c;
 
   .innerContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 97%;
     height: 95%;
     background: #ffffff;
     border-radius: 39px;
-    position: relative;
   }
 
-  .forgotPassword {
-    position: absolute;
-    width: 356px;
-    height: 23px;
-    left: calc(52.5% - 434px / 2);
-    top: 791px;
+  .createAccount {
+    top: 780px;
     font-family: "Montserrat";
     font-style: normal;
     font-weight: 500;
@@ -29,41 +28,56 @@
     text-decoration: none;
   }
 
-  .forgotPassword:hover {
-    color: #555555;
+  .createAccountHover {
+    cursor: pointer;
+
+    &:hover {
+      content: "";
+      width: 100%;
+      height: 2px;
+      bottom: -2px;
+      left: 0;
+      color: #00f999;
+    }
   }
 
   .loginTitle {
-    position: absolute;
     width: 381px;
     height: 51px;
-    left: calc(51% - 434px / 2);
-    top: 319px;
     font-family: "Montserrat";
     font-style: normal;
-    font-weight: 600;
     font-size: 20px;
     line-height: 24px;
     color: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
   }
 
   .group40 {
-    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 45px;
+
     width: 434px;
-    height: 335px;
-    left: calc(50% - 434px / 2);
-    top: 389px;
     background: #f9fffd;
     border: 1px solid #00f999;
     border-radius: 39px;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
   }
 
   .loginSubtitle {
-    position: absolute;
-    width: 73px;
-    height: 23px;
-    left: calc(51% - 434px / 2);
-    top: 417px;
+    margin-left: 15px;
     font-family: "Montserrat";
     font-style: normal;
     font-weight: 600;
@@ -72,102 +86,36 @@
     color: #000000;
   }
 
-  .inputGroup {
-    position: absolute;
+  .Input {
     width: 390px;
-    height: 53px;
-    left: calc(50% - 390px / 2);
-    top: 488px;
-    background: #f9fffd;
-    border: 1px solid #00f999;
-    border-radius: 39px;
-  }
-
-  .inputLabel {
-    position: absolute;
-    width: 297.21px;
-    height: 24px;
-    left: 568.49px;
-    top: 503px;
-    font-family: "Montserrat";
-    font-style: normal;
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 24px;
-    color: #000000;
-  }
-
-  .passwordGroup {
-    position: absolute;
-    width: 390px;
-    height: 53px;
-    left: calc(50% - 390px / 2);
-    top: 589px;
     background: #ffffff;
     border: 1px solid #00f999;
     border-radius: 39px;
   }
 
-  .passwordLabel {
-    position: absolute;
-    width: 297.21px;
-    height: 24px;
-    left: 568.49px;
-    top: 604px;
-    font-family: "Montserrat";
-    font-style: normal;
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 24px;
-    color: #000000;
-  }
-
   .logo {
-    position: absolute;
-    width: 159px;
-    height: 159px;
-    left: 46%;
-    top: 109px;
+    width: 115px;
+    height: 115px;
     background: url("/assets/logo-side.png");
     background-size: contain;
     background-repeat: no-repeat;
     margin-bottom: 20px;
   }
 
-  .buttonGroup {
-    position: absolute;
-    width: 298px;
-    height: 53px;
-    left: calc(50% - 298px / 2);
-    top: 690px;
-    background: #00f999;
-    border-radius: 39px;
-  }
-
   .loginButton {
-    width: 100%;
-    height: 100%;
     border-radius: 39px;
+
     background: #00f999;
     font-family: "Montserrat";
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
-    line-height: 24px;
-    color: #000000;
-  }
 
-  .buttonLabel {
-    position: absolute;
-    width: 70.9px;
-    height: 24px;
-    left: 684px;
-    top: 705px;
-    font-family: "Montserrat";
-    font-style: normal;
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 24px;
     color: #000000;
+
+    border-radius: 39px;
+  }
+  .loginButton:hover {
+    background: #03a869;
   }
 }

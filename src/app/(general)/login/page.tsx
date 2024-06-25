@@ -1,11 +1,10 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Login.module.scss";
 import {
   TextField,
   Button,
   Typography,
-  Link,
   ThemeProvider,
   createTheme,
 } from "@mui/material";
@@ -16,6 +15,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: "50px",
+          border: "1px",
           "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
             borderColor: "#00f999",
           },
@@ -24,6 +24,7 @@ const theme = createTheme({
           },
         },
         notchedOutline: {
+          border: "1px",
           borderColor: "#00f999",
         },
         input: {
@@ -35,24 +36,32 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           color: "black",
-          left: "20px",
           fontWeight: "bold",
           fontSize: "22px",
           top: "-5px",
           "&.Mui-focused": {
             color: "black",
-            transform: "translate(14px, -22px) scale(0.75)",
+            // transform: "translate(14px, -22px) scale(0.75)",
           },
+          transform: "translate(14px, -22px) scale(0.75)",
         },
         shrink: {
-          transform: "translate(14px, -9px) scale(0.75)",
+          // transform: "translate(14px, -22px) scale(0.75)",
         },
       },
     },
   },
 });
 
-export default function Login() {
+const Login: React.FC<LoginProps> = ({ onLogin, onToggleForm }) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    onLogin();
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <div className={styles.loginContainer}>
@@ -63,35 +72,50 @@ export default function Login() {
             <br />
             Para iniciar navegação, efetue login
           </Typography>
-          <div className={styles.group40} />
-          <Typography className={styles.loginSubtitle}>LOGIN</Typography>
-          <div className={styles.inputGroup}>
-            <TextField
-              className={styles.loginInput}
-              label="Usuário"
-              variant="outlined"
-              fullWidth
-            />
+          <div className={styles.group40}>
+            <form onSubmit={handleSubmit} className={styles.form}>
+              <Typography className={styles.loginSubtitle}>LOGIN</Typography>
+              <TextField
+                className={styles.Input}
+                label="Usuário:"
+                variant="outlined"
+                fullWidth
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+
+              <TextField
+                className={styles.Input}
+                label="Senha:"
+                variant="outlined"
+                type="password"
+                fullWidth
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <Button
+                className={styles.loginButton}
+                type="submit"
+                variant="contained"
+              >
+                Entrar
+              </Button>
+            </form>
           </div>
-          <div className={styles.passwordGroup}>
-            <TextField
-              className={styles.loginInput}
-              label="Senha"
-              variant="outlined"
-              type="password"
-              fullWidth
-            />
-          </div>
-          <div className={styles.buttonGroup}>
-            <Button className={styles.loginButton} variant="contained">
-              Entrar
-            </Button>
-          </div>
-          <Link href="#" className={styles.forgotPassword}>
-            Esqueceu sua senha? <strong>Clique aqui!</strong>
-          </Link>
+
+                   <p className={styles.createAccount}>
+            Não possui acesso?{" "}
+            <strong
+              onClick={onToggleForm}
+              className={styles.createAccountHover}
+            >
+              Crie aqui!
+            </strong>
+          </p>
         </div>
       </div>
     </ThemeProvider>
   );
-}
+};
+
+export default Login;
