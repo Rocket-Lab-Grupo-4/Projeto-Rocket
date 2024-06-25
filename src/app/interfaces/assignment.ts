@@ -1,7 +1,8 @@
-export interface avaliation {
+export interface assignment {
   id: string;
+  status: boolean;
   type: string;
-  media: number
+  media: number;
   dataAnswered: string;
   dateConcluded: string;
 }

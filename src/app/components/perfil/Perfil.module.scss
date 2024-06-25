@@ -1,0 +1,28 @@
+.headerRight {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  background-color: white;
+}
+
+.notificationIcon {
+  font-size: 26px;
+  background-color: red;
+  border-radius: 100%;
+  padding: 0.5rem;
+}
+
+.welcomeText {
+  display: flex;
+  align-items: center;
+  border-radius: 26px;
+  background-color: #F6F5F5;
+  padding: 0.5rem;
+}
+
+.profilePic {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  margin-left: 10px;
+}
