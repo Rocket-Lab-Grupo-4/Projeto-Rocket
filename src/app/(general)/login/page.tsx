@@ -41,12 +41,12 @@ const theme = createTheme({
           top: "-5px",
           "&.Mui-focused": {
             color: "black",
-            transform: "translate(14px, -22px) scale(0.75)",
+            // transform: "translate(14px, -22px) scale(0.75)",
           },
           transform: "translate(14px, -22px) scale(0.75)",
         },
         shrink: {
-          transform: "translate(14px, -22px) scale(0.75)",
+          // transform: "translate(14px, -22px) scale(0.75)",
         },
       },
     },
@@ -72,36 +72,38 @@ const Login: React.FC<LoginProps> = ({ onLogin, onToggleForm }) => {
             <br />
             Para iniciar navegação, efetue login
           </Typography>
-          <div className={styles.group40} />
-          <Typography className={styles.loginSubtitle}>LOGIN</Typography>
-          <form onSubmit={handleSubmit} className={styles.inputGroup}>
-            <TextField
-              label="Usuário:"
-              variant="outlined"
-              fullWidth
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
+          <div className={styles.group40}>
+            <form onSubmit={handleSubmit} className={styles.form}>
+              <Typography className={styles.loginSubtitle}>LOGIN</Typography>
+              <TextField
+                className={styles.Input}
+                label="Usuário:"
+                variant="outlined"
+                fullWidth
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
 
-            <TextField
-              className={styles.passwordInput}
-              label="Senha:"
-              variant="outlined"
-              type="password"
-              fullWidth
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Button
-              className={styles.loginButton}
-              type="submit"
-              variant="contained"
-            >
-              Entrar
-            </Button>
-          </form>
+              <TextField
+                className={styles.Input}
+                label="Senha:"
+                variant="outlined"
+                type="password"
+                fullWidth
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <Button
+                className={styles.loginButton}
+                type="submit"
+                variant="contained"
+              >
+                Entrar
+              </Button>
+            </form>
+          </div>
 
-          <p className={styles.createAccount}>
+                   <p className={styles.createAccount}>
             Não possui acesso?{" "}
             <strong
               onClick={onToggleForm}

@@ -31,7 +31,7 @@ export default function RootLayout({
       if (isRegistering) {
         router.push("/cadastro");
       } else {
-        router.push("/login");
+        router.push("/home");
       }
     }
   }, [isAuthenticated, isRegistering, router]);

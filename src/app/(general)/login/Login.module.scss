@@ -7,18 +7,17 @@
   background: #00183c;
 
   .innerContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 97%;
     height: 95%;
     background: #ffffff;
     border-radius: 39px;
-    position: relative;
   }
 
   .createAccount {
-    position: absolute;
-    width: 356px;
-    height: 23px;
-    left: calc(53.5% - 434px / 2);
     top: 780px;
     font-family: "Montserrat";
     font-style: normal;
@@ -30,26 +29,21 @@
   }
 
   .createAccountHover {
-    position: relative;
     cursor: pointer;
 
-    &:hover::after {
+    &:hover {
       content: "";
-      position: absolute;
       width: 100%;
       height: 2px;
       bottom: -2px;
       left: 0;
-      background-color: black;
+      color: #00f999;
     }
   }
 
   .loginTitle {
-    position: absolute;
     width: 381px;
     height: 51px;
-    left: calc(51% - 434px / 2);
-    top: 319px;
     font-family: "Montserrat";
     font-style: normal;
     font-size: 20px;
@@ -62,22 +56,28 @@
   }
 
   .group40 {
-    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 45px;
+
     width: 434px;
-    height: 335px;
-    left: calc(50% - 434px / 2);
-    top: 389px;
     background: #f9fffd;
     border: 1px solid #00f999;
     border-radius: 39px;
   }
 
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+  }
+
   .loginSubtitle {
-    position: absolute;
-    width: 73px;
-    height: 23px;
-    left: calc(51.3% - 434px / 2);
-    top: 417px;
+    margin-left: 15px;
     font-family: "Montserrat";
     font-style: normal;
     font-weight: 600;
@@ -86,34 +86,16 @@
     color: #000000;
   }
 
-  .inputGroup {
-    position: absolute;
+  .Input {
     width: 390px;
-    height: 53px;
-    left: calc(50% - 390px / 2);
-    top: 488px;
-    background: #ffffff;
-    border: 1px solid #00f999;
-    border-radius: 39px;
-  }
-
-  .passwordInput {
-    top: 160%;
-    position: absolute;
-    width: 390px;
-    height: 53px;
-    left: calc(50% - 390px / 2);
     background: #ffffff;
     border: 1px solid #00f999;
     border-radius: 39px;
   }
 
   .logo {
-    position: absolute;
-    width: 159px;
-    height: 159px;
-    left: 46%;
-    top: 109px;
+    width: 115px;
+    height: 115px;
     background: url("/assets/logo-side.png");
     background-size: contain;
     background-repeat: no-repeat;
@@ -121,8 +103,6 @@
   }
 
   .loginButton {
-    width: 50%;
-    height: 100%;
     border-radius: 39px;
 
     background: #00f999;
@@ -130,32 +110,12 @@
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
-    position: absolute;
 
-    line-height: 24px;
     color: #000000;
 
-    position: absolute;
-    height: 53px;
-    left: calc(62% - 298px / 2);
-    top: 205px;
     border-radius: 39px;
   }
   .loginButton:hover {
     background: #03a869;
-  }
-
-  .buttonLabel {
-    position: absolute;
-    width: 70.9px;
-    height: 24px;
-    left: 684px;
-    top: 705px;
-    font-family: "Montserrat";
-    font-style: normal;
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 24px;
-    color: #000000;
   }
 }
