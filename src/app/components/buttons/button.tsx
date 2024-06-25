@@ -21,7 +21,7 @@ export const BlueButton = styled(Button)<ColorButtonProps>(
 );
 
 export const GreenButton = styled(Button)<ColorButtonProps>(
-  ({ width, height ,borderRadius }) => ({
+  ({ width, height, borderRadius }) => ({
     width: width || "100%",
     height: height || "100%",
     borderRadius: borderRadius || "16px",
@@ -30,6 +30,20 @@ export const GreenButton = styled(Button)<ColorButtonProps>(
     color: "#00183C",
     "&:hover": {
       backgroundColor: "#30e09d",
+    },
+  })
+);
+
+export const OutlinedButton = styled(Button)<ColorButtonProps>(
+  ({ width, height, borderRadius }) => ({
+    width: width || "100%",
+    height: height || "100%",
+    borderRadius: borderRadius || "25px",
+    border: "1px solid #00F999",
+    color: "#00F999",
+    "&:hover": {
+      backgroundColor: "#00F999",
+      color: "#00183C",
     },
   })
 );
