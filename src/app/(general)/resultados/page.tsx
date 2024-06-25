@@ -1,14 +1,8 @@
 "use client";
 import React from "react";
 import SearchBar from "@/app/components/searchBar/searchBar";
+import Resultados from "./[id]/page";
 
-export default function Resultados() {
-  return (
-    <>
-      <p>Resultados</p>
-      <SearchBar onSearch={function (query: string): void {
-        throw new Error("Function not implemented.");
-      } } />
-    </>
-  );
+export default function Resultado() {
+  return <Resultados />;
 }
