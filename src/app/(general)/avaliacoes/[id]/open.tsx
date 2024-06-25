@@ -5,7 +5,6 @@ import { BlueButton, GreenButton } from "@/app/components/buttons/button";
 import ErrorIcon from "@mui/icons-material/Error";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { formatDate } from "@/utils/formatDate";
-import { userAssignment } from "@/app/interfaces/userAssignment";
 import { UnionStatusAndAssignment } from "./page";
 
 function OpenAvaliation({

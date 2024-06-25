@@ -19,7 +19,6 @@ export type UnionStatusAndAssignment = {
   assignmentId: string;
   dataAnswered?: string;
   dateConcluded: string;
-  media: number;
   status: boolean;
   type: string;
   userId: string;

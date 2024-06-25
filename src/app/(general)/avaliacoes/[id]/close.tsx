@@ -1,7 +1,6 @@
 "use client";
-import { avaliation } from "@/app/interfaces/avaliation";
 import styles from "./historico.module.scss";
-import { BlueButton, GreenButton } from "@/app/components/buttons/button";
+import { BlueButton } from "@/app/components/buttons/button";
 import { UnionStatusAndAssignment } from "./page";
 
 function Avaliation({
