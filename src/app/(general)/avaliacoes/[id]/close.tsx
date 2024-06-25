@@ -2,8 +2,13 @@
 import { avaliation } from "@/app/interfaces/avaliation";
 import styles from "./historico.module.scss";
 import { BlueButton, GreenButton } from "@/app/components/buttons/button";
+import { UnionStatusAndAssignment } from "./page";
 
-function Avaliation({ avaliations }: { avaliations: avaliation[] }) {
+function Avaliation({
+  avaliations,
+}: {
+  avaliations: UnionStatusAndAssignment[];
+}) {
   return (
     <div>
       <div className={styles.lineGrey}>
@@ -19,7 +24,7 @@ function Avaliation({ avaliations }: { avaliations: avaliation[] }) {
             className={index % 2 === 0 ? styles.lineWhite : styles.lineGrey}
           >
             <p className={styles.width}>{avaliation.type}</p>
-            <p className={styles.width}>{avaliation.dateRealization}</p>
+            <p className={styles.width}>{avaliation.dataAnswered}</p>
             <div className={styles.buttonsContainer}>
               <BlueButton
                 width="145px"

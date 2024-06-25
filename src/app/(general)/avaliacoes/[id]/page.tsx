@@ -9,16 +9,28 @@ import BasicTabs from "@/app/components/tabs/tabs";
 import OpenAvaliation from "./open";
 import CloseAvaliation from "./close";
 import { BlueButton } from "@/app/components/buttons/button";
-import { avaliation } from "@/app/interfaces/avaliation";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import api from "@/utils/api";
 import { userAssignment } from "@/app/interfaces/userAssignment";
 import { assignment } from "@/app/interfaces/assignment";
 
-const userId = "clxq9oq9y0000ngms1y6ixony";
+export type UnionStatusAndAssignment = {
+  id: string;
+  assignmentId: string;
+  dataAnswered?: string;
+  dateConcluded: string;
+  media: number;
+  status: boolean;
+  type: string;
+  userId: string;
+};
+
+const userId = "clxtlggn60000cvzgissdxodd";
 
 function HistoricAvaliation() {
-  const [assignments, setAssignments] = useState<assignment[]>([]);
+  const [assignments, setAssignments] = useState<UnionStatusAndAssignment[]>(
+    []
+  );
   const [assignmentToDo, setAssignmentToDo] = useState<boolean>(false);
   const today = new Date();
 
@@ -35,25 +47,40 @@ function HistoricAvaliation() {
     return assignmentsResponses.map((res) => res.data) as assignment[];
   };
 
-  const getAllStatusFromAssignments = (assignments: assignment[]) => {
-    return assignments.map((assignment) => {
-      return assignment.status;
-    });
+  const getStatusFromUserAssignments = (assignments: userAssignment[]) => {
+    return assignments.map((assignment) => assignment.status);
   };
 
   const verifyIfhaveFalseStatus = (status: boolean[]) => {
     return status.some((s) => s === false);
   };
 
-  const filterOpenAvaliations = (assignments: assignment[]) => {
+  const filterOpenAvaliations = (assignments: UnionStatusAndAssignment[]) => {
     return assignments.filter((assignment) => {
       return assignment.dateConcluded > today.toISOString();
     });
   };
 
-  const filterCloseAvaliations = (assignments: assignment[]) => {
+  const filterCloseAvaliations = (assignments: UnionStatusAndAssignment[]) => {
     return assignments.filter((assignment) => {
       return assignment.dateConcluded < today.toISOString();
+    });
+  };
+
+  const unionStatusFromAssignmentAndUserWithAssignmentsById = (
+    assignments: userAssignment[],
+    fetchedAssignments: assignment[]
+  ) => {
+    return assignments.map((au) => {
+      const assignment = fetchedAssignments.find(
+        (a) => a.id === au.assignmentId
+      );
+      return {
+        ...au,
+        ...assignment,
+        dateConcluded: assignment?.dateConcluded || "",
+        type: assignment?.type || "", // Add a default value for the 'type' property
+      };
     });
   };
 
@@ -62,10 +89,17 @@ function HistoricAvaliation() {
       const assignmentsByUser = await fecthAssignmentsByUser();
       const assignmentIds = assignmentsByUser.map((au) => au.assignmentId);
       const fetchedAssignments = await getAllAssignments(assignmentIds);
-      setAssignments(fetchedAssignments);
 
-      const status = getAllStatusFromAssignments(fetchedAssignments);
+      const status = getStatusFromUserAssignments(assignmentsByUser);
       setAssignmentToDo(verifyIfhaveFalseStatus(status));
+
+      const UnionAssignmentsByUser =
+        unionStatusFromAssignmentAndUserWithAssignmentsById(
+          assignmentsByUser,
+          fetchedAssignments
+        );
+
+      setAssignments(UnionAssignmentsByUser);
     };
 
     fetchData();

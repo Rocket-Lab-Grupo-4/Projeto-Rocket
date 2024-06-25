@@ -4,9 +4,15 @@ import styles from "./historico.module.scss";
 import { BlueButton, GreenButton } from "@/app/components/buttons/button";
 import ErrorIcon from "@mui/icons-material/Error";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { formatDate } from '@/utils/formatDate';
+import { formatDate } from "@/utils/formatDate";
+import { userAssignment } from "@/app/interfaces/userAssignment";
+import { UnionStatusAndAssignment } from "./page";
 
-function OpenAvaliation({ avaliations }: { avaliations: avaliation[] }) {
+function OpenAvaliation({
+  avaliations,
+}: {
+  avaliations: UnionStatusAndAssignment[];
+}) {
   return (
     <div>
       <div className={styles.lineGrey}>
@@ -25,13 +31,19 @@ function OpenAvaliation({ avaliations }: { avaliations: avaliation[] }) {
             className={index % 2 === 0 ? styles.lineWhite : styles.lineGrey}
           >
             {avaliation.status ? (
-              <CheckCircleIcon style={{ color: "#48742c", marginRight: "5px" }} />
+              <CheckCircleIcon
+                style={{ color: "#48742c", marginRight: "5px" }}
+              />
             ) : (
               <ErrorIcon style={{ color: "#eb3223", marginRight: "5px" }} />
             )}
             <p className={styles.width}>{avaliation.type}</p>
-            <p className={styles.width}>{formatDate(avaliation.dataAnswered)}</p>
-            <p className={styles.width}>{formatDate(avaliation.dateConcluded)}</p>
+            <p className={styles.width}>
+              {formatDate(avaliation.dataAnswered || "")}
+            </p>
+            <p className={styles.width}>
+              {formatDate(avaliation.dateConcluded)}
+            </p>
             <div className={styles.buttonsContainer}>
               <BlueButton
                 width="145px"
