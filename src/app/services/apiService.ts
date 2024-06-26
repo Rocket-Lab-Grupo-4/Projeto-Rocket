@@ -79,3 +79,33 @@ interface CreateAnswerParams {
   };
 
 
+export const createAvaliation = async (evaluatorId: string, evaluatedId: string) => {
+  
+  try {
+    const user = await fetchUserById(evaluatorId)
+    const avaliationType = user.manager
+    ? 'avaliationByManager'
+    : evaluatorId === evaluatedId
+    ? 'autoavaliation'
+    : null
+
+    if (!avaliationType) throw new Error ('Invalid avaliation type')
+
+    const response = await api.post(`/avaliation/${evaluatorId}/${evaluatedId}`, { avaliationType })
+    return response.data
+
+  } catch (error) {
+    console.error('Error creating avaliation: ', error);
+    throw error;
+  }
+}
+
+export const fetchUserById = async (userId: string) => {
+  try {
+    const response = await api.get(`/user/${userId}`)
+    return response.data
+  } catch (error) {
+    console.error('Error fetching user: ', error)
+    throw error
+  }
+}
