@@ -27,7 +27,7 @@ export default function Resultados() {
   const [manager, setManager] = useState(false);
   const [avaliations, setAvaliations] = useState([] as assignment[]);
 
-  const { fecthAssignmentsByUser, getAllAssignments } = useFetchAssignments();
+  const { fecthAssignmentsByUser, getAllAssignments, getAllAvaliationsByUserAssignmentId } = useFetchAssignments();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -36,9 +36,16 @@ export default function Resultados() {
       setManager(response.data.manager);
 
       const assignmentsByUser = await fecthAssignmentsByUser(userId);
+
+      // get avaliations name, dates
       const assignmentIds = assignmentsByUser.map((au) => au.assignmentId);
       const fetchedAssignments = await getAllAssignments(assignmentIds);
       setAvaliations(fetchedAssignments);
+
+      // get avaliations media, type (auto, avaliationsbymanager)
+      const userAssignmentIds = assignmentsByUser.map((au) => au.id);
+      const avaliations = await getAllAvaliationsByUserAssignmentId(userAssignmentIds);
+      console.log(avaliations);
     };
 
     fetchUser();

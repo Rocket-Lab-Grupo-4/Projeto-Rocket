@@ -16,5 +16,13 @@ export const useFetchAssignments = () => {
     return assignmentsResponses.map((res) => res.data) as assignment[];
   };
 
-  return { fecthAssignmentsByUser, getAllAssignments };
+  const getAllAvaliationsByUserAssignmentId = async (userAssignmentId: string[]) => {
+    const assignmentPromises = userAssignmentId.map((id) =>
+      api.get(`/avaliation/findByUserAssignmentId/${id}`)
+    );
+    const assignmentsResponses = await Promise.all(assignmentPromises);
+    return assignmentsResponses.map((res) => res.data) as assignment[];
+  }
+
+  return { fecthAssignmentsByUser, getAllAssignments, getAllAvaliationsByUserAssignmentId };
 };
