@@ -4,9 +4,11 @@ import styles from "./Datas.module.scss";
 import { UserProps } from "@/app/interfaces/user";
 import { useParams } from "next/navigation";
 import api from "@/utils/api";
-import { BlueButton, GreenButton } from '@/app/components/buttons/button';
-import { formatDate } from '@/utils/formatDate';
-import { InputTextField } from '@/app/components/inputs';
+import { BlueButton, GreenButton } from "@/app/components/buttons/button";
+import { formatDate } from "@/utils/formatDate";
+import { InputTextField } from "@/app/components/inputs";
+
+const userId = "clxtlggn60000cvzgissdxodd";
 
 export default function SeusDados() {
   const params = useParams();
@@ -21,7 +23,7 @@ export default function SeusDados() {
 
   async function fetchData() {
     try {
-      const response = await api.get(`/user/${params.id}`);
+      const response = await api.get(`/user/${userId}`);
       const user = response.data;
       setUser(user);
       setUpdatedUser(user);
@@ -41,7 +43,7 @@ export default function SeusDados() {
       console.log("Dados atualizados com sucesso!");
       setIsEditing(false); // Desabilitar edição após salvar
     } catch (error) {
-      alert('Erro ao atualizar dados');
+      alert("Erro ao atualizar dados");
     }
   };
 
@@ -58,7 +60,10 @@ export default function SeusDados() {
       <div>
         <div className={styles.profileImage}>
           <img
-            src="https://images.unsplash.com/photo-1589156191108-c762ff4b96ab?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YmxhY2slMjB3b21hbnxlbnwwfHwwfHx8MA%3D%3D"
+            src={
+              user.image ??
+              "https://images.unsplash.com/photo-1589156191108-c762ff4b96ab?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YmxhY2slMjB3b21hbnxlbnwwfHwwfHx8MA%3D%3D"
+            }
             alt="Profile"
           />
         </div>
@@ -80,7 +85,9 @@ export default function SeusDados() {
             <h3 className={styles.title}>Data de nascimento: &nbsp;</h3>
             <InputTextField
               value={formatDate(updatedUser.dateNaissance)}
-              onChange={(newValue) => handleInputChange("dateNaissance", newValue)}
+              onChange={(newValue) =>
+                handleInputChange("dateNaissance", newValue)
+              }
               disabled={!isEditing}
             />
           </div>
@@ -117,7 +124,9 @@ export default function SeusDados() {
             <h3 className={styles.title}>Orgão emissor: &nbsp;</h3>
             <InputTextField
               value={updatedUser.issuingBody}
-              onChange={(newValue) => handleInputChange("issuingBody", newValue)}
+              onChange={(newValue) =>
+                handleInputChange("issuingBody", newValue)
+              }
               disabled={!isEditing}
             />
           </div>
@@ -163,8 +172,17 @@ export default function SeusDados() {
         </div>
       </div>
       <div className={styles.ButtonsContainer}>
-        <BlueButton width='108px' height='30px' onClick={toggleEdit}>Editar</BlueButton>
-        <GreenButton width='108px' height='30px' onClick={handleSave} disabled={!isEditing}>Salvar</GreenButton>
+        <BlueButton width="108px" height="30px" onClick={toggleEdit}>
+          Editar
+        </BlueButton>
+        <GreenButton
+          width="108px"
+          height="30px"
+          onClick={handleSave}
+          disabled={!isEditing}
+        >
+          Salvar
+        </GreenButton>
       </div>
     </div>
   );

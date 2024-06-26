@@ -27,11 +27,44 @@ export default function Resultados() {
   const [manager, setManager] = useState(false);
   const [avaliations, setAvaliations] = useState([] as assignment[]);
 
+  const [autoAvaliationAverages, setAutoAvaliationAverages] = useState([] as number[]);
+  const [managerAvaliationAverages, setManagerAvaliationAverages] = useState([] as number[]);
+
+  const [autoAvaliationDates, setAutoAvaliationDates] = useState([] as string[]);
+
   const {
     fecthAssignmentsByUser,
     getAllAssignments,
     getAllAvaliationsByUserAssignmentId,
   } = useFetchAssignments();
+
+  function getAveragesByType(evaluations: avaliation[][], type: 'autoavaliation' | 'avaliationbymanager'): number[] {
+    return evaluations.map(evaluationArray => {
+      const filteredEvaluations = evaluationArray.filter(evaluation => evaluation.avaliationType === type);
+      const totalMedia = filteredEvaluations.reduce((sum, evaluation) => sum + evaluation.media, 0);
+      return filteredEvaluations.length > 0 ? totalMedia / filteredEvaluations.length : 0;
+    });
+  }
+
+  function getDateByType(evaluations: avaliation[][], type: 'autoavaliation' | 'avaliationbymanager'): string[] {
+    return evaluations.map(evaluationArray => {
+      const filteredEvaluations = evaluationArray.filter(evaluation => evaluation.avaliationType === type);
+      return filteredEvaluations.length > 0 ? formatDate(filteredEvaluations[0].dataCreated) : '';
+    });
+  }
+
+  function getMonthYear(date: string[]): string[] {
+    return date.map(d => {
+      const [day, month, year] = d.split('.');
+
+      if (!month || !year) {
+        return '';
+      }
+
+      return `${month}/${year}`;
+    });
+  
+  }
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -52,6 +85,17 @@ export default function Resultados() {
         userAssignmentIds
       );
       console.log(avaliations);
+
+      const autoAvaliationAverages = getAveragesByType(avaliations, 'autoavaliation');
+      setAutoAvaliationAverages(autoAvaliationAverages);
+      const managerAvaliationAverages = getAveragesByType(avaliations, 'avaliationbymanager');
+      setManagerAvaliationAverages(managerAvaliationAverages);
+
+      const autoAvaliationDates = getDateByType(avaliations, 'autoavaliation');
+      console.log(autoAvaliationDates);
+
+      setAutoAvaliationDates(getMonthYear(autoAvaliationDates));
+
     };
 
     fetchUser();
@@ -104,7 +148,7 @@ export default function Resultados() {
         </div>
         <div className={styles.subsection1_3}>
           <h2 className={styles.subtitle}>Suas notas desde que chegou aqui</h2>
-          <LineChartComponent data={LineData} />
+          <LineChartComponent date={autoAvaliationDates} pv={autoAvaliationAverages} uv={managerAvaliationAverages} />
         </div>
         <div className={styles.subsection1_3}>
           <h2 className={styles.subtitle}>Comparativo por critérios</h2>

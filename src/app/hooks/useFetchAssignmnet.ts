@@ -1,4 +1,5 @@
 import { assignment } from '../interfaces/assignment';
+import { avaliation } from '../interfaces/avaliation';
 import { userAssignment } from "../interfaces/userAssignment";
 import { api } from "../services/apiService";
 
@@ -21,7 +22,7 @@ export const useFetchAssignments = () => {
       api.get(`/avaliation/findByUserAssignmentId/${id}`)
     );
     const assignmentsResponses = await Promise.all(assignmentPromises);
-    return assignmentsResponses.map((res) => res.data) as assignment[];
+    return assignmentsResponses.map((res) => res.data) as avaliation[][];
   }
 
   return { fecthAssignmentsByUser, getAllAssignments, getAllAvaliationsByUserAssignmentId };
