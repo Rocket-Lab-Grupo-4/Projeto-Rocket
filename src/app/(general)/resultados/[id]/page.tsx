@@ -27,7 +27,11 @@ export default function Resultados() {
   const [manager, setManager] = useState(false);
   const [avaliations, setAvaliations] = useState([] as assignment[]);
 
-  const { fecthAssignmentsByUser, getAllAssignments, getAllAvaliationsByUserAssignmentId } = useFetchAssignments();
+  const {
+    fecthAssignmentsByUser,
+    getAllAssignments,
+    getAllAvaliationsByUserAssignmentId,
+  } = useFetchAssignments();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -44,7 +48,9 @@ export default function Resultados() {
 
       // get avaliations media, type (auto, avaliationsbymanager)
       const userAssignmentIds = assignmentsByUser.map((au) => au.id);
-      const avaliations = await getAllAvaliationsByUserAssignmentId(userAssignmentIds);
+      const avaliations = await getAllAvaliationsByUserAssignmentId(
+        userAssignmentIds
+      );
       console.log(avaliations);
     };
 
@@ -53,8 +59,10 @@ export default function Resultados() {
 
   return (
     <div className={styles.container}>
-      <Perfil picture={user.image} name={user.name} badge={false} />
-
+      <div className={styles.header}>
+        <Perfil picture={user.image} name={user.name} badge={false} />
+      </div>
+      
       {manager ? (
         <>
           <h2 className={styles.title}>
