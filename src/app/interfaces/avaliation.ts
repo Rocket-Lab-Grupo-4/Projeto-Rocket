@@ -1,7 +1,9 @@
 export interface avaliation {
+  avaliationType: string;
+  dataCreated: string;
+  evaluatedId: string;
+  evaluatorId: string;
   id: string;
-  type: string;
-  media: number
-  dataAnswered: string;
-  dateConcluded: string;
+  media: number;
+  userAssignmentId: string;
 }

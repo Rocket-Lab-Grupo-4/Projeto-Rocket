@@ -13,28 +13,28 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const {
-    isAuthenticated,
-    isRegistering,
-    handleLogin,
-    handleToggleForm,
-    setAuthenticated,
-  } = useAuth();
-  const router = useRouter();
+  // const {
+  //   isAuthenticated,
+  //   isRegistering,
+  //   handleLogin,
+  //   handleToggleForm,
+  //   setAuthenticated,
+  // } = useAuth();
+  // const router = useRouter();
 
-  const handleCadastroSuccess = () => {
-    setAuthenticated(true);
-  };
+  // const handleCadastroSuccess = () => {
+  //   setAuthenticated(true);
+  // };
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      if (isRegistering) {
-        router.push("/cadastro");
-      } else {
-        router.push("/home");
-      }
-    }
-  }, [isAuthenticated, isRegistering, router]);
+  // useEffect(() => {
+  //   if (!isAuthenticated) {
+  //     if (isRegistering) {
+  //       router.push("/cadastro");
+  //     } else {
+  //       router.push("/home");
+  //     }
+  //   }
+  // }, [isAuthenticated, isRegistering, router]);
 
   return (
     <html lang="en">
@@ -45,9 +45,9 @@ export default function RootLayout({
       </head>
       <body>
         <div className={sideStyles.appContainer}>
-          {isAuthenticated ? (
+          {/* {isAuthenticated ? ( */}
             <SideBar>{children}</SideBar>
-          ) : (
+          {/* ) : (
             <>
               {isRegistering ? (
                 <Cadastro
@@ -58,7 +58,7 @@ export default function RootLayout({
                 <Login onLogin={handleLogin} onToggleForm={handleToggleForm} />
               )}
             </>
-          )}
+          )} */}
         </div>
       </body>
     </html>

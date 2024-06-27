@@ -2,6 +2,7 @@
 import styles from "./historico.module.scss";
 import { BlueButton } from "@/app/components/buttons/button";
 import { UnionStatusAndAssignment } from "./page";
+import { formatDate } from '@/utils/formatDate';
 
 function Avaliation({
   avaliations,
@@ -23,7 +24,7 @@ function Avaliation({
             className={index % 2 === 0 ? styles.lineWhite : styles.lineGrey}
           >
             <p className={styles.width}>{avaliation.type}</p>
-            <p className={styles.width}>{avaliation.dataAnswered}</p>
+            <p className={styles.width}>{formatDate(avaliation.dataAnswered ?? '')}</p>
             <div className={styles.buttonsContainer}>
               <BlueButton
                 width="145px"

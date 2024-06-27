@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import api from "@/utils/api";
 import { userAssignment } from "@/app/interfaces/userAssignment";
 import { assignment } from "@/app/interfaces/assignment";
+import { useFetchAssignments } from '@/app/hooks/useFetchAssignmnet';
 
 export type UnionStatusAndAssignment = {
   id: string;
@@ -33,18 +34,7 @@ function HistoricAvaliation() {
   const [assignmentToDo, setAssignmentToDo] = useState<boolean>(false);
   const today = new Date();
 
-  const fecthAssignmentsByUser = async () => {
-    const response = await api.get(`/user-assignment/user/${userId}`);
-    return response.data as userAssignment[];
-  };
-
-  const getAllAssignments = async (assignmentIds: string[]) => {
-    const assignmentPromises = assignmentIds.map((id) =>
-      api.get(`/assignment/assignment/${id}`)
-    );
-    const assignmentsResponses = await Promise.all(assignmentPromises);
-    return assignmentsResponses.map((res) => res.data) as assignment[];
-  };
+  const { fecthAssignmentsByUser, getAllAssignments } = useFetchAssignments();
 
   const getStatusFromUserAssignments = (assignments: userAssignment[]) => {
     return assignments.map((assignment) => assignment.status);
@@ -85,7 +75,7 @@ function HistoricAvaliation() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const assignmentsByUser = await fecthAssignmentsByUser();
+      const assignmentsByUser = await fecthAssignmentsByUser(userId);
       const assignmentIds = assignmentsByUser.map((au) => au.assignmentId);
       const fetchedAssignments = await getAllAssignments(assignmentIds);
 
