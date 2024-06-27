@@ -1,9 +1,7 @@
-import React from "react";
+import SeusDados from './[id]/page';
 
-export default function SeusDados() {
-  return (
-    <>
-      <p>Seus Dados</p>
-    </>
-  );
+function Mydata() {
+  return ( <SeusDados/> );
 }
+
+export default Mydata;

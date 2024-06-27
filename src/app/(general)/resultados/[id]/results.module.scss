@@ -1,0 +1,158 @@
+.title {
+  font-family: Montserrat;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24.38px;
+  color: rgba(0, 24, 60, 1);
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+// bubble
+.baloonContainer {
+  position: relative;
+  width: fit-content;
+}
+
+.baloonImage {
+  display: block;
+}
+
+.baloonText {
+  position: absolute;
+  top: 20%; 
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: Montserrat, sans-serif;
+  color: #000; 
+
+  width: 80%;
+  
+  text-align: justify;
+  font-size: 20px;
+  font-weight: 600;
+
+}
+
+// 
+.inline {
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  gap: 11px
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+}
+
+.charts {
+  display: flex;
+  flex-direction: row;
+
+}
+
+.subtitle {
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19.5px;
+
+  color: #000;
+}
+
+.subsection1_3{
+  display: flex;
+  flex-direction: column;
+
+  width: 33%;
+  height: 350px;
+}
+
+.media {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 25px ;
+
+  width: 290px;
+  height: 65px;
+  border-radius: 14px;
+  background-color: rgba(0, 24, 60, 1);
+  color: #FFFFFF;
+
+  .note {
+    font-family: Montserrat;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 39.01px;
+    text-align: left;
+  
+  }
+}
+
+.certificate {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 0px 25px ;
+
+  width: 290px;
+  border-radius: 14px;
+  background-color: rgba(248, 248, 248, 1);
+  color: rgba(0, 0, 0, 1);
+}
+
+.star {
+  width: 26px;
+  height: 26px;
+}
+
+// 
+.lineGrey {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: flex-start;
+  align-items: center;
+
+
+  width: 100%;
+  height: 44px;
+  background-color: rgba(248, 248, 248, 1)
+
+  
+}
+
+.lineWhite {
+  display: flex;
+  flex-direction: row;
+
+
+  justify-content: flex-start;
+  align-items: center;
+
+  width: 100%;
+  height: 44px;
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.width {
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19.5px;
+  color: #000;
+
+  width: 280px;
+
+}

@@ -11,12 +11,20 @@
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@mui/icons-material": "^5.15.20",
     "@mui/material": "^5.15.19",
+    "@prisma/client": "^5.15.1",
+    "@types/pdfmake": "^0.2.9",
+    "axios": "^1.7.2",
+    "mui": "^0.0.1",
     "next": "14.2.3",
+    "pdfmake": "^0.2.10",
     "react": "^18",
     "react-dom": "^18",
     "react-router-dom": "^6.23.1",
-    "sass": "^1.77.4"
+    "recharts": "^2.12.7",
+    "sass": "^1.77.4",
+    "scss": "^0.2.4"
   },
   "devDependencies": {
     "@types/node": "^20",

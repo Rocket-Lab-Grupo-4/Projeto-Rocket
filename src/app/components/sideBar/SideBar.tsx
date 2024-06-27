@@ -3,9 +3,13 @@ import React from "react";
 import styles from "./SideBar.module.scss";
 import Link from "next/link";
 import useActiveLink from "../../hooks/useActiveLink";
-
+import { OutlinedButton } from "../buttons/button";
+import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
+import { useRouter } from "next/navigation";
 const SideBar = ({ children }: { children: React.ReactNode }) => {
   const { activeLink, handleLinkClick } = useActiveLink();
+
+  const router = useRouter();
 
   return (
     <div className={styles.wrapper}>
@@ -44,6 +48,16 @@ const SideBar = ({ children }: { children: React.ReactNode }) => {
                 Seus Dados
               </Link>
             </li>
+            <OutlinedButton
+              width="169px"
+              height="44px"
+              onClick={() => {
+                router.push("/");
+              }}
+            >
+              <LogoutRoundedIcon />
+              Sair
+            </OutlinedButton>
           </ul>
         </nav>
       </div>
