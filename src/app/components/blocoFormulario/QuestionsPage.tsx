@@ -1,23 +1,48 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { fetchQuestions } from '@/app/services/apiService';
+import { fetchQuestions, fetchUserById, getAvaliation, createAvaliation } from '@/app/services/apiService';
 import BlocoFormulario from './BlocoFormulario';
 
 const QuestionsPage: React.FC = () => {
   const [questions, setQuestions] = useState([]);
+  const [avaliationId, setAvaliationId] = useState<string | null>(null);
+  const [evaluatorId] = useState('clxxa9odi000111x01dzfq4q1'); // ids só para teste
+  const [evaluatedId] = useState('clxxa9odi000111x01dzfq4q1');
 
   useEffect(() => {
-    const getQuestions = async () => {
+    const initializePage = async () => {
       try {
+
+        const user = await fetchUserById(evaluatorId);
+        const avaliationType = user.manager
+          ? 'avaliationByManager'
+          : evaluatorId === evaluatedId
+          ? 'autoAvaliation'
+          : null;
+
+        if (!avaliationType) throw new Error('Invalid evaluation type');
+
+        const existingAvaliation = await getAvaliation(evaluatorId, evaluatedId);
+
+        if (existingAvaliation) {
+          setAvaliationId(existingAvaliation.id);
+        } else {
+          const avaliationResponse = await createAvaliation(evaluatorId, evaluatedId);
+          setAvaliationId(avaliationResponse.id);
+        }
+
+
         const data = await fetchQuestions();
         setQuestions(data);
+
+
       } catch (error) {
-        console.error('Error fetching questions:', error);
+        console.error('Error initializing page:', error);
       }
     };
 
-    getQuestions();
+    initializePage();
   }, []);
 
   const handleAnswerChange = (answer: number, justificative: string) => {
@@ -37,7 +62,7 @@ const QuestionsPage: React.FC = () => {
           title={question.title}
           question={question.question}
           questionId={question.id}
-          avaliationId='clxjt04910000tszw4t7blu6h'
+          avaliationId={avaliationId}
           answerId={question.answerId}
           onAnswerChange={handleAnswerChange}
           />
@@ -50,7 +75,7 @@ const QuestionsPage: React.FC = () => {
           title={question.title}
           question={question.question}
           questionId={question.id}
-          avaliationId='clxjt04910000tszw4t7blu6h'
+          avaliationId={avaliationId}
           answerId={question.answerId}
           onAnswerChange={handleAnswerChange} 
         />

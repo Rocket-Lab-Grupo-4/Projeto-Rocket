@@ -10,7 +10,7 @@ interface UpdateAnswerParams {
   answerId: string;
   answer: number | null;
   justificative: string;
-  avaliationId: string;
+  avaliationId: string | null;
   questionId: string;
 }
 
@@ -36,7 +36,7 @@ export const updateAnswer = async ({ answerId, answer, justificative, avaliation
 
 interface GetAnswerParams {
   questionId: string;
-  avaliationId: string;
+  avaliationId: string | null;
 }
 
 
@@ -53,7 +53,7 @@ export const getAnswers = async ({ questionId, avaliationId }: GetAnswerParams) 
 interface CreateAnswerParams {
   answer: number;
   justificative: string;
-  avaliationId: string;
+  avaliationId: string | null;
   questionId: string;
   evaluatorId: string;
   evaluatedId: string;
@@ -99,6 +99,16 @@ export const createAvaliation = async (evaluatorId: string, evaluatedId: string)
     throw error;
   }
 }
+
+export const getAvaliation = async (evaluatorId: string, evaluatedId: string) => {
+  try {
+    const response = await api.get('/avaliation', { params: { evaluatorId, evaluatedId } });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching avaliation:', error);
+    throw error;
+  }
+};
 
 export const fetchUserById = async (userId: string) => {
   try {
