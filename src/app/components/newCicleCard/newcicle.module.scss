@@ -1,0 +1,68 @@
+.card {
+  width: fit-content;
+  border-radius: 24px;
+  background-color: #F1F1F1;
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.subDivision {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.inLine {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-left: 10px;  
+}
+
+.dateField {
+  width: 100px;
+  height: 33px;
+  border-radius: 16.5px;
+  background: #FFFFFF;
+}
+
+.text {
+  font-family: Montserrat;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 18.29px;
+  text-align: left;
+}
+
+.cicles {
+  display: flex ;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 5px;
+  margin-bottom: 5px;
+
+  height: 24px;
+  border-radius: 12px;
+  background-color: #D9D9D9;
+
+  padding: 12px;
+}
+
+.listCicle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  height: fit-content;
+  overflow-y: scroll;
+
+}
