@@ -159,6 +159,7 @@ export default function Resultados() {
         <div>
           <div className={styles.lineGrey}>
             <p className={`${styles.subtitle} ${styles.width}`}>Tipo</p>
+            <p className={`${styles.subtitle} ${styles.width}`}>Notas</p>
             <p className={`${styles.subtitle} ${styles.width}`}>
               Data de realização
             </p>
@@ -173,6 +174,7 @@ export default function Resultados() {
                 className={index % 2 === 0 ? styles.lineWhite : styles.lineGrey}
               >
                 <p className={styles.width}>{avaliation.type}</p>
+                <p className={styles.width}> {4}</p>
                 <p className={styles.width}>
                   {formatDate(avaliation.dataAnswered)}
                 </p>

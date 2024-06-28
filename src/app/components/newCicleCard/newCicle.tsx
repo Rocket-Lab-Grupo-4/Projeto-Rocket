@@ -13,28 +13,92 @@ import { GreenButton } from "../buttons/button";
 
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { info } from "console";
+import { formatDate } from "@/utils/formatDate";
 
 interface NewCicleProps {
-  getdate?: (date: string) => void;
+  getdate?: (openDate: string, closeDate: string) => void;
   okClick?: () => void;
-  trashClick?: () => void;
-  programatedCicle: programatedCicleType;
+  trashClick?: (id: string) => void;
+  programatedCicle: programatedCicleType[];
 }
 
 interface programatedCicleType {
-  [index: number]: [string, string];
+  id: string;
+  dateOpened: string;
+  dateConcluded: string;
 }
 
-const programatedCicleList: programatedCicleType = [
-  ["2022-04-17", "2022-04-24"],
-  ["2022-04-25", "2022-05-02"],
-  ["2022-05-03", "2022-05-10"],
-  ["2022-05-11", "2022-05-18"],
-  ["2022-05-19", "2022-05-26"],
-  ["2022-05-27", "2022-06-03"],
-  ["2022-05-27", "2022-06-03"],
-  ["2022-05-27", "2022-06-03"],
-  ["2022-05-27", "2022-06-03"],
+const programatedCicleList: programatedCicleType[] = [
+  {
+    id: "1",
+    dateOpened: "2022-04-17",
+    dateConcluded: "2022-04-17",
+  },
+  {
+    id: "2",
+    dateOpened: "2022-04-17",
+    dateConcluded: "2022-04-17",
+  },
+  {
+    id: "3",
+    dateOpened: "2022-04-17",
+    dateConcluded: "2022-04-17",
+  },
+  {
+    id: "4",
+    dateOpened: "2022-04-17",
+    dateConcluded: "2022-04-17",
+  },
+  {
+    id: "5",
+    dateOpened: "2022-04-17",
+    dateConcluded: "2022-04-17",
+  },
+  {
+    id: "6",
+    dateOpened: "2022-04-17",
+    dateConcluded: "2022-04-17",
+  },
+  {
+    id: "7",
+    dateOpened: "2022-04-17",
+    dateConcluded: "2022-04-17",
+  },
+  {
+    id: "8",
+    dateOpened: "2022-04-17",
+    dateConcluded: "2022-04-17",
+  },
+  {
+    id: "9",
+    dateOpened: "2022-04-17",
+    dateConcluded: "2022-04-17",
+  },
+  {
+    id: "10",
+    dateOpened: "2022-04-17",
+    dateConcluded: "2022-04-17",
+  },
+  {
+    id: "11",
+    dateOpened: "2022-04-17",
+    dateConcluded: "2022-04-17",
+  },
+  {
+    id: "12",
+    dateOpened: "2022-04-17",
+    dateConcluded: "2022-04-17",
+  },
+  {
+    id: "13",
+    dateOpened: "2022-04-17",
+    dateConcluded: "2022-04-17",
+  },
+  {
+    id: "14",
+    dateOpened: "2022-04-17",
+    dateConcluded: "2022-04-17",
+  },
 ];
 
 function NewCicle({
@@ -49,13 +113,7 @@ function NewCicle({
   useEffect(() => {
     if (openDate && closeDate) {
       getdate &&
-        getdate(
-          `${openDate.format("YYYY-MM-DD")} até ${closeDate.format(
-            "YYYY-MM-DD"
-          )}`
-        );
-
-      console.log(closeDate.format("YYYY-MM-DD"));
+        getdate(openDate.format("YYYY-MM-DD"), closeDate.format("YYYY-MM-DD"));
     }
   }, [openDate, closeDate]);
 
@@ -104,9 +162,15 @@ function NewCicle({
           return (
             <div key={index} className={styles.cicles}>
               <p>
-                Ciclo programado: {cicle[0]} até {cicle[1]}
+                Ciclo programado: {formatDate(cicle.dateOpened)} até{" "}
+                {formatDate(cicle.dateConcluded)}
               </p>
-              <IconButton aria-label="delete" onClick={trashClick}>
+              <IconButton
+                aria-label="delete"
+                onClick={() => {
+                  trashClick && trashClick(cicle.id);
+                }}
+              >
                 <DeleteOutlinedIcon />
               </IconButton>
             </div>
