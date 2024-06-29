@@ -34,11 +34,23 @@ const nextAuthOptions: NextAuthOptions = {
   pages: {
     signIn: "/login",
   },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.user = user;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      session.user = token.user as UserProps;
+      return session;
+    },
+  },
 };
 
 const handler = NextAuth(nextAuthOptions);
 
-export { handler as GET, handler as POST };
+export { handler as GET, handler as POST, nextAuthOptions };
 
 const colaborator: UserProps = {
   id: "caksljddjaskld",
@@ -64,8 +76,8 @@ const manager: UserProps = {
   image:
     "https://images.unsplash.com/photo-1615109398623-88346a601842?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fG1hbnxlbnwwfHwwfHx8MA%3D%3D",
   name: "Maria Aline",
-  office: "Maneger",
-  dateNaissance: "06/06/1996 ",
+  office: "Manager",
+  dateNaissance: "06/06/1996",
   rg: "9999999",
   adress: "Rua das lagos, 123",
   ctps: "1234567890",

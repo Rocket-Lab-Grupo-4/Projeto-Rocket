@@ -5,11 +5,20 @@ import Link from "next/link";
 import useActiveLink from "../../hooks/useActiveLink";
 import { OutlinedButton } from "../buttons/button";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 const SideBar = ({ children }: { children: React.ReactNode }) => {
   const { activeLink, handleLinkClick } = useActiveLink();
 
   const router = useRouter();
+
+  async function logout() {
+    await signOut({
+      redirect: false,
+    });
+
+    router.replace("/login");
+  }
 
   return (
     <div className={styles.wrapper}>
@@ -48,13 +57,7 @@ const SideBar = ({ children }: { children: React.ReactNode }) => {
                 Seus Dados
               </Link>
             </li>
-            <OutlinedButton
-              width="169px"
-              height="44px"
-              onClick={() => {
-                router.push("/");
-              }}
-            >
+            <OutlinedButton width="169px" height="44px" onClick={logout}>
               <LogoutRoundedIcon />
               Sair
             </OutlinedButton>
