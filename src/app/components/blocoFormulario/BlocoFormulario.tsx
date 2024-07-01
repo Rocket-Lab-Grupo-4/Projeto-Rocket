@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import styles from './BlocoFormulario.module.scss';
 import { BlocoFormularioProps } from "@/app/interfaces/Formulario";
-import { updateAnswer, getAnswers, createAnswer } from "@/app/services/apiService";
+import { updateAnswer, getAnswers, createAnswer, calculateAvaliationMedia, updateAvaliationMedia } from "@/app/services/apiService";
 
 const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, questionId, avaliationId, answerId, onAnswerChange }) => {
   const [answer, setAnswer] = useState<number | null>(null);
@@ -53,13 +53,19 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
           justificative, 
           avaliationId,
           questionId,
-          evaluatorId: 'clxxa9odi000111x01dzfq4q1', //id de exemplo só para testar
-          evaluatedId: 'clxxa9odi000111x01dzfq4q1'
+          evaluatorId: 'clxtlggn60000cvzgissdxodd', //id de exemplo só para testar
+          evaluatedId: 'clxtlggn60000cvzgissdxodd'
         });
         setExistingAnswer(response);
         fetchData()
         console.log('Answer created successfully')
       }
+
+      if (avaliationId) {
+        const media = await calculateAvaliationMedia(avaliationId);
+        await updateAvaliationMedia(avaliationId, media);
+      }
+
     } catch (error) {
       console.error('Failed to update or create answer:', error);
     }
@@ -91,13 +97,19 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
             justificative: value,
             avaliationId,
             questionId,
-            evaluatorId: 'clxxa9odi000111x01dzfq4q1', 
-            evaluatedId: 'clxxa9odi000111x01dzfq4q1'  
+            evaluatorId: 'clxtlggn60000cvzgissdxodd', 
+            evaluatedId: 'clxtlggn60000cvzgissdxodd'  
           });
           setExistingAnswer(response);
           fetchData()
           console.log('Justification created successfully');
         }
+
+        if (avaliationId) {
+          const media = await calculateAvaliationMedia(avaliationId);
+          await updateAvaliationMedia(avaliationId, media);
+        }
+
       } catch (error) {
         console.error('Failed to update or create justification:', error);
       }

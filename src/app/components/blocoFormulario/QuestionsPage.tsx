@@ -7,8 +7,9 @@ import BlocoFormulario from './BlocoFormulario';
 const QuestionsPage: React.FC = () => {
   const [questions, setQuestions] = useState([]);
   const [avaliationId, setAvaliationId] = useState<string | null>(null);
-  const [evaluatorId] = useState('clxxa9odi000111x01dzfq4q1'); // ids só para teste
-  const [evaluatedId] = useState('clxxa9odi000111x01dzfq4q1');
+  const [evaluatorId] = useState('clxtlggn60000cvzgissdxodd'); // ids só para teste
+  const [evaluatedId] = useState('clxtlggn60000cvzgissdxodd');
+  const [assignmentId] = useState('clxyzhudc0000uoik63rg8pni'); // id do ciclo de avaliação para teste
 
   useEffect(() => {
     const initializePage = async () => {
@@ -28,7 +29,7 @@ const QuestionsPage: React.FC = () => {
         if (existingAvaliation) {
           setAvaliationId(existingAvaliation.id);
         } else {
-          const avaliationResponse = await createAvaliation(evaluatorId, evaluatedId);
+          const avaliationResponse = await createAvaliation(evaluatorId, evaluatedId, assignmentId);
           setAvaliationId(avaliationResponse.id);
         }
 
@@ -43,7 +44,7 @@ const QuestionsPage: React.FC = () => {
     };
 
     initializePage();
-  }, []);
+  }, [evaluatorId, evaluatedId, assignmentId]);
 
   const handleAnswerChange = (answer: number, justificative: string) => {
     console.log('Answer:', answer, 'Justificative:', justificative);
