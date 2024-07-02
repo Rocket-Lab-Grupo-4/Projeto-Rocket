@@ -5,5 +5,6 @@ export interface BlocoFormularioProps {
     questionId: string;
     avaliationId: string | null;
     answerId: string;
+    isManager: boolean;
     onAnswerChange: (answer: number, justificative: string) => void;
 }

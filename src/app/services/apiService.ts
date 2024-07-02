@@ -6,6 +6,44 @@ export const api = axios.create({
   baseURL: API_URL,
 });
 
+
+interface UserAssignment {
+  id: string;
+  userId: string;
+  userAssignmentId: string;
+  status: boolean;
+}
+
+interface CreateUserAssignmentParams {
+  userId: string;
+  userAssignmentId: string;
+}
+
+export const createUserAssignment = async ({ userId, userAssignmentId }: CreateUserAssignmentParams) => {
+  try {
+    const response = await api.post('/user-assignment', {
+      userId,
+      userAssignmentId,
+      status: true
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error creating user assignment:', error);
+    throw error;
+  }
+};
+
+
+export const getUserAssignments = async (userId: string): Promise<UserAssignment[]> => {
+  try {
+    const response = await api.get(`/user-assignment/user/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching user assignments:', error);
+    throw error;
+  }
+};
+
 interface UpdateAnswerParams {
   answerId: string;
   answer: number | null;
@@ -37,12 +75,13 @@ export const updateAnswer = async ({ answerId, answer, justificative, avaliation
 interface GetAnswerParams {
   questionId: string;
   avaliationId: string | null;
+  evaluatedId: string;
 }
 
 
-export const getAnswers = async ({ questionId, avaliationId }: GetAnswerParams) => {
+export const getAnswers = async ({ questionId, avaliationId, evaluatedId }: GetAnswerParams) => {
   try {
-    const response = await api.get(`/answers`, { params: { questionId, avaliationId } });
+    const response = await api.get(`/answers`, { params: { questionId, avaliationId, evaluatedId } });
     return response.data;
   } catch (error) {
     console.error('Error fetching answer:', error);
@@ -79,7 +118,7 @@ interface CreateAnswerParams {
   };
 
 
-export const createAvaliation = async (evaluatorId: string, evaluatedId: string) => {
+export const createAvaliation = async (evaluatorId: string, evaluatedId: string, userAssignmentId: string) => {
   
   try {
     const user = await fetchUserById(evaluatorId)
@@ -91,7 +130,14 @@ export const createAvaliation = async (evaluatorId: string, evaluatedId: string)
 
     if (!avaliationType) throw new Error ('Invalid avaliation type')
 
-    const response = await api.post(`/avaliation/${evaluatorId}/${evaluatedId}`, { avaliationType })
+    const media = 0;
+
+
+    const response = await api.post(`/avaliation/${evaluatorId}/${evaluatedId}`, { 
+      avaliationType, 
+      userAssignmentId, 
+      media 
+    })
     return response.data
 
   } catch (error) {
@@ -106,6 +152,32 @@ export const getAvaliation = async (evaluatorId: string, evaluatedId: string) =>
     return response.data;
   } catch (error) {
     console.error('Error fetching avaliation:', error);
+    throw error;
+  }
+};
+
+export const calculateAvaliationMedia = async (avaliationId: string) => {
+  try {
+    const response = await api.get('/answers', { params: { avaliationId } });
+    const answers = response.data;
+
+    if (answers.length === 0) return 0;
+
+    const total = answers.reduce((sum: number, answer: any) => sum + answer.answer, 0);
+    const media = total / answers.length;
+
+    return media;
+  } catch (error) {
+    console.error('Error calculating media:', error);
+    throw error;
+  }
+};
+
+export const updateAvaliationMedia = async (avaliationId: string, media: number) => {
+  try {
+    await api.patch(`/avaliation/${avaliationId}`, { media });
+  } catch (error) {
+    console.error('Error updating avaliation media:', error);
     throw error;
   }
 };
