@@ -133,7 +133,11 @@ export const createAvaliation = async (evaluatorId: string, evaluatedId: string,
     const media = 0;
 
 
-    const response = await api.post(`/avaliation/${evaluatorId}/${evaluatedId}`, { avaliationType, userAssignmentId, media })
+    const response = await api.post(`/avaliation/${evaluatorId}/${evaluatedId}`, { 
+      avaliationType, 
+      userAssignmentId, 
+      media 
+    })
     return response.data
 
   } catch (error) {

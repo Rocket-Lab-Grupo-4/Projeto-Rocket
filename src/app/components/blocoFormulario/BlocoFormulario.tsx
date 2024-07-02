@@ -5,15 +5,17 @@ import styles from './BlocoFormulario.module.scss';
 import { BlocoFormularioProps } from "@/app/interfaces/Formulario";
 import { updateAnswer, getAnswers, createAnswer, calculateAvaliationMedia, updateAvaliationMedia } from "@/app/services/apiService";
 
-const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, questionId, avaliationId, answerId, onAnswerChange }) => {
+const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, questionId, isManager, avaliationId, answerId, onAnswerChange }) => {
   const [answer, setAnswer] = useState<number | null>(null);
   const [justificative, setJustificative] = useState('');
   const [existingAnswer, setExistingAnswer] = useState<any | null>(null)
   //debugger
   const [currentAvaliationId, setCurrentAvaliationId] = useState<any>();
 
-  const evaluatorId = 'clxtlggn60000cvzgissdxodd'; // id de exemplo só para testar
+  const evaluatorId = 'cly3enmhc0000z7qhue9v2517'; // id de exemplo só para testar
   const evaluatedId = 'clxtlggn60000cvzgissdxodd'
+
+  const autoAnswer = 4; // valor de exemplo
 
   const fetchData = async () => {
     try {
@@ -62,6 +64,7 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
         });
         fetchData()
         setCurrentAvaliationId(existingAnswer.avaliationId)
+        updateMedia(currentAvaliationId);
         console.log('Answer updated successfully');
       } else {
         const response = await createAnswer({
@@ -74,6 +77,7 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
         });
         setExistingAnswer(response);
         setCurrentAvaliationId(response.avaliationId)
+        updateMedia(currentAvaliationId);
         fetchData()
         console.log('Answer created successfully')
       }
@@ -82,9 +86,6 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
       //debugger
     
       updateMedia(currentAvaliationId);
-      
-
-      fetchData()
     } catch (error) {
       console.error('Failed to update or create answer:', error);
     }
@@ -138,8 +139,37 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
   return (
     <div className={styles.blocoFormulario}>
       <h3>{title}</h3>
-      <p>{question}</p>
-      <div className={styles.responseOptions}>
+
+
+      {/* tela para o gestor */}
+      {isManager && (
+
+        <>
+        <p>Nesse critério, o colaborador se avaliou com nota {autoAnswer}</p>
+        <div className={styles.responseOptions}>
+        {[1, 2, 3, 4, 5].map((value) => (
+          <label key={value}>
+            <input
+              type="radio"
+              name={questionId}
+              value={value}
+              checked={answer === value}
+              onChange={() => handleAnswerChange(value)}
+            />
+            {value}
+          </label>
+        ))}
+      </div>
+      </>
+      )}
+
+      {/* tela para o colaborador   */}
+
+      {!isManager && (
+
+        <>
+        <p>{question}</p>
+        <div className={styles.responseOptions}>
         {[1, 2, 3, 4, 5].map((value) => (
           <label key={value}>
             <input
@@ -158,6 +188,9 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
         value={justificative}
         onChange={handleJustificativeChange}
       />
+        </>
+      )}
+      
     </div>
   );
 };
