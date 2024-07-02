@@ -42,28 +42,51 @@
     margin-left: 10px;
 }
 
-
-
-.bubble {
+.homeWomen {
     display: flex;
-    width: 335px;
-    height: 235px;
-    padding: 0px;
-    background: #00F999;
-    -webkit-border-radius: 24px;
-    -moz-border-radius: 24px;
-    border-radius: 24px;
+    width: 315px;
+    height: 398px;
+    position: absolute;
+    left: 406px;
+    top: 317px;
 }
 
-.bubble:after {
-    content: '';
-    display: flex;
-    border-style: solid;
-    border-width: 10px 16px 10px 0;
-    border-color: transparent #00F999;
-    display: block;
-    width: 0;
-    z-index: 1;
-    left: -16px;
-    top: 188px;
+.rightBubble {
+    width: 334px;
+    height: 237px;
+    position: absolute;
+    top: 178px;
+    right: 190px;
+}
+
+.leftBubble {
+    width: 344px;
+    height: 243px;
+    position: absolute;
+    top: 116px;
+    left: 138px;
+}
+
+.beginButton {
+    border-radius: 39px;
+    background: #00f999;
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    color: #000000;
+    position: absolute;
+    bottom: -350px;
+    right: 450px;
+    margin: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border: none;
+}
+
+.beginButton:hover {
+    background-color: #00e689;
+
 }
