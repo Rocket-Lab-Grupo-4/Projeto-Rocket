@@ -47,27 +47,31 @@
     width: 315px;
     height: 398px;
     position: absolute;
-    left: 406px;
-    top: 317px;
+    left: 40%;
+    top: 400%;
 }
 
 .rightBubble {
+    display: flex;
+    z-index: 1;
     width: 334px;
     height: 237px;
     position: absolute;
-    top: 178px;
-    right: 190px;
+    top: 280%;
+    left: 55%;
 }
 
 .leftBubble {
+    z-index: 1;
     width: 344px;
-    height: 243px;
+    height: 210px;
     position: absolute;
-    top: 116px;
-    left: 138px;
+    top: 200%;
+    left: 23%;
 }
 
 .beginButton {
+    display: flex;
     border-radius: 39px;
     background: #00f999;
     font-family: "Montserrat";
@@ -76,8 +80,8 @@
     font-size: 20px;
     color: #000000;
     position: absolute;
-    bottom: -350px;
-    right: 450px;
+    top: 800%;
+    right: 41%;
     margin: 10px;
     padding-left: 30px;
     padding-right: 30px;
@@ -89,4 +93,24 @@
 .beginButton:hover {
     background-color: #00e689;
 
+}
+
+.bubbleTextR {
+    z-index: 2;
+    width: 295px;
+    height: 190px;
+    position: absolute;
+    top: 290%;
+    right: 24%;
+    font-size: 0.9em;
+}
+
+.bubbleTextL {
+    z-index: 2;
+    width: 300px;
+    height: 200px;
+    position: absolute;
+    top: 215%;
+    right: 56.5%;
+    font-size: 0.9em;
 }
