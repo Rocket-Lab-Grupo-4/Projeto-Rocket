@@ -54,8 +54,8 @@
 .rightBubble {
     display: flex;
     z-index: 1;
-    width: 334px;
-    height: 237px;
+    width: 390px;
+    height: 260px;
     position: absolute;
     top: 280%;
     left: 55%;
@@ -63,11 +63,11 @@
 
 .leftBubble {
     z-index: 1;
-    width: 344px;
-    height: 210px;
+    width: 370px;
+    height: 260px;
     position: absolute;
-    top: 200%;
-    left: 23%;
+    top: 210%;
+    left: 22%;
 }
 
 .beginButton {
@@ -97,12 +97,13 @@
 
 .bubbleTextR {
     z-index: 2;
-    width: 295px;
+    width: 325px;
     height: 190px;
     position: absolute;
     top: 290%;
-    right: 24%;
-    font-size: 0.9em;
+    right: 21.5%;
+    font-size: 1.1em;
+    font-weight: 500;
 }
 
 .bubbleTextL {
@@ -112,5 +113,6 @@
     position: absolute;
     top: 215%;
     right: 56.5%;
-    font-size: 0.9em;
+    font-size: 1.1em;
+    font-weight: 500;
 }
