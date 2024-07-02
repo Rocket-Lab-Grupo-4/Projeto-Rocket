@@ -9,6 +9,8 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
   const [answer, setAnswer] = useState<number | null>(null);
   const [justificative, setJustificative] = useState('');
   const [existingAnswer, setExistingAnswer] = useState<any | null>(null)
+  //debugger
+  const [currentAvaliationId, setCurrentAvaliationId] = useState<any>();
 
   const evaluatorId = 'clxtlggn60000cvzgissdxodd'; // id de exemplo só para testar
   const evaluatedId = 'clxtlggn60000cvzgissdxodd'
@@ -34,12 +36,22 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
   }, [questionId, avaliationId, evaluatedId]);
 
 
+    
+  const updateMedia = async (avaliationId: string) => {
+    try {
+      const media = await calculateAvaliationMedia(avaliationId);
+      await updateAvaliationMedia(avaliationId, media);
+      console.log(`Media updated: ${media}`);
+    } catch (error) {
+      console.error('Error updating media:', error);
+    }
+  };
+
   const handleAnswerChange = async (value: number) => {
     setAnswer(value);
     onAnswerChange(value, justificative);
 
     try {
-      //debugger
       if (existingAnswer && existingAnswer.id != null && existingAnswer.questionId === questionId) {
         await updateAnswer({
           answerId: existingAnswer.id,
@@ -49,6 +61,7 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
           justificative
         });
         fetchData()
+        setCurrentAvaliationId(existingAnswer.avaliationId)
         console.log('Answer updated successfully');
       } else {
         const response = await createAnswer({
@@ -60,18 +73,17 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
           evaluatedId
         });
         setExistingAnswer(response);
+        setCurrentAvaliationId(response.avaliationId)
         fetchData()
         console.log('Answer created successfully')
       }
       fetchData()
+
       //debugger
-      if (existingAnswer.avaliationId) {
-        const media = await calculateAvaliationMedia(existingAnswer.avaliationId);
-        await updateAvaliationMedia(existingAnswer.avaliationId, media);
-        console.log(`Media updated: ${media}`);
-      } else{
-        console.log('Resposta criada')
-      }
+    
+      updateMedia(currentAvaliationId);
+      
+
       fetchData()
     } catch (error) {
       console.error('Failed to update or create answer:', error);
@@ -97,6 +109,7 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
             justificative: value
           });
           fetchData()
+          setCurrentAvaliationId(existingAnswer.avaliationId)
           console.log('Justification updated successfully');
         } else {
           const response = await createAnswer({
@@ -108,15 +121,12 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
             evaluatedId 
           });
           setExistingAnswer(response);
+          setCurrentAvaliationId(response.avaliationId)
           fetchData()
           console.log('Justification created successfully');
         }
-        debugger
-        if (avaliationId) {
-          const media = await calculateAvaliationMedia(avaliationId);
-          await updateAvaliationMedia(avaliationId, media);
-          console.log(`Media updated: ${media}`);
-        }
+
+        updateMedia(currentAvaliationId);
 
         fetchData()
       } catch (error) {
