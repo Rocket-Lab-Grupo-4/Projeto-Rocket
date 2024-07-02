@@ -10,20 +10,20 @@ export const api = axios.create({
 interface UserAssignment {
   id: string;
   userId: string;
-  assignmentId: string;
+  userAssignmentId: string;
   status: boolean;
 }
 
 interface CreateUserAssignmentParams {
   userId: string;
-  assignmentId: string;
+  userAssignmentId: string;
 }
 
-export const createUserAssignment = async ({ userId, assignmentId }: CreateUserAssignmentParams) => {
+export const createUserAssignment = async ({ userId, userAssignmentId }: CreateUserAssignmentParams) => {
   try {
     const response = await api.post('/user-assignment', {
       userId,
-      assignmentId,
+      userAssignmentId,
       status: true
     });
     return response.data;
@@ -75,12 +75,13 @@ export const updateAnswer = async ({ answerId, answer, justificative, avaliation
 interface GetAnswerParams {
   questionId: string;
   avaliationId: string | null;
+  evaluatedId: string;
 }
 
 
-export const getAnswers = async ({ questionId, avaliationId }: GetAnswerParams) => {
+export const getAnswers = async ({ questionId, avaliationId, evaluatedId }: GetAnswerParams) => {
   try {
-    const response = await api.get(`/answers`, { params: { questionId, avaliationId } });
+    const response = await api.get(`/answers`, { params: { questionId, avaliationId, evaluatedId } });
     return response.data;
   } catch (error) {
     console.error('Error fetching answer:', error);
@@ -117,7 +118,7 @@ interface CreateAnswerParams {
   };
 
 
-export const createAvaliation = async (evaluatorId: string, evaluatedId: string, assignmentId: string) => {
+export const createAvaliation = async (evaluatorId: string, evaluatedId: string, userAssignmentId: string) => {
   
   try {
     const user = await fetchUserById(evaluatorId)
@@ -129,21 +130,10 @@ export const createAvaliation = async (evaluatorId: string, evaluatedId: string,
 
     if (!avaliationType) throw new Error ('Invalid avaliation type')
 
-    const userAssignments: UserAssignment[] = await getUserAssignments(evaluatorId);
-    let userAssignment = userAssignments.find((ua: UserAssignment) => ua.assignmentId === assignmentId);
-
-    if (!userAssignment) {
-      userAssignment = await createUserAssignment({ userId: evaluatorId, assignmentId });
-    }
-
-    if (!userAssignment) {
-      throw new Error('Failed to create or find user assignment');
-    }
-
     const media = 0;
 
 
-    const response = await api.post(`/avaliation/${evaluatorId}/${evaluatedId}`, { avaliationType, userAssignmentId: userAssignment.id, media })
+    const response = await api.post(`/avaliation/${evaluatorId}/${evaluatedId}`, { avaliationType, userAssignmentId, media })
     return response.data
 
   } catch (error) {

@@ -9,7 +9,7 @@ const QuestionsPage: React.FC = () => {
   const [avaliationId, setAvaliationId] = useState<string | null>(null);
   const [evaluatorId] = useState('clxtlggn60000cvzgissdxodd'); // ids só para teste
   const [evaluatedId] = useState('clxtlggn60000cvzgissdxodd');
-  const [assignmentId] = useState('clxyzhudc0000uoik63rg8pni'); // id do ciclo de avaliação para teste
+  const [userAssignmentId] = useState('clxtnd6ck0001pvd78ds4au1v'); // id do ciclo de avaliação para teste
 
   useEffect(() => {
     const initializePage = async () => {
@@ -29,7 +29,7 @@ const QuestionsPage: React.FC = () => {
         if (existingAvaliation) {
           setAvaliationId(existingAvaliation.id);
         } else {
-          const avaliationResponse = await createAvaliation(evaluatorId, evaluatedId, assignmentId);
+          const avaliationResponse = await createAvaliation(evaluatorId, evaluatedId, userAssignmentId);
           setAvaliationId(avaliationResponse.id);
         }
 
@@ -44,7 +44,7 @@ const QuestionsPage: React.FC = () => {
     };
 
     initializePage();
-  }, [evaluatorId, evaluatedId, assignmentId]);
+  }, [evaluatorId, evaluatedId, userAssignmentId]);
 
   const handleAnswerChange = (answer: number, justificative: string) => {
     console.log('Answer:', answer, 'Justificative:', justificative);
