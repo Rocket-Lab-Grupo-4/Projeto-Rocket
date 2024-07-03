@@ -1,12 +1,13 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./SideBar.module.scss";
 import Link from "next/link";
 import useActiveLink from "../../hooks/useActiveLink";
 import { OutlinedButton } from "../buttons/button";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
-import { redirect, useRouter } from "next/navigation";
-import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
+
 const SideBar = ({ children }: { children: React.ReactNode }) => {
   const { activeLink, handleLinkClick } = useActiveLink();
 
@@ -20,6 +21,30 @@ const SideBar = ({ children }: { children: React.ReactNode }) => {
     router.replace("/login");
   }
 
+  const { data: session } = useSession();
+  const manager = session?.user?.manager;
+
+  useEffect(() => {
+    console.log(manager);
+  }, [manager]);
+
+  const managerOptions = {
+    home: true,
+    avaliacoes: false,
+    resultados: false,
+    "seus dados": true,
+  };
+
+  const userOptions = {
+    home: true,
+    avaliacoes: true,
+    resultados: true,
+    "seus dados": true,
+  };
+
+  const routeNameFromSeusDados = "seus dados";
+  const correctedRouteNameFromSeusDados = "seus-dados";
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.sidebar}>
@@ -28,35 +53,79 @@ const SideBar = ({ children }: { children: React.ReactNode }) => {
         </div>
         <nav className={styles.sidebarNav}>
           <ul>
-            <li className={activeLink === "/home" ? styles.active : ""}>
-              <Link href="/home" onClick={() => handleLinkClick("/home")}>
-                Home
-              </Link>
-            </li>
-            <li className={activeLink === "/avaliacoes" ? styles.active : ""}>
-              <Link
-                href="/avaliacoes"
-                onClick={() => handleLinkClick("/avaliacoes")}
-              >
-                Avaliações
-              </Link>
-            </li>
-            <li className={activeLink === "/resultados" ? styles.active : ""}>
-              <Link
-                href="/resultados"
-                onClick={() => handleLinkClick("/resultados")}
-              >
-                Resultados
-              </Link>
-            </li>
-            <li className={activeLink === "/seus-dados" ? styles.active : ""}>
-              <Link
-                href="/seus-dados"
-                onClick={() => handleLinkClick("/seus-dados")}
-              >
-                Seus Dados
-              </Link>
-            </li>
+            {manager
+              ? Object.entries(managerOptions).map(([routeName, show]) => {
+                  return show ? (
+                    <li
+                      key={routeName}
+                      className={
+                        activeLink ===
+                        `/${
+                          routeName === routeNameFromSeusDados
+                            ? correctedRouteNameFromSeusDados
+                            : routeName
+                        }`
+                          ? styles.active
+                          : ""
+                      }
+                    >
+                      <Link
+                        href={`/${
+                          routeName === routeNameFromSeusDados
+                            ? correctedRouteNameFromSeusDados
+                            : routeName
+                        }`}
+                        onClick={() =>
+                          handleLinkClick(
+                            `/${
+                              routeName === routeNameFromSeusDados
+                                ? correctedRouteNameFromSeusDados
+                                : routeName
+                            }`
+                          )
+                        }
+                      >
+                        {routeName.replace("-", " ")}
+                      </Link>
+                    </li>
+                  ) : null;
+                })
+              : Object.entries(userOptions).map(([routeName, show]) => {
+                  return show ? (
+                    <li
+                      key={routeName}
+                      className={
+                        activeLink ===
+                        `/${
+                          routeName === routeNameFromSeusDados
+                            ? correctedRouteNameFromSeusDados
+                            : routeName
+                        }`
+                          ? styles.active
+                          : ""
+                      }
+                    >
+                      <Link
+                        href={`/${
+                          routeName === routeNameFromSeusDados
+                            ? correctedRouteNameFromSeusDados
+                            : routeName
+                        }`}
+                        onClick={() =>
+                          handleLinkClick(
+                            `/${
+                              routeName === routeNameFromSeusDados
+                                ? correctedRouteNameFromSeusDados
+                                : routeName
+                            }`
+                          )
+                        }
+                      >
+                        {routeName.replace("-", " ")}
+                      </Link>
+                    </li>
+                  ) : null;
+                })}
             <OutlinedButton width="169px" height="44px" onClick={logout}>
               <LogoutRoundedIcon />
               Sair
