@@ -3,16 +3,27 @@
 import { useState, useEffect } from "react";
 import styles from './BlocoFormulario.module.scss';
 import { BlocoFormularioProps } from "@/app/interfaces/Formulario";
-import { updateAnswer, getAnswers, createAnswer } from "@/app/services/apiService";
+import Link from "next/link";
+import { updateAnswer, getAnswersByEvaluatedId, createAnswer, calculateAvaliationMedia, updateAvaliationMedia } from "@/app/services/apiService";
+import useActiveLink from "@/app/hooks/useActiveLink";
 
-const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, questionId, avaliationId, answerId, onAnswerChange }) => {
+const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, questionId, isManager, avaliationId, answerId, onAnswerChange }) => {
   const [answer, setAnswer] = useState<number | null>(null);
   const [justificative, setJustificative] = useState('');
   const [existingAnswer, setExistingAnswer] = useState<any | null>(null)
+  const [currentAvaliationId, setCurrentAvaliationId] = useState('');
+
+  const evaluatorId = 'clxtlh00m0001cvzgd7gq1tjl' // id de gestor
+  //const evaluatorId = 'clxtlggn60000cvzgissdxodd'; // id de colaborador
+  const evaluatedId = 'clxtlggn60000cvzgissdxodd'
+
+  const autoAnswer = 4; // valor de exemplo
+
+  const { activeLink, handleLinkClick } = useActiveLink();
 
   const fetchData = async () => {
     try {
-      const data = await getAnswers({ questionId, avaliationId });
+      const data = await getAnswersByEvaluatedId({ questionId, avaliationId, evaluatedId });
       const answerData = data.find((item: any) => item.questionId === questionId)
       if (answerData) {
         setExistingAnswer(answerData);
@@ -28,15 +39,31 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
 
   useEffect(() => {
       fetchData();
-  }, [questionId, avaliationId]);
+  }, [questionId, avaliationId, evaluatedId]);
 
+  useEffect(() => {
+    if (currentAvaliationId) {
+      updateMedia(currentAvaliationId);
+    }
+  }, [currentAvaliationId]); 
+
+
+    
+  const updateMedia = async (avaliationId: string) => {
+    try {
+      const media = await calculateAvaliationMedia(avaliationId);
+      await updateAvaliationMedia(avaliationId, media);
+      console.log(`Media updated: ${media}`);
+    } catch (error) {
+      console.error('Error updating media:', error);
+    }
+  };
 
   const handleAnswerChange = async (value: number) => {
     setAnswer(value);
     onAnswerChange(value, justificative);
 
     try {
-      
       if (existingAnswer && existingAnswer.id != null && existingAnswer.questionId === questionId) {
         await updateAnswer({
           answerId: existingAnswer.id,
@@ -46,6 +73,7 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
           justificative
         });
         fetchData()
+        setCurrentAvaliationId(existingAnswer.avaliationId)
         console.log('Answer updated successfully');
       } else {
         const response = await createAnswer({
@@ -53,13 +81,16 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
           justificative, 
           avaliationId,
           questionId,
-          evaluatorId: 'clxxa9odi000111x01dzfq4q1', //id de exemplo só para testar
-          evaluatedId: 'clxxa9odi000111x01dzfq4q1'
+          evaluatorId,
+          evaluatedId
         });
         setExistingAnswer(response);
+        setCurrentAvaliationId(response.avaliationId)
         fetchData()
         console.log('Answer created successfully')
       }
+      fetchData()
+  
     } catch (error) {
       console.error('Failed to update or create answer:', error);
     }
@@ -84,6 +115,7 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
             justificative: value
           });
           fetchData()
+          setCurrentAvaliationId(existingAnswer.avaliationId)
           console.log('Justification updated successfully');
         } else {
           const response = await createAnswer({
@@ -91,13 +123,16 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
             justificative: value,
             avaliationId,
             questionId,
-            evaluatorId: 'clxxa9odi000111x01dzfq4q1', 
-            evaluatedId: 'clxxa9odi000111x01dzfq4q1'  
+            evaluatorId, 
+            evaluatedId 
           });
           setExistingAnswer(response);
+          setCurrentAvaliationId(response.avaliationId)
           fetchData()
           console.log('Justification created successfully');
         }
+
+        fetchData()
       } catch (error) {
         console.error('Failed to update or create justification:', error);
       }
@@ -107,8 +142,44 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
   return (
     <div className={styles.blocoFormulario}>
       <h3>{title}</h3>
-      <p>{question}</p>
-      <div className={styles.responseOptions}>
+
+
+      {/* tela para o gestor */}
+      {isManager && (
+
+        <>
+        <p>Nesse critério, o colaborador se avaliou com nota {autoAnswer}</p>
+        <div className={styles.responseOptions}>
+        {[1, 2, 3, 4, 5].map((value) => (
+          <label key={value}>
+            <input
+              type="radio"
+              name={questionId}
+              value={value}
+              checked={answer === value}
+              onChange={() => handleAnswerChange(value)}
+            />
+            {value}
+          </label>
+          
+        ))}
+      </div>
+            <div className={styles.footerButtons}>
+                <button className={styles.cancelButton}>Cancelar</button>
+                <Link href='/home'>
+                  <button className={styles.submitButton}>Enviar</button>
+                </Link>
+            </div>
+      </>
+      )}
+
+      {/* tela para o colaborador   */}
+
+      {!isManager && (
+
+        <>
+        <p>{question}</p>
+        <div className={styles.responseOptions}>
         {[1, 2, 3, 4, 5].map((value) => (
           <label key={value}>
             <input
@@ -127,6 +198,15 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
         value={justificative}
         onChange={handleJustificativeChange}
       />
+            <div className={styles.footerButtons}>
+                <button className={styles.cancelButton}>Cancelar</button>
+                <Link href='/home'>
+                  <button className={styles.submitButton}>Enviar</button>
+                </Link>
+            </div>
+        </>
+      )}
+      
     </div>
   );
 };

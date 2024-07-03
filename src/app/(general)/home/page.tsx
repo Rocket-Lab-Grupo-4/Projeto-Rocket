@@ -1,8 +1,9 @@
 "use client";
 
-import ControlPanel from "@/app/(admin-routes)/painelControle/[id]/page";
-import { useSession } from "next-auth/react";
 import React from "react";
+import { useSession } from "next-auth/react";
+import ControlPanel from "@/app/(admin-routes)/painelControle/[id]/page";
+import HomeEmployee from "./homeEmployee";
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -13,5 +14,5 @@ export default function Home() {
 
   const manager = session?.user?.manager;
 
-  return <>{manager ? <ControlPanel /> : <p>Welcome, employee!</p>}</>;
+  return <>{manager ? <ControlPanel /> : <HomeEmployee />}</>;
 }

@@ -6,15 +6,20 @@ import BlocoFormulario from './BlocoFormulario';
 
 const QuestionsPage: React.FC = () => {
   const [questions, setQuestions] = useState([]);
+  const [isManager, setIsManager] = useState(false);
   const [avaliationId, setAvaliationId] = useState<string | null>(null);
-  const [evaluatorId] = useState('clxxa9odi000111x01dzfq4q1'); // ids só para teste
-  const [evaluatedId] = useState('clxxa9odi000111x01dzfq4q1');
+
+  const [evaluatorId] = useState('clxtlh00m0001cvzgd7gq1tjl'); // id de gestor
+  //const [evaluatorId] = useState('clxtlggn60000cvzgissdxodd'); // id de colaborador
+  const [evaluatedId] = useState('clxtlggn60000cvzgissdxodd');
+  const [userAssignmentId, setUserAssignmentId] = useState<string>('clxtnd6ck0001pvd78ds4au1v'); // id do ciclo de avaliação para teste
 
   useEffect(() => {
     const initializePage = async () => {
       try {
 
         const user = await fetchUserById(evaluatorId);
+        setIsManager(user.manager);
         const avaliationType = user.manager
           ? 'avaliationByManager'
           : evaluatorId === evaluatedId
@@ -24,11 +29,17 @@ const QuestionsPage: React.FC = () => {
         if (!avaliationType) throw new Error('Invalid evaluation type');
 
         const existingAvaliation = await getAvaliation(evaluatorId, evaluatedId);
+        
+        console.log("userAssignmentId antes da criação:", userAssignmentId);
 
         if (existingAvaliation) {
+          //debugger
           setAvaliationId(existingAvaliation.id);
         } else {
-          const avaliationResponse = await createAvaliation(evaluatorId, evaluatedId);
+          //debugger
+          const avaliationResponse = await createAvaliation(evaluatorId, evaluatedId, userAssignmentId);
+          console.log('Avaliação criada com sucesso')
+          console.log(userAssignmentId)
           setAvaliationId(avaliationResponse.id);
         }
 
@@ -43,7 +54,7 @@ const QuestionsPage: React.FC = () => {
     };
 
     initializePage();
-  }, []);
+  }, [evaluatorId, evaluatedId, userAssignmentId]);
 
   const handleAnswerChange = (answer: number, justificative: string) => {
     console.log('Answer:', answer, 'Justificative:', justificative);
@@ -65,6 +76,7 @@ const QuestionsPage: React.FC = () => {
           avaliationId={avaliationId}
           answerId={question.answerId}
           onAnswerChange={handleAnswerChange}
+          isManager={isManager}
           />
       ))}
 
@@ -78,6 +90,7 @@ const QuestionsPage: React.FC = () => {
           avaliationId={avaliationId}
           answerId={question.answerId}
           onAnswerChange={handleAnswerChange} 
+          isManager={isManager}
         />
       ))}
     </div>
