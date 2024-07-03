@@ -1,0 +1,81 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
+.container {
+    display: flex;
+    flex-direction: column;
+    font-family: "Montserrat", sans-serif;
+    background-color: white;
+
+    gap: 1rem;
+    align-items: center;
+}
+
+.headerRight {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.content {
+    background-color: red;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    background-color: white;
+}
+
+.rightBubble {
+    height: 16rem;
+    position: relative;
+}
+
+.leftBubble {
+    height: 16rem;
+    position: relative;
+}
+
+.bubbleTextR {
+    width: 325px;
+    height: 190px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.1em;
+    font-weight: 500;
+}
+
+.bubbleTextL {
+    width: 325px;
+    height: 190px;
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    font-size: 1.1em;
+    font-weight: 500;
+}
+
+.homeWomen {
+    display: flex;
+    height: 20rem;
+    margin-top: 10rem;
+}
+
+.beginButton {
+    cursor: pointer;
+    border-radius: 39px;
+    background: #00f999;
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    color: #000000;
+    padding: 15px;
+    border: none;
+}
+
+.beginButton:hover {
+    background-color: #00e689;
+
+}
