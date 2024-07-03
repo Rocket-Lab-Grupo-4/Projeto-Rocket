@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Login.module.scss";
 import {
   TextField,
@@ -8,6 +8,8 @@ import {
   ThemeProvider,
   createTheme,
 } from "@mui/material";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const theme = createTheme({
   components: {
@@ -57,9 +59,24 @@ const Login: React.FC<LoginProps> = ({ onLogin, onToggleForm }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const router = useRouter();
+
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    onLogin();
+    console.log("Login", username, password);
+
+    const tryLogin = await signIn("credentials", {
+      redirect: false,
+      username,
+      password,
+    });
+
+    if (tryLogin?.error) {
+      console.error("Failed to login", tryLogin.error);
+      return;
+    }
+
+    router.replace("/home");
   };
 
   return (
@@ -79,6 +96,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onToggleForm }) => {
                 className={styles.Input}
                 label="Usuário:"
                 variant="outlined"
+                type="text"
                 fullWidth
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
@@ -103,7 +121,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onToggleForm }) => {
             </form>
           </div>
 
-                   <p className={styles.createAccount}>
+          <p className={styles.createAccount}>
             Não possui acesso?{" "}
             <strong
               onClick={onToggleForm}
