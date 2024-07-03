@@ -104,18 +104,18 @@ function ControlPanel() {
   const [userAssignmentsNotEvaluated, setUserAssignmentsNotEvaluated] =
     useState([]);
   const printAvaliationsAndUsers = async () => {
-    console.log("função printAvaliationsAndUsers");
+    // console.log("função printAvaliationsAndUsers");
     // console.log("avaliações:", avaliations);
     // console.log("colaboradores:", colaborators);
     const userIdsNotEvaluated = getUsersWithoutManagerAvaliation(
       colaborators,
       avaliations
     );
-    console.log("userIdsNotEvaluated 1 :", userIdsNotEvaluated);
+    // console.log("userIdsNotEvaluated 1 :", userIdsNotEvaluated);
     setUserNotEvaluated(userIdsNotEvaluated);
 
     const results = await fetchAvaliations(userIdsNotEvaluated);
-    console.log("avaliation:", results.flat());
+    // console.log("avaliation:", results.flat());
     setAvaliationNotEvaluated(results.flat());
   };
 
@@ -140,7 +140,7 @@ function ControlPanel() {
     };
 
     const assignmentsNotEvaluated = await fetchAssignmentsT();
-    console.log("assignmentsIds:", assignmentsNotEvaluated);
+    // console.log("assignmentsIds:", assignmentsNotEvaluated);
     setAssignmentNotEvaluated(assignmentsNotEvaluated);
   };
 
@@ -154,7 +154,7 @@ function ControlPanel() {
           return response.data;
         })
       );
-      console.log("userAssignmentAssociativa:", results);
+      // console.log("userAssignmentAssociativa:", results);
 
       setUserAssignmentsNotEvaluated(results);
       return results;
@@ -309,15 +309,18 @@ function ControlPanel() {
     getUserAssignmentsByUserId();
   }, [avaliations]);
 
+  const [colaboratorsToEqualization, setColaboratorsToEqualization] = useState<
+    Result[]
+  >([]);
   useEffect(() => {
-    const results = linkAttributes(
+    const colaboratorsToEqualization = linkAttributes(
       userNotEvaluated,
       assignmentNotEvaluated,
       avaliationNotEvaluated,
       userAssignmentsNotEvaluated.flat()
     );
 
-    console.log("linked Propriets:", results);
+    setColaboratorsToEqualization(colaboratorsToEqualization);
   }, [avaliationNotEvaluated]);
 
   async function getAllusers() {
@@ -350,11 +353,6 @@ function ControlPanel() {
   ): Result[] {
     const result: Result[] = [];
 
-    console.log("users👍:", users);
-    console.log("assignments👍:", assignments);
-    console.log("avaliations👍:", avaliations);
-    console.log("associativeTable👍:", associativeTable);
-    
     users.forEach((user) => {
       const userAssignments = associativeTable.filter(
         (entry) => entry.userId === user.id
@@ -417,16 +415,16 @@ function ControlPanel() {
             Data de fechamento
           </p>
         </div>
-        {colaborators.map((avaliation, index) => (
+        {colaboratorsToEqualization.map((avaliation, index) => (
           <div
             key={index}
             className={index % 2 === 0 ? styles.lineWhite : styles.lineGrey}
           >
             <p className={styles.width}>{avaliation.name}</p>
-            {/* <p className={styles.width}>{avaliation.media}</p>
+            <p className={styles.width}>{avaliation.media}</p>
             <p className={styles.width}>
               {formatDate(avaliation.dateConcluded ?? "")}
-            </p> */}
+            </p>
             <div className={styles.buttonsContainer}>
               <BlueButton
                 width="145px"
