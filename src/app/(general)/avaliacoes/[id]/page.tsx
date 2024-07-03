@@ -8,12 +8,12 @@ import {
 import BasicTabs from "@/app/components/tabs/tabs";
 import OpenAvaliation from "./open";
 import CloseAvaliation from "./close";
-import { BlueButton } from "@/app/components/buttons/button";
+import { BlueButtonColorWhite } from "@/app/components/buttons/button";
 import { useEffect, useState } from "react";
 import api from "@/utils/api";
 import { userAssignment } from "@/app/interfaces/userAssignment";
 import { assignment } from "@/app/interfaces/assignment";
-import { useFetchAssignments } from '@/app/hooks/useFetchAssignmnet';
+import { useFetchAssignments } from "@/app/hooks/useFetchAssignmnet";
 
 export type UnionStatusAndAssignment = {
   id: string;
@@ -102,9 +102,13 @@ function HistoricAvaliation() {
       {assignmentToDo ? (
         <SpeechBubbleBig>
           Olá! Você tem um ciclo de avaliação em aberto.
-          <BlueButton width="fit-content" height="fit-content">
+          <BlueButtonColorWhite
+            width="fit-content"
+            height="fit-content"
+            borderRadius="9px"
+          >
             Clique para visualizar
-          </BlueButton>
+          </BlueButtonColorWhite>
         </SpeechBubbleBig>
       ) : (
         <SpeechBubble>

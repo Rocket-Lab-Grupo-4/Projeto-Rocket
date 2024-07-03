@@ -150,7 +150,7 @@ export default function Resultados() {
           <h2 className={styles.subtitle}>Suas notas desde que chegou aqui</h2>
           <LineChartComponent date={autoAvaliationDates} pv={autoAvaliationAverages} uv={managerAvaliationAverages} />
         </div>
-        <div className={styles.subsection1_3}>
+        <div className={`${styles.subsection1_3} ${styles.marginLeft}`}>
           <h2 className={styles.subtitle}>Comparativo por critérios</h2>
           <PieChartComponent data={PieData} />
         </div>
@@ -159,6 +159,7 @@ export default function Resultados() {
         <div>
           <div className={styles.lineGrey}>
             <p className={`${styles.subtitle} ${styles.width}`}>Tipo</p>
+            <p className={`${styles.subtitle} ${styles.width}`}>Notas</p>
             <p className={`${styles.subtitle} ${styles.width}`}>
               Data de realização
             </p>
@@ -173,6 +174,7 @@ export default function Resultados() {
                 className={index % 2 === 0 ? styles.lineWhite : styles.lineGrey}
               >
                 <p className={styles.width}>{avaliation.type}</p>
+                <p className={styles.width}> {4}</p>
                 <p className={styles.width}>
                   {formatDate(avaliation.dataAnswered)}
                 </p>

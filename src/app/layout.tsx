@@ -1,40 +1,18 @@
 "use client";
-import React, { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import React from "react";
+import { usePathname } from "next/navigation";
 import SideBar from "./components/sideBar/SideBar";
 import "../styles/globals.scss";
 import sideStyles from "./components/sideBar/SideBar.module.scss";
-import Login from "./(general)/login/page";
-import Cadastro from "./(general)/cadastro/page";
-import { useAuth } from "./hooks/useAuth";
+import NextAuthSessionProvider from "../providers/sessionprovider";
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // const {
-  //   isAuthenticated,
-  //   isRegistering,
-  //   handleLogin,
-  //   handleToggleForm,
-  //   setAuthenticated,
-  // } = useAuth();
-  // const router = useRouter();
-
-  // const handleCadastroSuccess = () => {
-  //   setAuthenticated(true);
-  // };
-
-  // useEffect(() => {
-  //   if (!isAuthenticated) {
-  //     if (isRegistering) {
-  //       router.push("/cadastro");
-  //     } else {
-  //       router.push("/home");
-  //     }
-  //   }
-  // }, [isAuthenticated, isRegistering, router]);
+  const pathname = usePathname();
+  const showSideBar = pathname !== "/login" && pathname !== "/cadastro";
 
   return (
     <html lang="en">
@@ -45,20 +23,13 @@ export default function RootLayout({
       </head>
       <body>
         <div className={sideStyles.appContainer}>
-          {/* {isAuthenticated ? ( */}
-            <SideBar>{children}</SideBar>
-          {/* ) : (
-            <>
-              {isRegistering ? (
-                <Cadastro
-                  onToggleForm={handleToggleForm}
-                  onSuccess={handleCadastroSuccess}
-                />
-              ) : (
-                <Login onLogin={handleLogin} onToggleForm={handleToggleForm} />
-              )}
-            </>
-          )} */}
+          {showSideBar ? (
+            <NextAuthSessionProvider>
+              <SideBar>{children}</SideBar>
+            </NextAuthSessionProvider>
+          ) : (
+            children
+          )}
         </div>
       </body>
     </html>
