@@ -33,10 +33,10 @@ export default function Avaliacoes() {
         </div>
         <QuestionsPage />
       </div>
-      <div className={styles.footerButtons}>
+      {/* <div className={styles.footerButtons}>
         <button className={styles.cancelButton}>Cancelar</button>
         <button className={styles.submitButton}>Enviar</button>
-      </div>
+      </div> */}
     </div>
   );
 }

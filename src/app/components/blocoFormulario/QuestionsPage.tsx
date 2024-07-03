@@ -8,7 +8,9 @@ const QuestionsPage: React.FC = () => {
   const [questions, setQuestions] = useState([]);
   const [isManager, setIsManager] = useState(false);
   const [avaliationId, setAvaliationId] = useState<string | null>(null);
-  const [evaluatorId] = useState('cly3enmhc0000z7qhue9v2517'); // ids só para teste
+
+  //const [evaluatorId] = useState('cly3enmhc0000z7qhue9v2517'); // id de gestor
+  const [evaluatorId] = useState('clxtlggn60000cvzgissdxodd'); // id de colaborador
   const [evaluatedId] = useState('clxtlggn60000cvzgissdxodd');
   const [userAssignmentId, setUserAssignmentId] = useState<string>('clxtnd6ck0001pvd78ds4au1v'); // id do ciclo de avaliação para teste
 

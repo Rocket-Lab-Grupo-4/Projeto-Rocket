@@ -3,7 +3,9 @@
 import { useState, useEffect } from "react";
 import styles from './BlocoFormulario.module.scss';
 import { BlocoFormularioProps } from "@/app/interfaces/Formulario";
+import Link from "next/link";
 import { updateAnswer, getAnswers, createAnswer, calculateAvaliationMedia, updateAvaliationMedia } from "@/app/services/apiService";
+import useActiveLink from "@/app/hooks/useActiveLink";
 
 const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, questionId, isManager, avaliationId, answerId, onAnswerChange }) => {
   const [answer, setAnswer] = useState<number | null>(null);
@@ -12,10 +14,13 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
   //debugger
   const [currentAvaliationId, setCurrentAvaliationId] = useState<any>();
 
-  const evaluatorId = 'cly3enmhc0000z7qhue9v2517'; // id de exemplo só para testar
+  //const evaluatorId = 'cly3enmhc0000z7qhue9v2517' // id de gestor
+  const evaluatorId = 'clxtlggn60000cvzgissdxodd'; // id de colaborador
   const evaluatedId = 'clxtlggn60000cvzgissdxodd'
 
   const autoAnswer = 4; // valor de exemplo
+
+  const { activeLink, handleLinkClick } = useActiveLink();
 
   const fetchData = async () => {
     try {
@@ -84,8 +89,7 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
       fetchData()
 
       //debugger
-    
-      updateMedia(currentAvaliationId);
+  
     } catch (error) {
       console.error('Failed to update or create answer:', error);
     }
@@ -127,8 +131,6 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
           console.log('Justification created successfully');
         }
 
-        updateMedia(currentAvaliationId);
-
         fetchData()
       } catch (error) {
         console.error('Failed to update or create justification:', error);
@@ -158,8 +160,15 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
             />
             {value}
           </label>
+          
         ))}
       </div>
+            <div className={styles.footerButtons}>
+                <button className={styles.cancelButton}>Cancelar</button>
+                <Link href='/home'>
+                  <button className={styles.submitButton}>Enviar</button>
+                </Link>
+            </div>
       </>
       )}
 
@@ -188,6 +197,12 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
         value={justificative}
         onChange={handleJustificativeChange}
       />
+            <div className={styles.footerButtons}>
+                <button className={styles.cancelButton}>Cancelar</button>
+                <Link href='/home'>
+                  <button className={styles.submitButton}>Enviar</button>
+                </Link>
+            </div>
         </>
       )}
       
