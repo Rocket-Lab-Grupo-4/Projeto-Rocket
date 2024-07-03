@@ -337,13 +337,26 @@ function ControlPanel() {
     });
   };
 
-  // const filtercolaboratorByName = (name: string) => {
-  //   const filteredColaborators = colaborators.filter((colaborator) => {
-  //     return colaborator.name.toLowerCase().includes(name.toLowerCase());
-  //   });
+  const filtercolaboratorByName = (name: string) => {
+    console.log("name:", name);
 
-  //   setcolaborators(filteredColaborators);
-  // };
+    const filteredColaborators = colaboratorsToEqualization.filter(
+      (colaborator) => {
+        return colaborator.name.toLowerCase().includes(name.toLowerCase());
+      }
+    );
+    setColaboratorsToEqualization(filteredColaborators);
+
+    if (filteredColaborators.length === 0) {
+      const colaboratorsToEqualization = linkAttributes(
+        userNotEvaluated,
+        assignmentNotEvaluated,
+        avaliationNotEvaluated,
+        userAssignmentsNotEvaluated.flat()
+      );
+      setColaboratorsToEqualization(colaboratorsToEqualization);
+    }
+  };
 
   function linkAttributes(
     users: any[],
@@ -401,7 +414,7 @@ function ControlPanel() {
         <p className={styles.title}>
           Para encontrar um colaborador específico, basta pesquisar:
         </p>
-        <SearchBar onSearch={() => {}} />
+        <SearchBar onSearch={filtercolaboratorByName} />
       </div>
 
       <div>
