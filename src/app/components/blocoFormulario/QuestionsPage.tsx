@@ -9,8 +9,8 @@ const QuestionsPage: React.FC = () => {
   const [isManager, setIsManager] = useState(false);
   const [avaliationId, setAvaliationId] = useState<string | null>(null);
 
-  //const [evaluatorId] = useState('cly3enmhc0000z7qhue9v2517'); // id de gestor
-  const [evaluatorId] = useState('clxtlggn60000cvzgissdxodd'); // id de colaborador
+  const [evaluatorId] = useState('clxtlh00m0001cvzgd7gq1tjl'); // id de gestor
+  //const [evaluatorId] = useState('clxtlggn60000cvzgissdxodd'); // id de colaborador
   const [evaluatedId] = useState('clxtlggn60000cvzgissdxodd');
   const [userAssignmentId, setUserAssignmentId] = useState<string>('clxtnd6ck0001pvd78ds4au1v'); // id do ciclo de avaliação para teste
 
@@ -33,10 +33,10 @@ const QuestionsPage: React.FC = () => {
         console.log("userAssignmentId antes da criação:", userAssignmentId);
 
         if (existingAvaliation) {
-          debugger
+          //debugger
           setAvaliationId(existingAvaliation.id);
         } else {
-          debugger
+          //debugger
           const avaliationResponse = await createAvaliation(evaluatorId, evaluatedId, userAssignmentId);
           console.log('Avaliação criada com sucesso')
           console.log(userAssignmentId)

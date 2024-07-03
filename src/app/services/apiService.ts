@@ -79,9 +79,9 @@ interface GetAnswerParams {
 }
 
 
-export const getAnswers = async ({ questionId, avaliationId, evaluatedId }: GetAnswerParams) => {
+export const getAnswersByEvaluatedId = async ({ questionId, avaliationId, evaluatedId }: GetAnswerParams) => {
   try {
-    const response = await api.get(`/answers`, { params: { questionId, avaliationId, evaluatedId } });
+    const response = await api.get(`/answers/evaluated/${evaluatedId}`, { params: { questionId, avaliationId, evaluatedId } });
     return response.data;
   } catch (error) {
     console.error('Error fetching answer:', error);
@@ -158,7 +158,7 @@ export const getAvaliation = async (evaluatorId: string, evaluatedId: string) =>
 
 export const calculateAvaliationMedia = async (avaliationId: string) => {
   try {
-    const response = await api.get('/answers', { params: { avaliationId } });
+    const response = await api.get(`/answers/avaliation/${avaliationId}`);
     const answers = response.data;
 
     if (answers.length === 0) return 0;

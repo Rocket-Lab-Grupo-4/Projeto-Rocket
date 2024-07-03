@@ -4,18 +4,17 @@ import { useState, useEffect } from "react";
 import styles from './BlocoFormulario.module.scss';
 import { BlocoFormularioProps } from "@/app/interfaces/Formulario";
 import Link from "next/link";
-import { updateAnswer, getAnswers, createAnswer, calculateAvaliationMedia, updateAvaliationMedia } from "@/app/services/apiService";
+import { updateAnswer, getAnswersByEvaluatedId, createAnswer, calculateAvaliationMedia, updateAvaliationMedia } from "@/app/services/apiService";
 import useActiveLink from "@/app/hooks/useActiveLink";
 
 const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, questionId, isManager, avaliationId, answerId, onAnswerChange }) => {
   const [answer, setAnswer] = useState<number | null>(null);
   const [justificative, setJustificative] = useState('');
   const [existingAnswer, setExistingAnswer] = useState<any | null>(null)
-  //debugger
-  const [currentAvaliationId, setCurrentAvaliationId] = useState<any>();
+  const [currentAvaliationId, setCurrentAvaliationId] = useState('');
 
-  //const evaluatorId = 'cly3enmhc0000z7qhue9v2517' // id de gestor
-  const evaluatorId = 'clxtlggn60000cvzgissdxodd'; // id de colaborador
+  const evaluatorId = 'clxtlh00m0001cvzgd7gq1tjl' // id de gestor
+  //const evaluatorId = 'clxtlggn60000cvzgissdxodd'; // id de colaborador
   const evaluatedId = 'clxtlggn60000cvzgissdxodd'
 
   const autoAnswer = 4; // valor de exemplo
@@ -24,7 +23,7 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
 
   const fetchData = async () => {
     try {
-      const data = await getAnswers({ questionId, avaliationId, evaluatedId });
+      const data = await getAnswersByEvaluatedId({ questionId, avaliationId, evaluatedId });
       const answerData = data.find((item: any) => item.questionId === questionId)
       if (answerData) {
         setExistingAnswer(answerData);
@@ -41,6 +40,12 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
   useEffect(() => {
       fetchData();
   }, [questionId, avaliationId, evaluatedId]);
+
+  useEffect(() => {
+    if (currentAvaliationId) {
+      updateMedia(currentAvaliationId);
+    }
+  }, [currentAvaliationId]); 
 
 
     
@@ -69,7 +74,6 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
         });
         fetchData()
         setCurrentAvaliationId(existingAnswer.avaliationId)
-        updateMedia(currentAvaliationId);
         console.log('Answer updated successfully');
       } else {
         const response = await createAnswer({
@@ -82,13 +86,10 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
         });
         setExistingAnswer(response);
         setCurrentAvaliationId(response.avaliationId)
-        updateMedia(currentAvaliationId);
         fetchData()
         console.log('Answer created successfully')
       }
       fetchData()
-
-      //debugger
   
     } catch (error) {
       console.error('Failed to update or create answer:', error);
