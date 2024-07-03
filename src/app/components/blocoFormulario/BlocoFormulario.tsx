@@ -4,11 +4,12 @@ import { useState, useEffect } from "react";
 import styles from './BlocoFormulario.module.scss';
 import { BlocoFormularioProps } from "@/app/interfaces/Formulario";
 import Link from "next/link";
-import { updateAnswer, getAnswersByEvaluatedId, createAnswer, calculateAvaliationMedia, updateAvaliationMedia } from "@/app/services/apiService";
+import { updateAnswer, getAnswersByEvaluatedId, createAnswer, calculateAvaliationMedia, updateAvaliationMedia, getAvaliation, createAvaliation } from "@/app/services/apiService";
 import useActiveLink from "@/app/hooks/useActiveLink";
 
 const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, questionId, isManager, avaliationId, answerId, onAnswerChange }) => {
   const [answer, setAnswer] = useState<number | null>(null);
+  const [autoAnswer, setAutoAnswer] = useState()
   const [justificative, setJustificative] = useState('');
   const [existingAnswer, setExistingAnswer] = useState<any | null>(null)
   const [currentAvaliationId, setCurrentAvaliationId] = useState('');
@@ -16,8 +17,7 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
   const evaluatorId = 'clxtlh00m0001cvzgd7gq1tjl' // id de gestor
   //const evaluatorId = 'clxtlggn60000cvzgissdxodd'; // id de colaborador
   const evaluatedId = 'clxtlggn60000cvzgissdxodd'
-
-  const autoAnswer = 4; // valor de exemplo
+  const [userAssignmentId, setUserAssignmentId] = useState<string>('clxtnd6ck0001pvd78ds4au1v'); // id do ciclo de avaliação para teste
 
   const { activeLink, handleLinkClick } = useActiveLink();
 
@@ -47,6 +47,34 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
     }
   }, [currentAvaliationId]); 
 
+  useEffect(() => {
+    const initializeAvaliation = async () => {
+      try {
+        const avaliation = await getAvaliation(evaluatorId, evaluatedId);
+        setCurrentAvaliationId(avaliation.id); 
+      } catch (error) {
+        console.error('Error initializing avaliation:', error);
+      }
+    };
+  
+    initializeAvaliation();
+  }, [evaluatorId, evaluatedId, userAssignmentId]);
+
+
+  interface Answer {
+    questionId: string;
+    answer: number;
+  }
+
+  useEffect(() => {
+    const fetchPreviousAnswer = async () => {
+      const previousAnswers = await getAnswersByEvaluatedId({ questionId, avaliationId, evaluatedId });
+      const previousAnswer = previousAnswers.find((answer: Answer) => answer.questionId === questionId);
+      setAutoAnswer(previousAnswer ? previousAnswer.answer : null);
+    };
+  
+    if (isManager) fetchPreviousAnswer();
+  }, [questionId, avaliationId, evaluatedId, isManager]);
 
     
   const updateMedia = async (avaliationId: string) => {
@@ -74,23 +102,25 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
         });
         fetchData()
         setCurrentAvaliationId(existingAnswer.avaliationId)
+        updateMedia(currentAvaliationId)
         console.log('Answer updated successfully');
       } else {
-        const response = await createAnswer({
+        await createAnswer({
           answer: value,
           justificative, 
-          avaliationId,
+          avaliationId: currentAvaliationId,
           questionId,
           evaluatorId,
           evaluatedId
         });
-        setExistingAnswer(response);
-        setCurrentAvaliationId(response.avaliationId)
+        updateMedia(currentAvaliationId)
         fetchData()
+        //debugger
+        
         console.log('Answer created successfully')
       }
       fetchData()
-  
+      
     } catch (error) {
       console.error('Failed to update or create answer:', error);
     }
