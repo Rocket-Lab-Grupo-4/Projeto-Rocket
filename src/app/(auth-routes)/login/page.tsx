@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Login.module.scss";
 import {
   TextField,
@@ -77,7 +77,6 @@ const Login: React.FC<LoginProps> = ({ onLogin, onToggleForm }) => {
     }
 
     router.replace("/home");
-
   };
 
   return (

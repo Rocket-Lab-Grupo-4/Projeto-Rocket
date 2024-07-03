@@ -1,5 +1,6 @@
 "use client";
 
+import ControlPanel from "@/app/(admin-routes)/painelControle/[id]/page";
 import { useSession } from "next-auth/react";
 import React from "react";
 
@@ -10,16 +11,7 @@ export default function Home() {
     return <p>Loading...</p>;
   }
 
-  return (
-    <>
-      {session ? (
-        <>
-          <p>Olá {session.user?.name}</p>
-          <p>{status}</p>
-        </>
-      ) : (
-        <p>Você não está logado</p>
-      )}
-    </>
-  );
+  const manager = session?.user?.manager;
+
+  return <>{manager ? <ControlPanel /> : <p>Welcome, employee!</p>}</>;
 }
