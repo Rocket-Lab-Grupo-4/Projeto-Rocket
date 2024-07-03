@@ -172,18 +172,12 @@ export default function SeusDados() {
         </div>
       </div>
       <div className={styles.ButtonsContainer}>
-        <BlueButton
-          width="108px"
-          height="30px"
-          borderRadius="9px"
-          onClick={toggleEdit}
-        >
+        <BlueButton width="108px" height="30px" onClick={toggleEdit}>
           Editar
         </BlueButton>
         <GreenButton
           width="108px"
           height="30px"
-          borderRadius="9px"
           onClick={handleSave}
           disabled={!isEditing}
         >

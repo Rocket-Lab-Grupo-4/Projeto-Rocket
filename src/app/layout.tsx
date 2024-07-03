@@ -1,18 +1,40 @@
 "use client";
-import React from "react";
-import { usePathname } from "next/navigation";
+import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import SideBar from "./components/sideBar/SideBar";
 import "../styles/globals.scss";
 import sideStyles from "./components/sideBar/SideBar.module.scss";
-import NextAuthSessionProvider from "../providers/sessionprovider";
+import Login from "./(general)/login/page";
+import Cadastro from "./(general)/cadastro/page";
+import { useAuth } from "./hooks/useAuth";
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
-  const showSideBar = pathname !== "/login" && pathname !== "/cadastro";
+  // const {
+  //   isAuthenticated,
+  //   isRegistering,
+  //   handleLogin,
+  //   handleToggleForm,
+  //   setAuthenticated,
+  // } = useAuth();
+  // const router = useRouter();
+
+  // const handleCadastroSuccess = () => {
+  //   setAuthenticated(true);
+  // };
+
+  // useEffect(() => {
+  //   if (!isAuthenticated) {
+  //     if (isRegistering) {
+  //       router.push("/cadastro");
+  //     } else {
+  //       router.push("/home");
+  //     }
+  //   }
+  // }, [isAuthenticated, isRegistering, router]);
 
   return (
     <html lang="en">
@@ -23,13 +45,20 @@ export default function RootLayout({
       </head>
       <body>
         <div className={sideStyles.appContainer}>
-          {showSideBar ? (
-            <NextAuthSessionProvider>
-              <SideBar>{children}</SideBar>
-            </NextAuthSessionProvider>
-          ) : (
-            children
-          )}
+          {/* {isAuthenticated ? ( */}
+            <SideBar>{children}</SideBar>
+          {/* ) : (
+            <>
+              {isRegistering ? (
+                <Cadastro
+                  onToggleForm={handleToggleForm}
+                  onSuccess={handleCadastroSuccess}
+                />
+              ) : (
+                <Login onLogin={handleLogin} onToggleForm={handleToggleForm} />
+              )}
+            </>
+          )} */}
         </div>
       </body>
     </html>

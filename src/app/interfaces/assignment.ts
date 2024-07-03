@@ -1,7 +1,8 @@
 export interface assignment {
   id: string;
+  status: boolean;
   type: string;
-  dateOpened: string;
+  media: number;
   dataAnswered: string;
   dateConcluded: string;
 }

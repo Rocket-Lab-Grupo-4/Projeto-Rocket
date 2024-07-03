@@ -1,6 +1,8 @@
 export const PieData = [
-  { name: 'Comportamental', value: 400, fill: '#0875F7' },
-  { name: 'Execução', value: 300, fill: '#FF8D06' },
+  { name: 'Group A', value: 400, fill: '#0875F7' },
+  { name: 'Group B', value: 300, fill: '#FF8D06' },
+  { name: 'Group C', value: 200, fill: '#00F999' },
+  { name: 'Group D', value: 300, fill: '#00183C' },
 ];
 
 export const LineData = [
