@@ -76,7 +76,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onToggleForm }) => {
       return;
     }
 
-    router.replace("/home");
+    router.replace("/Home");
   };
 
   return (

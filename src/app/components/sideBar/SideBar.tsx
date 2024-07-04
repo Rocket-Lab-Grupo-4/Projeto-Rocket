@@ -29,21 +29,21 @@ const SideBar = ({ children }: { children: React.ReactNode }) => {
   }, [manager]);
 
   const managerOptions = {
-    home: true,
-    avaliacoes: false,
-    resultados: false,
-    "seus dados": true,
+    Home: true,
+    Avaliacoes: false,
+    Resultados: false,
+    "Seus dados": true,
   };
 
   const userOptions = {
-    home: true,
-    avaliacoes: true,
-    resultados: true,
-    "seus dados": true,
+    Home: true,
+    Avaliacoes: true,
+    Resultados: true,
+    "Seus dados": true,
   };
 
-  const routeNameFromSeusDados = "seus dados";
-  const correctedRouteNameFromSeusDados = "seus-dados";
+  const routeNameFromSeusDados = "Seus dados";
+  const correctedRouteNameFromSeusDados = "Seus-dados";
 
   return (
     <div className={styles.wrapper}>

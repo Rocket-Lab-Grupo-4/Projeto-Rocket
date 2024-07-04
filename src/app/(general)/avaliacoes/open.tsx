@@ -1,11 +1,10 @@
 "use client";
-import { avaliation } from "@/app/interfaces/avaliation";
 import styles from "./historico.module.scss";
 import { BlueButton, GreenButton } from "@/app/components/buttons/button";
 import ErrorIcon from "@mui/icons-material/Error";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { formatDate } from "@/utils/formatDate";
-import { UnionStatusAndAssignment } from "./page";
+import { UnionStatusAndAssignment } from './page';
 
 function OpenAvaliation({
   avaliations,

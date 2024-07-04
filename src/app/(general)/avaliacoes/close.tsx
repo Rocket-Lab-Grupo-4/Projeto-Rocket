@@ -1,8 +1,8 @@
 "use client";
 import styles from "./historico.module.scss";
 import { BlueButton } from "@/app/components/buttons/button";
-import { UnionStatusAndAssignment } from "./page";
 import { formatDate } from '@/utils/formatDate';
+import { UnionStatusAndAssignment } from './page';
 
 function Avaliation({
   avaliations,
