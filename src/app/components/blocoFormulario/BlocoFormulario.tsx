@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import styles from './BlocoFormulario.module.scss';
 import { BlocoFormularioProps } from "@/app/interfaces/Formulario";
 import Link from "next/link";
-import { updateAnswer, getAnswersByEvaluatedId, createAnswer, calculateAvaliationMedia, updateAvaliationMedia, getAvaliation, createAvaliation } from "@/app/services/apiService";
+import { updateAnswer, getAnswersByEvaluatedId, createAnswer, calculateAvaliationMedia, updateAvaliationMedia, getAvaliation, createAvaliation, deleteAnswer, getAnswersByAvaliationId } from "@/app/services/apiService";
 import useActiveLink from "@/app/hooks/useActiveLink";
 
 const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, questionId, isManager, avaliationId, answerId, onAnswerChange }) => {
@@ -12,7 +12,7 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
   const [autoAnswer, setAutoAnswer] = useState()
   const [justificative, setJustificative] = useState('');
   const [existingAnswer, setExistingAnswer] = useState<any | null>(null)
-  const [currentAvaliationId, setCurrentAvaliationId] = useState('');
+  const [currentAvaliationId, setCurrentAvaliationId] = useState<string>('');
 
   const evaluatorId = 'clxtlh00m0001cvzgd7gq1tjl' // id de gestor
   //const evaluatorId = 'clxtlggn60000cvzgissdxodd'; // id de colaborador
@@ -35,6 +35,23 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
     } catch (error) {
       console.error('Error fetching existing answer:', error);
     }
+  };
+
+  const handleDiscard = async () => {
+    
+      try {
+        const answers = await getAnswersByAvaliationId(currentAvaliationId);
+        for (const answer of answers) {
+          await deleteAnswer(answer.id);
+        }
+        console.log('All answers discarded successfully');
+        setAnswer(null);
+        setExistingAnswer(null);
+        updateMedia(currentAvaliationId);
+        fetchData()
+      } catch (error) {
+        console.error('Failed to discard answers:', error);
+      }
   };
 
   useEffect(() => {
@@ -108,14 +125,13 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
         await createAnswer({
           answer: value,
           justificative, 
-          avaliationId: currentAvaliationId,
+          avaliationId,
           questionId,
           evaluatorId,
           evaluatedId
         });
-        updateMedia(currentAvaliationId)
+        updateMedia('cly6bxxht000091e5u6mo72df')
         fetchData()
-        //debugger
         
         console.log('Answer created successfully')
       }
@@ -195,7 +211,7 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
         ))}
       </div>
             <div className={styles.footerButtons}>
-                <button className={styles.cancelButton}>Cancelar</button>
+                <button className={styles.discardButton} onClick={handleDiscard}>Descartar</button>
                 <Link href='/home'>
                   <button className={styles.submitButton}>Enviar</button>
                 </Link>
@@ -229,7 +245,7 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
         onChange={handleJustificativeChange}
       />
             <div className={styles.footerButtons}>
-                <button className={styles.cancelButton}>Cancelar</button>
+                <button className={styles.discardButton} onClick={handleDiscard}>Descartar</button>
                 <Link href='/home'>
                   <button className={styles.submitButton}>Enviar</button>
                 </Link>

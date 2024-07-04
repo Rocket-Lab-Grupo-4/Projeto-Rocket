@@ -55,6 +55,29 @@
     margin-bottom: 50px;
 }
 
+.bubble {
+    position: relative;
+    width: 420px;
+    margin-left: 10px;
+    background-image: url('/assets/equalizacaoBubble.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    padding: 20px;
+}
+
+.bubble p {
+    margin: 0; 
+    font-size: large;
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    width: 100%;
+    padding: 7px;
+    margin-top: 11px;
+}
+
 .content {
     padding: 20px;
 }

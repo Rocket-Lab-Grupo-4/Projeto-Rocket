@@ -22,14 +22,13 @@ export default function Equalizacao() {
                 <h3>Colaborador: </h3>
                 <BlocoResumo nome={""} cargo={""} mediaAutoAvaliacao={0} imagemUrl={""} />
             </header>
+            <div className={styles.bubble}>
+                    <p>Avalie o colaborador, atribua a cada critério mencionado uma nota de 0 a 5</p>               
+                {/* <img src="/assets/equalizacaoBubble.png" className={styles.bubble}/> */}
+            </div>
             <div className={styles.content}>
                 <QuestionsPage />
             </div>
-
-            {/* <div className={styles.footerButtons}>
-                <button className={styles.cancelButton}>Cancelar</button>
-                <button className={styles.submitButton}>Enviar</button>
-            </div> */}
         </div>
     )
 

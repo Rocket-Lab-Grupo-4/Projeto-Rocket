@@ -89,6 +89,16 @@ export const getAnswersByEvaluatedId = async ({ questionId, avaliationId, evalua
   }
 };
 
+export const getAnswersByAvaliationId = async ( avaliationId: string ) => {
+  try {
+    const response = await api.get(`/answers/avaliation/${avaliationId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching answer:', error);
+    throw error;
+  }
+}
+
 interface CreateAnswerParams {
   answer: number;
   justificative: string;
@@ -116,6 +126,16 @@ interface CreateAnswerParams {
       throw error;
   }
   };
+
+export const deleteAnswer = async (answerId: string) => {
+  try {
+      const response = await api.delete(`/answers/${answerId}`)
+      return response. data
+  } catch (error) {
+    console.error('Error deleting answer:', error);
+    throw error;
+  }
+}
 
 
 export const createAvaliation = async (evaluatorId: string, evaluatedId: string, userAssignmentId: string) => {
