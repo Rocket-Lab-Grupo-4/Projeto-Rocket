@@ -11,7 +11,7 @@ import { assignment } from "@/app/interfaces/assignment";
 import { UserProps } from "@/app/interfaces/user";
 import { avaliation } from "@/app/interfaces/avaliation";
 import { userAssignment } from "@/app/interfaces/userAssignment";
-import { get } from "http";
+import { useRouter } from "next/navigation";
 
 interface Result {
   name: string;
@@ -20,38 +20,13 @@ interface Result {
   userId: string;
   assignmentId: string;
 }
-const avaliations: Avaliation[] = [
-  {
-    name: "Avaliação de desempenho",
-    media: 8.5,
-    dateConcluded: "2021-09-01",
-  },
-  {
-    name: "Avaliação de desempenho",
-    media: 8.5,
-    dateConcluded: "2021-09-01",
-  },
-  {
-    name: "Avaliação de desempenho",
-    media: 8.5,
-    dateConcluded: "2021-09-01",
-  },
-  {
-    name: "Avaliação de desempenho",
-    media: 8.5,
-    dateConcluded: "2021-09-01",
-  },
-  {
-    name: "Avaliação de desempenho",
-    media: 8.5,
-    dateConcluded: "2021-09-01",
-  },
-];
 
 function ControlPanel() {
   const [checked, setChecked] = useState(true);
   const [openDate, setOpenDate] = useState("");
   const [closeDate, setCloseDate] = useState("");
+
+  const router = useRouter();
 
   const handleChange = (checked: boolean) => {
     setChecked(checked);
@@ -443,7 +418,9 @@ function ControlPanel() {
                 width="145px"
                 height="30px"
                 borderRadius="8px"
-                onClick={() => {}}
+                onClick={() => {
+                  router.push(`/equalizacao/${avaliation.userId}?assignmentId=${avaliation.assignmentId}`);
+                }}
               >
                 Avaliar
               </BlueButton>
