@@ -12,8 +12,9 @@ import api from "@/utils/api";
 import { userAssignment } from "@/app/interfaces/userAssignment";
 import { assignment } from "@/app/interfaces/assignment";
 import { useFetchAssignments } from "@/app/hooks/useFetchAssignmnet";
-import OpenAvaliation from './open';
-import CloseAvaliation from './close';
+import OpenAvaliation from "./open";
+import CloseAvaliation from "./close";
+import { useRouter } from "next/navigation";
 
 export type UnionStatusAndAssignment = {
   id: string;
@@ -33,6 +34,8 @@ function HistoricAvaliation() {
   );
   const [assignmentToDo, setAssignmentToDo] = useState<boolean>(false);
   const today = new Date();
+
+  const router = useRouter();
 
   const { fecthAssignmentsByUser, getAllAssignments } = useFetchAssignments();
 
@@ -73,6 +76,19 @@ function HistoricAvaliation() {
     });
   };
 
+  const getLastItemFromAssignments = (
+    assignments: UnionStatusAndAssignment[]
+  ) => {
+    const openAssignments = filterOpenAvaliations(assignments);
+    return assignments[openAssignments.length - 1];
+  };
+
+  const redirectToAssignment = () => {
+    const lastAssignment = getLastItemFromAssignments(assignments);
+    const route = `/Avaliacoes/${lastAssignment.userId}?assignmentId=${lastAssignment.assignmentId}`;
+    router.push(route);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const assignmentsByUser = await fecthAssignmentsByUser(userId);
@@ -106,6 +122,9 @@ function HistoricAvaliation() {
             width="fit-content"
             height="fit-content"
             borderRadius="9px"
+            onClick={() => {
+              redirectToAssignment();
+            }}
           >
             Clique para visualizar
           </BlueButtonColorWhite>

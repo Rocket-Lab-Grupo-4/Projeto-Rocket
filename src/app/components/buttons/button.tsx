@@ -15,6 +15,8 @@ export const BlueButton = styled(Button)<ColorButtonProps>(
     backgroundColor: "#00183C",
     color: "#00F999",
     fontWeight: "bold",
+    fontFamily: 'Montserrat, sans-serif',
+
     "&:hover": {
       backgroundColor: "#0a2e63",
     },
@@ -27,9 +29,10 @@ export const GreenButton = styled(Button)<ColorButtonProps>(
     height: height || "100%",
     borderRadius: borderRadius || "16px",
     backgroundColor: "#00F999",
-    fontWeight: "bold",
-
     color: "#00183C",
+    fontWeight: "bold",
+    fontFamily: 'Montserrat, sans-serif',
+
     "&:hover": {
       backgroundColor: "#30e09d",
     },
@@ -44,6 +47,7 @@ export const BlueButtonColorWhite = styled(Button)<ColorButtonProps>(
     backgroundColor: "#00183C",
     color: "#fff",
     fontWeight: "bold",
+    fontFamily: 'Montserrat, sans-serif',
     "&:hover": {
       backgroundColor: "#0a2e63",
     },
@@ -57,6 +61,7 @@ export const OutlinedButton = styled(Button)<ColorButtonProps>(
     borderRadius: borderRadius || "25px",
     border: "1px solid #00F999",
     color: "#00F999",
+    fontFamily: 'Montserrat, sans-serif',
 
     "&:hover": {
       backgroundColor: "#00F999",

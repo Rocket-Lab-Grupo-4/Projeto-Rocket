@@ -21,7 +21,7 @@ function CustomTabPanel(props: TabPanelProps) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && <Box sx={{ p: 0 }}>{children}</Box>}
+      {value === index && <Box sx={{ p: 0, mt: 0 }}>{children}</Box>}
     </div>
   );
 }
@@ -59,9 +59,19 @@ export default function BasicTabs({ children }: BasicTabsProps) {
             "& .MuiTab-root": {
               minWidth: 0,
               marginRight: 2,
-              padding: "6px 12px",
+              marginBottom: 2,
+              padding: "0px 12px",
               textTransform: "none",
               color: "black",
+              height: "fit-content",
+              borderRadius: "30px",
+              fontFamily: "Montserrat, sans-serif",
+              fontSize: "16px",
+              fontWeight: 600,
+              color: "rgba(0, 24, 60, 1)",
+              "&:hover": {
+                backgroundColor: "#30e09d",
+              },
               "&.Mui-selected": {
                 color: "black",
                 textDecoration: "underline",
@@ -69,8 +79,34 @@ export default function BasicTabs({ children }: BasicTabsProps) {
             },
           }}
         >
-          <Tab label="Em aberto" {...a11yProps(0)} />
-          <Tab label="Finalizadas" {...a11yProps(1)} />
+          <Tab 
+            label="Em aberto" 
+            {...a11yProps(0)} 
+            sx={{
+              backgroundColor: "#00F999",
+              "&:hover": {
+                backgroundColor: "#30e09d",
+              },
+              "&.Mui-selected": {
+                backgroundColor: "#00F999",
+                color: "#00183C",
+              },
+            }}
+          />
+          <Tab 
+            label="Finalizadas" 
+            {...a11yProps(1)} 
+            sx={{
+              backgroundColor: "#00F999",
+              "&:hover": {
+                backgroundColor: "#30e09d",
+              },
+              "&.Mui-selected": {
+                backgroundColor: "#00F999",
+                color: "#00183C",
+              },
+            }}
+          />
         </Tabs>
       </Box>
       {children.map((child, index) => (

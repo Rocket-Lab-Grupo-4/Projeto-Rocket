@@ -1,8 +1,11 @@
 import React from "react";
 import styles from "./Home.module.scss";
 import Perfil from "@/app/components/perfil/perfil";
+import { useRouter } from "next/navigation";
 
 export default function HomeEmployee() {
+  const router = useRouter();
+
   return (
     <div className={styles.container}>
       <div className={styles.headerRight}>
@@ -52,7 +55,14 @@ export default function HomeEmployee() {
           </div>
         </div>
       </div>
-      <button className={styles.beginButton}>Começar Avaliações</button>
+      <button
+        className={styles.beginButton}
+        onClick={() => {
+          router.push("/Avaliacoes");
+        }}
+      >
+        Começar Avaliações
+      </button>
     </div>
   );
 }

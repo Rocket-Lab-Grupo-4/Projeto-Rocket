@@ -380,16 +380,16 @@ function ControlPanel() {
             trashClick={deleteAssignment}
           />
         </div>
-        <div className={styles.containerSwitch}>
+        <div className={styles.containerSearchbar}>
+          <p className={styles.title}>
+            Para encontrar um colaborador específico, basta pesquisar:
+          </p>
+          <SearchBar onSearch={filtercolaboratorByName} />
+        </div>
+        {/* <div className={styles.containerSwitch}>
           <p>Controle manual dos ciclos de avaliação:</p>
           <ControlledSwitches getValues={handleChange} />
-        </div>
-      </div>
-      <div>
-        <p className={styles.title}>
-          Para encontrar um colaborador específico, basta pesquisar:
-        </p>
-        <SearchBar onSearch={filtercolaboratorByName} />
+        </div> */}
       </div>
 
       <div>
@@ -419,7 +419,9 @@ function ControlPanel() {
                 height="30px"
                 borderRadius="8px"
                 onClick={() => {
-                  router.push(`/equalizacao/${avaliation.userId}?assignmentId=${avaliation.assignmentId}`);
+                  router.push(
+                    `/equalizacao/${avaliation.userId}?assignmentId=${avaliation.assignmentId}`
+                  );
                 }}
               >
                 Avaliar

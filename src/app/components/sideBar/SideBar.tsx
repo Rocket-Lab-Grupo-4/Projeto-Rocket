@@ -49,7 +49,9 @@ const SideBar = ({ children }: { children: React.ReactNode }) => {
     <div className={styles.wrapper}>
       <div className={styles.sidebar}>
         <div className={styles.sidebarHeader}>
-          <img src="/assets/logo-side.png" alt="Logo" className={styles.logo} />
+          <Link href="/Home">
+            <img src="/assets/logo-side.png" alt="Logo" className={styles.logo} />
+          </Link>
         </div>
         <nav className={styles.sidebarNav}>
           <ul>

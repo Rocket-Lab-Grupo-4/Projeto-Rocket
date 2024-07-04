@@ -40,6 +40,10 @@
   font-weight: 600;
 }
 
+.sidebarNav ul li.active {
+  position: relative;
+}
+
 .sidebarNav ul li.active a {
   color: #00f999;
 }
@@ -47,12 +51,12 @@
 .sidebarNav ul li.active::before {
   content: "";
   position: absolute;
-  left: -70px;
-  top: 50%;
-  transform: translateY(-50%);
+  left: -2.5rem; 
+  top: 0;
+  height: 100%;
   width: 5px;
-  height: 50px;
   background-color: #00f999;
+  border-radius: 0px 3px 3px 0px;
 }
 
 .content {
