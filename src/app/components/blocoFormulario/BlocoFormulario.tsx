@@ -194,7 +194,7 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
       {isManager && (
 
         <>
-        <p>Nesse critério, o colaborador se avaliou com nota {autoAnswer}</p>
+        <p>Nesse critério, o colaborador se avaliou com nota <b>{autoAnswer}</b></p>
         <div className={styles.responseOptions}>
         {[1, 2, 3, 4, 5].map((value) => (
           <label key={value}>

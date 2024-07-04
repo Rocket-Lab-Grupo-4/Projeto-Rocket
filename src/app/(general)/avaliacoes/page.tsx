@@ -3,17 +3,14 @@
 import React from "react";
 import QuestionsPage from "@/app/components/blocoFormulario/QuestionsPage";
 import styles from "./Avaliacoes.module.scss"
+import Perfil from "@/app/components/perfil/perfil";
 
 export default function Avaliacoes() {
   return (
 
     <div className={styles.container}>
       <div className={styles.headerRight}>
-        <div className={styles.notificationIcon}>🔔</div>
-        <div className={styles.welcomeText}>
-          <span>Bem-vinda, Maria!</span>          
-          <img src="/assets/image-perfil.png" alt="Profile" className={styles.profilePic} />
-        </div>
+        <Perfil name={""} badge={false} />
       </div>
       <header className={styles.header}>
         <h2>Ciclo de Avaliações</h2>
@@ -33,10 +30,6 @@ export default function Avaliacoes() {
         </div>
         <QuestionsPage />
       </div>
-      {/* <div className={styles.footerButtons}>
-        <button className={styles.cancelButton}>Cancelar</button>
-        <button className={styles.submitButton}>Enviar</button>
-      </div> */}
     </div>
   );
 }
