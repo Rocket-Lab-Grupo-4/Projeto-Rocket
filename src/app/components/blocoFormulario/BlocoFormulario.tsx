@@ -9,6 +9,7 @@ import useActiveLink from "@/app/hooks/useActiveLink";
 
 const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, questionId, isManager, avaliationId, answerId, onAnswerChange }) => {
   const [answer, setAnswer] = useState<number | null>(null);
+  const [hasAnswer, setHasAnswer] = useState(false);
   const [autoAnswer, setAutoAnswer] = useState()
   const [justificative, setJustificative] = useState('');
   const [existingAnswer, setExistingAnswer] = useState<any | null>(null)
@@ -25,6 +26,10 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
     try {
       const data = await getAnswersByEvaluatedId({ questionId, avaliationId, evaluatedId });
       const answerData = data.find((item: any) => item.questionId === questionId)
+      if (answerData) {
+        setHasAnswer(true)
+      }
+  
       if (answerData) {
         setExistingAnswer(answerData);
         setAnswer(answerData.answer);
@@ -187,8 +192,16 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
 
   return (
     <div className={styles.blocoFormulario}>
-      <h3>{title}</h3>
+      
 
+      <div className={styles.header}>
+      <h3>{title}</h3>
+      {hasAnswer ? (
+                    <img src="/assets/imageMarked.png" alt="Respondido" className={styles.statusIcon} />
+                ) : (
+                    <img src="/assets/imageUnmarked.png" alt="Não Respondido" className={styles.statusIcon}/>
+                )}
+      </div>
 
       {/* tela para o gestor */}
       {isManager && (
@@ -202,7 +215,7 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
               type="radio"
               name={questionId}
               value={value}
-              checked={answer === value}
+              checked={answer === value}            
               onChange={() => handleAnswerChange(value)}
             />
             {value}
