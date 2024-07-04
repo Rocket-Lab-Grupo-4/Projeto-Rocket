@@ -4,7 +4,7 @@ import { BlueButton } from "@/app/components/buttons/button";
 import { formatDate } from '@/utils/formatDate';
 import { UnionStatusAndAssignment } from './page';
 
-function Avaliation({
+function CloseAvaliation({
   avaliations,
 }: {
   avaliations: UnionStatusAndAssignment[];
@@ -42,4 +42,4 @@ function Avaliation({
   );
 }
 
-export default Avaliation;
+export default CloseAvaliation;

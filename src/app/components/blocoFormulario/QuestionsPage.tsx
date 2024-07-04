@@ -1,63 +1,92 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
-import { fetchQuestions, fetchUserById, getAvaliation, createAvaliation } from '@/app/services/apiService';
-import BlocoFormulario from './BlocoFormulario';
+import React, { useEffect, useState } from "react";
+import {
+  fetchQuestions,
+  fetchUserById,
+  getAvaliation,
+  createAvaliation,
+  fetchUserAssignmentByUserAndAssignment,
+} from "@/app/services/apiService";
+import BlocoFormulario from "./BlocoFormulario";
+import { useParams ,useSearchParams } from "next/navigation";
+import api from '@/utils/api';
 
 const QuestionsPage: React.FC = () => {
   const [questions, setQuestions] = useState([]);
   const [isManager, setIsManager] = useState(false);
   const [avaliationId, setAvaliationId] = useState<string | null>(null);
 
-  const [evaluatorId] = useState('clxtlh00m0001cvzgd7gq1tjl'); // id de gestor
   //const [evaluatorId] = useState('clxtlggn60000cvzgissdxodd'); // id de colaborador
-  const [evaluatedId] = useState('clxtlggn60000cvzgissdxodd');
-  const [userAssignmentId, setUserAssignmentId] = useState<string>('clxtnd6ck0001pvd78ds4au1v'); // id do ciclo de avaliação para teste
-
+  // const [userAssignmentId] = useState<string>("clxtnd6ck0001pvd78ds4au1v"); // id do ciclo de avaliação para teste
+  
+  const params = useParams(); // Para obter o userId da rota dinâmica
+  const searchParams = useSearchParams(); 
+  
+  const userId = String(params.id);
+  const assignmentId = searchParams.get('assignmentId') ?? '';
+  
+  const [evaluatorId] = useState(userId);
+  const [evaluatedId] = useState(userId);
+  
   useEffect(() => {
     const initializePage = async () => {
       try {
 
+        console.log("user:", userId, 'assignmnet:', assignmentId)
+
         const user = await fetchUserById(evaluatorId);
         setIsManager(user.manager);
         const avaliationType = user.manager
-          ? 'avaliationByManager'
+          ? "avaliationByManager"
           : evaluatorId === evaluatedId
-          ? 'autoAvaliation'
+          ? "autoAvaliation"
           : null;
 
-        if (!avaliationType) throw new Error('Invalid evaluation type');
+        if (!avaliationType) throw new Error("Invalid evaluation type");
 
-        const existingAvaliation = await getAvaliation(evaluatorId, evaluatedId);
-        
-        console.log("userAssignmentId antes da criação:", userAssignmentId);
+        const existingAvaliation = await getAvaliation(
+          evaluatorId,
+          evaluatedId
+        );
 
-        if (existingAvaliation) {
+
+        if (existingAvaliation.length > 0) {
+          console.log("Avaliação já existe:");
           //debugger
           setAvaliationId(existingAvaliation.id);
         } else {
-          //debugger
-          const avaliationResponse = await createAvaliation(evaluatorId, evaluatedId, userAssignmentId);
-          console.log('Avaliação criada com sucesso')
-          console.log(userAssignmentId)
-          setAvaliationId(avaliationResponse.id);
-        }
+          console.log("Avaliação não existe, criando...");
+          const response = await fetchUserAssignmentByUserAndAssignment(
+            String(userId),
+            assignmentId
+          )
+          const userAssignmentId = response.id;
 
+          const avaliationType = evaluatedId === evaluatorId ? 'autoavaliation ' : 'avaliationbymanager';
+
+          const avaliation = await api.post(`/avaliation/${evaluatorId}/${evaluatedId}`, {
+            avaliationType,
+            userAssignmentId,
+            media: 0,
+          });
+
+          console.log('Avaliação criada com sucesso:');
+          setAvaliationId(avaliation.data.id);
+        }
 
         const data = await fetchQuestions();
         setQuestions(data);
-
-
       } catch (error) {
-        console.error('Error initializing page:', error);
+        console.error("Error initializing page:", error);
       }
     };
 
     initializePage();
-  }, [evaluatorId, evaluatedId, userAssignmentId]);
+  }, [evaluatorId, evaluatedId]);
 
   const handleAnswerChange = (answer: number, justificative: string) => {
-    console.log('Answer:', answer, 'Justificative:', justificative);
+    console.log("Answer:", answer, "Justificative:", justificative);
   };
 
   const criteriosComportamentais = questions.slice(0, 5);
@@ -65,35 +94,35 @@ const QuestionsPage: React.FC = () => {
 
   return (
     <div>
-    <div>
-      <h3>Critérios Comportamentais:</h3>
-      {criteriosComportamentais.map((question: any) => (
-        <BlocoFormulario
-          key={question.id}
-          title={question.title}
-          question={question.question}
-          questionId={question.id}
-          avaliationId={avaliationId}
-          answerId={question.answerId}
-          onAnswerChange={handleAnswerChange}
-          isManager={isManager}
+      <div>
+        <h3>Critérios Comportamentais:</h3>
+        {criteriosComportamentais.map((question: any) => (
+          <BlocoFormulario
+            key={question.id}
+            title={question.title}
+            question={question.question}
+            questionId={question.id}
+            avaliationId={avaliationId}
+            answerId={question.answerId}
+            onAnswerChange={handleAnswerChange}
+            isManager={isManager}
           />
-      ))}
+        ))}
 
-      <h3>Critérios de Execução:</h3>
-      {criteriosDeExecucao.map((question: any) => (
-        <BlocoFormulario
-          key={question.id}
-          title={question.title}
-          question={question.question}
-          questionId={question.id}
-          avaliationId={avaliationId}
-          answerId={question.answerId}
-          onAnswerChange={handleAnswerChange} 
-          isManager={isManager}
-        />
-      ))}
-    </div>
+        <h3>Critérios de Execução:</h3>
+        {criteriosDeExecucao.map((question: any) => (
+          <BlocoFormulario
+            key={question.id}
+            title={question.title}
+            question={question.question}
+            questionId={question.id}
+            avaliationId={avaliationId}
+            answerId={question.answerId}
+            onAnswerChange={handleAnswerChange}
+            isManager={isManager}
+          />
+        ))}
+      </div>
     </div>
   );
 };

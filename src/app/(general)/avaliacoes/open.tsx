@@ -4,13 +4,16 @@ import { BlueButton, GreenButton } from "@/app/components/buttons/button";
 import ErrorIcon from "@mui/icons-material/Error";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { formatDate } from "@/utils/formatDate";
-import { UnionStatusAndAssignment } from './page';
+import { UnionStatusAndAssignment } from "./page";
+import { useRouter } from "next/navigation";
 
 function OpenAvaliation({
   avaliations,
 }: {
   avaliations: UnionStatusAndAssignment[];
 }) {
+  const router = useRouter();
+
   return (
     <div>
       <div className={styles.lineGrey}>
@@ -55,7 +58,9 @@ function OpenAvaliation({
                 width="145px"
                 height="30px"
                 borderRadius="8px"
-                onClick={() => {}}
+                onClick={() => {
+                  router.push(`/Avaliacoes/${avaliation.userId}?assignmentId=${avaliation.assignmentId}`);
+                }}
               >
                 Alterar
               </GreenButton>

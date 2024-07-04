@@ -143,7 +143,7 @@ export const createAvaliation = async (evaluatorId: string, evaluatedId: string,
   try {
     const user = await fetchUserById(evaluatorId)
     const avaliationType = user.manager
-    ? 'avaliationByManager'
+    ? 'avaliationbymanager'
     : evaluatorId === evaluatedId
     ? 'autoavaliation'
     : null
@@ -152,13 +152,20 @@ export const createAvaliation = async (evaluatorId: string, evaluatedId: string,
 
     const media = 0;
 
+    console.log(
+      'user:', evaluatorId, 
+      'evaluated:', evaluatedId, 
+      'avaliationType:', avaliationType,
+      'userAssignmentId:', userAssignmentId,
+      'media', media
+    )
 
-    const response = await api.post(`/avaliation/${evaluatorId}/${evaluatedId}`, { 
-      avaliationType, 
-      userAssignmentId, 
-      media 
-    })
-    return response.data
+    // const response = await api.post(`/avaliation/${evaluatorId}/${evaluatedId}`, { 
+      // avaliationType, 
+      // userAssignmentId,
+      // media 
+    // })
+    // return response.data
 
   } catch (error) {
     console.error('Error creating avaliation: ', error);
@@ -208,6 +215,16 @@ export const fetchUserById = async (userId: string) => {
     return response.data
   } catch (error) {
     console.error('Error fetching user: ', error)
+    throw error
+  }
+}
+
+export const fetchUserAssignmentByUserAndAssignment = async (userId: string, assignmentId: string) => {
+  try {
+    const response = await api.get(`/user-assignment/userAssignment/${userId}/${assignmentId}`)
+    return response.data
+  } catch (error) {
+    console.error('Error fetching user assignment: ', error)
     throw error
   }
 }

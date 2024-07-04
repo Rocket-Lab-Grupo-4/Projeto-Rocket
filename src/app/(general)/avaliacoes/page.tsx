@@ -6,14 +6,14 @@ import {
   SpeechBubbleBig,
 } from "@/app/components/speechBubble/bubble";
 import BasicTabs from "@/app/components/tabs/tabs";
-import OpenAvaliation from "./open";
-import CloseAvaliation from "./close";
 import { BlueButtonColorWhite } from "@/app/components/buttons/button";
 import { useEffect, useState } from "react";
 import api from "@/utils/api";
 import { userAssignment } from "@/app/interfaces/userAssignment";
 import { assignment } from "@/app/interfaces/assignment";
 import { useFetchAssignments } from "@/app/hooks/useFetchAssignmnet";
+import OpenAvaliation from './open';
+import CloseAvaliation from './close';
 
 export type UnionStatusAndAssignment = {
   id: string;
