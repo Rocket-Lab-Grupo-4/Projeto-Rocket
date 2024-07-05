@@ -59,6 +59,7 @@ const QuestionsPage: React.FC = () => {
 
         console.log("existingAvaliation:", existingAvaliation);
 
+        debugger
         if (existingAvaliation) {
           console.log("Avaliação já existe:", existingAvaliation);
           setAvaliationId(existingAvaliation.id);

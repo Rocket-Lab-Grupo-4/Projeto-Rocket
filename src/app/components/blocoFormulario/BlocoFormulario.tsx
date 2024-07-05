@@ -33,12 +33,29 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
   const fetchData = async () => {
     
     try {
-      const data = await getAnswersByEvaluatedId({ questionId, avaliationId, evaluatedId });
-      const answerData = data.find((item: any) => item.questionId === questionId
-      && item.avaliationId === avaliationId
-      && item.evaluatedId === evaluatedId
-      // para funcionar a equalizaçao deve ver evaluator
-      );
+      let answerData;
+
+      if (!isManager) {
+        const data = await getAnswersByEvaluatedId({ questionId, avaliationId, evaluatedId });
+        answerData = data.find((item: any) => item.questionId === questionId
+        && item.avaliationId === avaliationId
+        && item.evaluatedId === evaluatedId
+        // para funcionar a equalizaçao deve ver evaluator
+        );
+      } else {
+        debugger
+        const data = await getAnswersByEvaluatedId({ questionId, avaliationId, evaluatedId });
+        console.log('data:', data)
+        const answers = await getAnswersByAvaliationId(data[0].avaliationId);
+
+        console.log('answers:', answers)
+
+        // answerData = data.find((item: any) => item.questionId === questionId
+        // && item.avaliationId === avaliationId
+        
+        // // para funcionar a equalizaçao deve ver evaluator
+        // );
+      }
 
       if (answerData) {
         setHasAnswer(true)
