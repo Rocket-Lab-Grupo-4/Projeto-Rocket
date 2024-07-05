@@ -24,9 +24,9 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
   // const evaluatorId = 'clxtlh00m0001cvzgd7gq1tjl' // id de gestor
   // const evaluatorId = 'clxtlggn60000cvzgissdxodd'; // id de colaborador
   // const evaluatedId = 'clxtlggn60000cvzgissdxodd'
-  const [userAssignmentId, setUserAssignmentId] = useState<string>('clxtnd6ck0001pvd78ds4au1v'); // id do ciclo de avaliação para teste
+  // const [userAssignmentId, setUserAssignmentId] = useState<string>('clxtnd6ck0001pvd78ds4au1v'); // id do ciclo de avaliação para teste
 
-  const { activeLink, handleLinkClick } = useActiveLink();
+  // const { activeLink, handleLinkClick } = useActiveLink();
 
   const { data: session } = useSession();
   const { id } = useParams();
@@ -70,7 +70,7 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
 
 
         // console.log('colaboratornswerData:', colaboratornswerData)
-        setAutoAnswer(colaboratornswerData.answer);
+        // setAutoAnswer(colaboratornswerData.answer);
 
         // answerData = data.find((item: any) => item.questionId === questionId
         // && item.avaliationId === avaliationId
