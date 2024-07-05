@@ -25,8 +25,13 @@ const certificateList = ["liderança", "soft skills", "comunicação positiva"];
 
 export default function Resultados() {
 
+  // const [userId, setUserId] = useState(''); 
+  const { id } = useParams();
   const { data: session } = useSession();
   const userId = session?.user.id;
+
+  const [colaborator, setColaborator] = useState({} as UserProps);
+
 
   const [user, setUser] = useState({} as UserProps);
   const [manager, setManager] = useState(false);
@@ -73,9 +78,17 @@ export default function Resultados() {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const response = await api.get(`/user/${userId}`);
+
+      if(id) {
+        const response = await api.get(`/user/${userId}`);
+        setManager(response.data.manager);
+      }
+      
+      const usertoFetch = id ?? userId;
+
+      const response = await api.get(`/user/${usertoFetch}`);
       setUser(response.data);
-      setManager(response.data.manager);
+      // setManager(response.data.manager);
 
       const assignmentsByUser = await fecthAssignmentsByUser(userId ?? '');
 

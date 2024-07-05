@@ -43,9 +43,6 @@ function ControlPanel() {
     { id: string; dateOpened: string; dateConcluded: string }[]
   >([]);
 
-  const [filteredColaborators, setFilteredColaborators] = useState<UserProps[]>(
-    []
-  );
   const getAssignment = useCallback(async () => {
     const responseGet = await api.get("/assignment");
     // console.log(responseGet.data);
@@ -305,6 +302,7 @@ function ControlPanel() {
     const colaborators = filtercolaborator(responseGet.data);
     // console.log("colaboradores:", colaborators);
 
+    setFilteredColaborators(colaborators);
     setcolaborators(colaborators);
   }
 
@@ -314,25 +312,38 @@ function ControlPanel() {
     });
   };
 
-  const filtercolaboratorByName = (name: string) => {
-    // console.log("name:", name);
+  // const filtercolaboratorByName = (name: string) => {
+  //   // console.log("name:", name);
 
-    const filteredColaborators = colaboratorsToEqualization.filter(
-      (colaborator) => {
-        return colaborator.name.toLowerCase().includes(name.toLowerCase());
-      }
+  //   const filteredColaborators = colaborators.filter(
+  //     (colaborator) => {
+  //       return colaborator.name.toLowerCase().includes(name.toLowerCase());
+  //     }
+  //   );
+  //   // setColaboratorsToEqualization(filteredColaborators);
+
+  //   // if (filteredColaborators.length === 0) {
+  //   //   const colaboratorsToEqualization = linkAttributes(
+  //   //     userNotEvaluated,
+  //   //     assignmentNotEvaluated,
+  //   //     avaliationNotEvaluated,
+  //   //     userAssignmentsNotEvaluated.flat()
+  //   //   );
+  //   //   setColaboratorsToEqualization(colaboratorsToEqualization);
+  //   // }
+  // };
+
+  const [filteredColaborators, setFilteredColaborators] = useState(
+    [] as UserProps[]
+  );
+  const handleSearch = (query: string) => {
+    console.log("filteredColaborators:", filteredColaborators);
+    const lowercasedQuery = query.toLowerCase();
+    const filtered = filteredColaborators.filter((user) =>
+      user.name.toLowerCase().includes(lowercasedQuery)
     );
-    setColaboratorsToEqualization(filteredColaborators);
-
-    if (filteredColaborators.length === 0) {
-      const colaboratorsToEqualization = linkAttributes(
-        userNotEvaluated,
-        assignmentNotEvaluated,
-        avaliationNotEvaluated,
-        userAssignmentsNotEvaluated.flat()
-      );
-      setColaboratorsToEqualization(colaboratorsToEqualization);
-    }
+    console.log("filtered:", filtered);
+    setFilteredColaborators(filtered);
   };
 
   function linkAttributes(
@@ -355,7 +366,7 @@ function ControlPanel() {
 
         if (assignment) {
           const userAvaliations = avaliations.filter(
-            (avaliation) => avaliation.userAssignmentId === userAssignment.id            
+            (avaliation) => avaliation.userAssignmentId === userAssignment.id
           );
 
           userAvaliations.forEach((avaliation) => {
@@ -380,7 +391,7 @@ function ControlPanel() {
         <Perfil badge={false} />
       </div>
       <div className={styles.sectionOne}>
-        <div>
+        <div className={styles.containerNewCicle}>
           <p className={styles.title}>Programe um novo ciclo:</p>
           <NewCicle
             programatedCicle={OpenAndCloseDates}
@@ -393,7 +404,19 @@ function ControlPanel() {
           <p className={styles.title}>
             Para encontrar um colaborador específico, basta pesquisar:
           </p>
-          <SearchBar onSearch={filtercolaboratorByName} />
+          <SearchBar onSearch={handleSearch} />
+          <ul>
+            {filteredColaborators.map((u) => (
+              <li
+                key={u.id}
+                onClick={() => {
+                  router.push(`/Resultados/${u.id}`);
+                }}
+              >
+                {u.name} {u.id} 
+              </li>
+            ))}
+          </ul>
         </div>
         {/* <div className={styles.containerSwitch}>
           <p>Controle manual dos ciclos de avaliação:</p>

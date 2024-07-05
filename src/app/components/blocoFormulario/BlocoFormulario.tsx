@@ -130,7 +130,7 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
       setShowPopup(true);
       setTimeout(() => {
         setShowPopup(false);
-        window.location.href = '/home'; 
+        window.location.href = '/Home'; 
       }, 1500); 
     }
   };
