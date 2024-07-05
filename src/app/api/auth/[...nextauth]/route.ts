@@ -21,7 +21,7 @@ const nextAuthOptions: NextAuthOptions = {
 
         if (
           credentials &&
-          credentials.username === "Maria Aline" &&
+          credentials.username === "Maria José" &&
           credentials.password === "123456"
         ) {
           return manager;
@@ -53,39 +53,39 @@ const handler = NextAuth(nextAuthOptions);
 export { handler as GET, handler as POST, nextAuthOptions };
 
 const colaborator: UserProps = {
-  id: "caksljddjaskld",
+  id: "clxtlggn60000cvzgissdxodd",
   image:
-    "https://images.unsplash.com/photo-1615109398623-88346a601842?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fG1hbnxlbnwwfHwwfHx8MA%3D%3D",
-  name: "john doe",
-  office: "developer",
-  dateNaissance: "07/07/1997",
-  rg: "9999999",
-  adress: "Rua das flores, 123",
-  ctps: "1234567890",
+    "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?q=80&w=1476&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  name: "John Doe",
+  office: "Developer",
+  dateNaissance: "1990-01-01T00:00:00.000Z",
+  rg: "123456789",
+  adress: "123 Main St, City, State, Country",
+  ctps: "123456789",
   issuingBody: "SSP",
-  number: "1234567890",
-  cpf: "1234567890-00",
-  cep: "12345-678",
-  complement: "apto 123",
+  number: "123456789",
+  cpf: "123456789",
+  cep: "12345678",
+  complement: "Apt 123",
   manager: false,
   password: "123456",
 };
 
 const manager: UserProps = {
-  id: "caksljddjaskld",
+  id: "clxtlh00m0001cvzgd7gq1tjl",
   image:
-    "https://images.unsplash.com/photo-1615109398623-88346a601842?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fG1hbnxlbnwwfHwwfHx8MA%3D%3D",
-  name: "Maria Aline",
-  office: "Manager",
-  dateNaissance: "06/06/1996",
-  rg: "9999999",
-  adress: "Rua das lagos, 123",
-  ctps: "1234567890",
-  issuingBody: "SDS",
-  number: "1234567890",
-  cpf: "1234567890-00",
-  cep: "12345-678",
-  complement: "apto 321",
+    "https://images.unsplash.com/photo-1664575600850-c4b712e6e2bf?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  name: "Maria José",
+  office: "Developer",
+  dateNaissance: "1990-01-01T00:00:00.000Z",
+  rg: "123456789",
+  adress: "123 Main St, City, State, Country",
+  ctps: "123456789",
+  issuingBody: "SSP",
+  number: "123456789",
+  cpf: "12345678910",
+  cep: "12345678",
+  complement: "Apt 123",
   manager: true,
   password: "123456",
 };

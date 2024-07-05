@@ -4,6 +4,7 @@ import Badge, { BadgeProps } from "@mui/material/Badge";
 import styles from "./Perfil.module.scss";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { IconButton, styled } from "@mui/material";
+import { useSession } from "next-auth/react";
 
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -17,12 +18,15 @@ const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
 }));
 
 interface PerfilProps {
-  picture?: string;
-  name: string;
   badge: boolean;
 }
 
-function Perfil({ picture, name, badge }: PerfilProps) {
+function Perfil({ badge }: PerfilProps) {
+  const { data: session, status } = useSession();
+
+  const name = session?.user?.name;
+  const picture = session?.user?.image;
+
   return (
     <div className={styles.headerRight}>
       <IconButton

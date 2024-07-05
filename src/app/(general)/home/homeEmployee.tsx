@@ -9,7 +9,7 @@ export default function HomeEmployee() {
   return (
     <div className={styles.container}>
       <div className={styles.headerRight}>
-        <Perfil name={""} badge={false} />
+        <Perfil badge={false} />
       </div>
       <div>
         <div className={styles.content}>

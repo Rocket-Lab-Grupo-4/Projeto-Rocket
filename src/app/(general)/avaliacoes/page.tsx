@@ -15,6 +15,7 @@ import { useFetchAssignments } from "@/app/hooks/useFetchAssignmnet";
 import OpenAvaliation from "./open";
 import CloseAvaliation from "./close";
 import { useRouter } from "next/navigation";
+import { useSession } from 'next-auth/react';
 
 export type UnionStatusAndAssignment = {
   id: string;
@@ -26,9 +27,13 @@ export type UnionStatusAndAssignment = {
   userId: string;
 };
 
-const userId = "clxtlggn60000cvzgissdxodd";
+// const userId = "clxtlggn60000cvzgissdxodd";
 
 function HistoricAvaliation() {
+
+  const { data: session } = useSession();
+  const userId = session?.user.id;
+
   const [assignments, setAssignments] = useState<UnionStatusAndAssignment[]>(
     []
   );
@@ -91,7 +96,7 @@ function HistoricAvaliation() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const assignmentsByUser = await fecthAssignmentsByUser(userId);
+      const assignmentsByUser = await fecthAssignmentsByUser(userId ?? "");
       const assignmentIds = assignmentsByUser.map((au) => au.assignmentId);
       const fetchedAssignments = await getAllAssignments(assignmentIds);
 
@@ -113,7 +118,7 @@ function HistoricAvaliation() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <Perfil name={"Maria"} badge={true} />
+        <Perfil badge={false} />
       </div>
       {assignmentToDo ? (
         <SpeechBubbleBig>

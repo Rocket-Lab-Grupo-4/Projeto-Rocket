@@ -10,7 +10,7 @@ export default function Avaliacoes() {
 
     <div className={styles.container}>
       <div className={styles.headerRight}>
-        <Perfil name={""} badge={false} />
+        <Perfil badge={false} />
       </div>
       <header className={styles.header}>
         <h2>Ciclo de Avaliações</h2>

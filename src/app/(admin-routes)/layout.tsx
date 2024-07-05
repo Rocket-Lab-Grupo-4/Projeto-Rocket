@@ -12,7 +12,6 @@ export default async function PrivateLayout({ children }: PrivateLayoutProps) {
 
   if (!session) {
     redirect('/login')
-    console.log('no session found, redirecting to login page')
   }
 
   return <div>{children}</div>;

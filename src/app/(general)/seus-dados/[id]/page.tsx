@@ -7,10 +7,15 @@ import api from "@/utils/api";
 import { BlueButton, GreenButton } from "@/app/components/buttons/button";
 import { formatDate } from "@/utils/formatDate";
 import { InputTextField } from "@/app/components/inputs";
+import { useSession } from 'next-auth/react';
 
-const userId = "clxtlggn60000cvzgissdxodd";
+// const userId = "clxtlggn60000cvzgissdxodd";
 
 export default function SeusDados() {
+
+  const { data: session } = useSession();
+  const userId = session?.user.id;
+
   const params = useParams();
   const [user, setUser] = useState<UserProps>({} as UserProps);
   const [updatedUser, setUpdatedUser] = useState<UserProps>({} as UserProps);

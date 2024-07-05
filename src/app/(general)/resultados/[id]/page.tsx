@@ -4,10 +4,8 @@ import React, { useEffect, useState } from "react";
 import styles from "./results.module.scss";
 import LineChartComponent from "@/app/components/charts/lineCharts";
 import PieChartComponent from "@/app/components/charts/pieCharts";
-import { LineData, PieData } from "./dataCharts";
 import { BlueButton } from "@/app/components/buttons/button";
 import { avaliation } from "@/app/interfaces/avaliation";
-import ReportPDF from "./pdf";
 import BlocoResumo from "@/app/components/blocoResumo/BlocoResumo";
 import { useParams } from "next/navigation";
 import api from "@/utils/api";
@@ -17,12 +15,19 @@ import Perfil from "@/app/components/perfil/perfil";
 import { useFetchAssignments } from "@/app/hooks/useFetchAssignmnet";
 import { assignment } from "@/app/interfaces/assignment";
 import { formatDate } from "@/utils/formatDate";
+import { useSession } from 'next-auth/react';
+import ReportPDF from './pdf';
+import { PieData } from './dataCharts';
 
 const certificateList = ["liderança", "soft skills", "comunicação positiva"];
 
-const userId = "clxtlggn60000cvzgissdxodd";
+// const userId = "clxtlggn60000cvzgissdxodd";
 
 export default function Resultados() {
+
+  const { data: session } = useSession();
+  const userId = session?.user.id;
+
   const [user, setUser] = useState({} as UserProps);
   const [manager, setManager] = useState(false);
   const [avaliations, setAvaliations] = useState([] as assignment[]);
@@ -72,7 +77,7 @@ export default function Resultados() {
       setUser(response.data);
       setManager(response.data.manager);
 
-      const assignmentsByUser = await fecthAssignmentsByUser(userId);
+      const assignmentsByUser = await fecthAssignmentsByUser(userId ?? '');
 
       // get avaliations name, dates
       const assignmentIds = assignmentsByUser.map((au) => au.assignmentId);
@@ -104,7 +109,7 @@ export default function Resultados() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <Perfil picture={user.image} name={user.name} badge={false} />
+        <Perfil badge={false} />
       </div>
       
       {manager ? (

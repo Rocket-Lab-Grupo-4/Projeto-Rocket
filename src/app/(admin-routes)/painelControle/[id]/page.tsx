@@ -12,6 +12,8 @@ import { UserProps } from "@/app/interfaces/user";
 import { avaliation } from "@/app/interfaces/avaliation";
 import { userAssignment } from "@/app/interfaces/userAssignment";
 import { useRouter } from "next/navigation";
+import Perfil from '@/app/components/perfil/perfil';
+import { useSession } from 'next-auth/react';
 
 interface Result {
   name: string;
@@ -370,6 +372,10 @@ function ControlPanel() {
   }
   return (
     <div className={styles.container}>
+      <div className={styles.header}>
+        <h2 className={styles.title}>Painel de controle</h2>
+        <Perfil badge={false} />
+      </div>
       <div className={styles.sectionOne}>
         <div>
           <p className={styles.title}>Programe um novo ciclo:</p>

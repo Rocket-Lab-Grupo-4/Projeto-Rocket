@@ -12,7 +12,7 @@ export default function Equalizacao() {
         <div className={styles.container}>
 
             <div className={styles.headerRight}>
-            <Perfil name={""} badge={false} />
+            <Perfil badge={false} />
             </div>
             <header className={styles.header}>
                 <h2>Avaliação do gestor: </h2>

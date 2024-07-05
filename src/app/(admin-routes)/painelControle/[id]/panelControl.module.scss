@@ -7,6 +7,24 @@
 
 }
 
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  height: fit-content;
+}
+
+.title {
+  font-family: Montserrat;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24.38px;
+  color: #00183C;
+}
+
 .sectionOne {
   display: flex;
   flex-direction: row;
