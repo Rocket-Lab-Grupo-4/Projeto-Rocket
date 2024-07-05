@@ -11,6 +11,7 @@ import {
 import BlocoFormulario from "./BlocoFormulario";
 import { useParams ,useSearchParams } from "next/navigation";
 import api from '@/utils/api';
+import { useSession } from 'next-auth/react';
 
 const QuestionsPage: React.FC = () => {
   const [questions, setQuestions] = useState([]);
@@ -25,8 +26,10 @@ const QuestionsPage: React.FC = () => {
   
   const userId = String(params.id);
   const assignmentId = searchParams.get('assignmentId') ?? '';
+
+  const { data: session } = useSession();
   
-  const [evaluatorId] = useState(userId);
+  const [evaluatorId] = useState(session?.user?.id);
   const [evaluatedId] = useState(userId);
   
   useEffect(() => {
@@ -35,7 +38,7 @@ const QuestionsPage: React.FC = () => {
 
         console.log("user:", userId, 'assignmnet:', assignmentId)
 
-        const user = await fetchUserById(evaluatorId);
+        const user = await fetchUserById(evaluatorId ?? '');
         setIsManager(user.manager);
         const avaliationType = user.manager
           ? "avaliationByManager"
@@ -46,15 +49,13 @@ const QuestionsPage: React.FC = () => {
         if (!avaliationType) throw new Error("Invalid evaluation type");
 
         const existingAvaliation = await getAvaliation(
-          evaluatorId,
+          evaluatorId ?? '',
           evaluatedId
         );
 
-
         if (existingAvaliation.length > 0) {
-          console.log("Avaliação já existe:");
-          //debugger
-          setAvaliationId(existingAvaliation.id);
+            console.log("Avaliação já existe:", existingAvaliation[0].id);
+          setAvaliationId(existingAvaliation[0].id);
         } else {
           console.log("Avaliação não existe, criando...");
           const response = await fetchUserAssignmentByUserAndAssignment(

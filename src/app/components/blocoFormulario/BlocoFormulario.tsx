@@ -23,9 +23,12 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
   const { activeLink, handleLinkClick } = useActiveLink();
 
   const fetchData = async () => {
+    debugger
     try {
       const data = await getAnswersByEvaluatedId({ questionId, avaliationId, evaluatedId });
-      const answerData = data.find((item: any) => item.questionId === questionId)
+      const answerData = data.find((item: any) => item.questionId === questionId
+      );
+
       if (answerData) {
         setHasAnswer(true)
       }
@@ -60,7 +63,7 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
   };
 
   useEffect(() => {
-      fetchData();
+    fetchData();
   }, [questionId, avaliationId, evaluatedId]);
 
   useEffect(() => {
@@ -85,13 +88,19 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
 
   interface Answer {
     questionId: string;
+    avaliationId: string;
+    evaluatorId: string;
     answer: number;
   }
 
   useEffect(() => {
     const fetchPreviousAnswer = async () => {
-      const previousAnswers = await getAnswersByEvaluatedId({ questionId, avaliationId, evaluatedId });
-      const previousAnswer = previousAnswers.find((answer: Answer) => answer.questionId === questionId);
+      const previousAnswers = await getAnswersByEvaluatedId({ questionId, avaliationId, evaluatedId });      
+      console.log(">>>>>>",avaliationId, evaluatedId, questionId, previousAnswers)
+      const previousAnswer = previousAnswers.find((answer: Answer) => 
+        answer.questionId === questionId
+        && answer.avaliationId === avaliationId
+    );
       setAutoAnswer(previousAnswer ? previousAnswer.answer : null);
     };
   
