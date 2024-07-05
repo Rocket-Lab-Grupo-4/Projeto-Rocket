@@ -63,8 +63,10 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
         // para funcionar a equalizaçao deve ver evaluator
         );
 
-        console.log('colaboratornswerData:', colaboratornswerData)
-        // setAutoAnswer(colaboratornswerData.answer);
+
+
+        // console.log('colaboratornswerData:', colaboratornswerData)
+        setAutoAnswer(colaboratornswerData.answer);
 
         // answerData = data.find((item: any) => item.questionId === questionId
         // && item.avaliationId === avaliationId
@@ -138,16 +140,15 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
   }
 
   useEffect(() => {
-    // const fetchPreviousAnswer = async () => {
-    //   const previousAnswers = await getAnswersByEvaluatedId({ questionId, avaliationId, evaluatedId });      
-    //   const previousAnswer = previousAnswers.find((answer: Answer) => 
-    //     answer.questionId === questionId
-    //     && answer.avaliationId === avaliationId
-    // );
-    //   setAutoAnswer(previousAnswer ? previousAnswer.answer : null);
-    // };
+    const fetchPreviousAnswer = async () => {
+      const avaliationsByCollaborator = await getAvaliation(evaluatedId, evaluatedId);
+      const answers = await getAnswersByAvaliationId(avaliationsByCollaborator.id)
+      const previousAnswer = answers.find((answer: Answer) => answer.questionId === questionId);
+
+      setAutoAnswer(previousAnswer.answer);
+    };
   
-    // if (isManager) fetchPreviousAnswer();
+    if (isManager) fetchPreviousAnswer();
   }, [questionId, avaliationId, evaluatedId, isManager]);
 
     
