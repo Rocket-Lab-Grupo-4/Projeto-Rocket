@@ -47,7 +47,6 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
         // para funcionar a equalizaçao deve ver evaluator
         );
       } else {
-        debugger
         // const data = await getAnswersByEvaluatedId({ questionId, avaliationId, evaluatedId });
         // console.log('data:', data)
         // const answers = await getAnswersByAvaliationId(data[0].avaliationId);
