@@ -61,7 +61,7 @@ const QuestionsPage: React.FC = () => {
 
         debugger
         if (existingAvaliation) {
-          console.log("Avaliação já existe:", existingAvaliation);
+          console.log("Avaliação já existe:");
           setAvaliationId(existingAvaliation.id);
           // para funcionar a equalizaçao deve ver existingAvaliation[0].id
         } else {
@@ -72,16 +72,6 @@ const QuestionsPage: React.FC = () => {
               ? "autoavaliation "
               : "avaliationbymanager";
 
-          console.log(
-            "avaliationType:",
-            avaliationType,
-            "userAssignmentId:",
-            response.id,
-            "evaluatorId:",
-            evaluatorId,
-            "evaluatedId:",
-            evaluatedId
-          );
 
           const avaliation = await api.post(`/avaliation/${evaluatorId}/${evaluatedId}`, {
             avaliationType,

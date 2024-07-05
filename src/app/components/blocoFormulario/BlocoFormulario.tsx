@@ -56,7 +56,15 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
             && answer.avaliationId === avaliationId
         );
 
-        // setAutoAnswer(previousAnswer ? previousAnswer.answer : null);
+        const data = await getAnswersByEvaluatedId({ questionId, avaliationId, evaluatedId });
+        const colaboratornswerData = data.find((item: any) => item.questionId === questionId
+        && item.avaliationId === avaliationId
+        && item.evaluatedId === evaluatedId
+        // para funcionar a equalizaçao deve ver evaluator
+        );
+
+        console.log('colaboratornswerData:', colaboratornswerData)
+        // setAutoAnswer(colaboratornswerData.answer);
 
         // answerData = data.find((item: any) => item.questionId === questionId
         // && item.avaliationId === avaliationId
@@ -147,7 +155,7 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
     try {
       const media = await calculateAvaliationMedia(avaliationId);
       await updateAvaliationMedia(avaliationId, media);
-      console.log(`Media updated: ${media}`);
+      // console.log(`Media updated: ${media}`);
     } catch (error) {
       console.error('Error updating media:', error);
     }
