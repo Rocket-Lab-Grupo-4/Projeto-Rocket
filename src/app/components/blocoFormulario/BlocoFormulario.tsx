@@ -27,6 +27,9 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
     try {
       const data = await getAnswersByEvaluatedId({ questionId, avaliationId, evaluatedId });
       const answerData = data.find((item: any) => item.questionId === questionId
+      && item.avaliationId === avaliationId
+      && item.evaluator === evaluatorId
+
       );
 
       if (answerData) {
@@ -83,8 +86,8 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
     };
   
     initializeAvaliation();
-  }, [evaluatorId, evaluatedId, userAssignmentId]);
-
+  }, [evaluatorId, evaluatedId]);
+  // , userAssignmentId
 
   interface Answer {
     questionId: string;
