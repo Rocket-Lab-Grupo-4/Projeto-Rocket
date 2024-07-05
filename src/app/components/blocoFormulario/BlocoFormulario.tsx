@@ -6,6 +6,8 @@ import { BlocoFormularioProps } from "@/app/interfaces/Formulario";
 import Link from "next/link";
 import { updateAnswer, getAnswersByEvaluatedId, createAnswer, calculateAvaliationMedia, updateAvaliationMedia, getAvaliation, createAvaliation, deleteAnswer, getAnswersByAvaliationId } from "@/app/services/apiService";
 import useActiveLink from "@/app/hooks/useActiveLink";
+import { useSession } from 'next-auth/react';
+import { useParams } from 'next/navigation';
 
 const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, questionId, isManager, avaliationId, answerId, onAnswerChange }) => {
   const [answer, setAnswer] = useState<number | null>(null);
@@ -15,21 +17,27 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
   const [existingAnswer, setExistingAnswer] = useState<any | null>(null)
   const [currentAvaliationId, setCurrentAvaliationId] = useState<string>('');
 
-  const evaluatorId = 'clxtlh00m0001cvzgd7gq1tjl' // id de gestor
+  // const evaluatorId = 'clxtlh00m0001cvzgd7gq1tjl' // id de gestor
   // const evaluatorId = 'clxtlggn60000cvzgissdxodd'; // id de colaborador
-  const evaluatedId = 'clxtlggn60000cvzgissdxodd'
+  // const evaluatedId = 'clxtlggn60000cvzgissdxodd'
   const [userAssignmentId, setUserAssignmentId] = useState<string>('clxtnd6ck0001pvd78ds4au1v'); // id do ciclo de avaliação para teste
 
   const { activeLink, handleLinkClick } = useActiveLink();
 
+  const { data: session } = useSession();
+  const { id } = useParams();
+  const evaluatorId =  String(session?.user?.id);
+  const evaluatedId = String(id);
+
+
   const fetchData = async () => {
-    debugger
+    
     try {
       const data = await getAnswersByEvaluatedId({ questionId, avaliationId, evaluatedId });
       const answerData = data.find((item: any) => item.questionId === questionId
       && item.avaliationId === avaliationId
-      && item.evaluator === evaluatorId
-
+      && item.evaluatedId === evaluatedId
+      // para funcionar a equalizaçao deve ver evaluator
       );
 
       if (answerData) {
@@ -139,7 +147,7 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
         updateMedia(currentAvaliationId)
         console.log('Answer updated successfully');
       } else {
-        await createAnswer({
+        const responseCreate = await createAnswer({
           answer: value,
           justificative, 
           avaliationId,
@@ -147,7 +155,8 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
           evaluatorId,
           evaluatedId
         });
-        updateMedia('cly6bxxht000091e5u6mo72df')
+        // console.log('Response create:', responseCreate)
+        // updateMedia('cly6bxxht000091e5u6mo72df')
         fetchData()
         
         console.log('Answer created successfully')

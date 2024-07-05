@@ -175,7 +175,7 @@ export const createAvaliation = async (evaluatorId: string, evaluatedId: string,
 
 export const getAvaliation = async (evaluatorId: string, evaluatedId: string) => {
   try {
-    const response = await api.get('/avaliation', { params: { evaluatorId, evaluatedId } });
+    const response = await api.get(`/avaliation/findByUserAssignmentIdAndAvaliationType/${evaluatorId}/${evaluatedId}`);
     return response.data;
   } catch (error) {
     console.error('Error fetching avaliation:', error);

@@ -12,8 +12,8 @@ import { UserProps } from "@/app/interfaces/user";
 import { avaliation } from "@/app/interfaces/avaliation";
 import { userAssignment } from "@/app/interfaces/userAssignment";
 import { useRouter } from "next/navigation";
-import Perfil from '@/app/components/perfil/perfil';
-import { useSession } from 'next-auth/react';
+import Perfil from "@/app/components/perfil/perfil";
+import { useSession } from "next-auth/react";
 
 interface Result {
   name: string;
@@ -315,7 +315,7 @@ function ControlPanel() {
   };
 
   const filtercolaboratorByName = (name: string) => {
-    console.log("name:", name);
+    // console.log("name:", name);
 
     const filteredColaborators = colaboratorsToEqualization.filter(
       (colaborator) => {
@@ -347,14 +347,17 @@ function ControlPanel() {
       const userAssignments = associativeTable.filter(
         (entry) => entry.userId === user.id
       );
+
       userAssignments.forEach((userAssignment) => {
         const assignment = assignments.find(
           (assignment) => assignment.id === userAssignment.assignmentId
         );
+
         if (assignment) {
           const userAvaliations = avaliations.filter(
-            (avaliation) => avaliation.userAssignmentId === userAssignment.id
+            (avaliation) => avaliation.userAssignmentId === userAssignment.id            
           );
+
           userAvaliations.forEach((avaliation) => {
             result.push({
               name: user.name,

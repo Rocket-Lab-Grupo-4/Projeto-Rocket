@@ -53,7 +53,8 @@ const handler = NextAuth(nextAuthOptions);
 export { handler as GET, handler as POST, nextAuthOptions };
 
 const colaborator: UserProps = {
-  id: "clxtlggn60000cvzgissdxodd",
+  // id: "clxtlggn60000cvzgissdxodd",
+  id:'cly8zdnmt0000cqyf0kf8olpg',
   image:
     "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?q=80&w=1476&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   name: "John Doe",
@@ -72,7 +73,8 @@ const colaborator: UserProps = {
 };
 
 const manager: UserProps = {
-  id: "clxtlh00m0001cvzgd7gq1tjl",
+  // id: "clxtlh00m0001cvzgd7gq1tjl",
+  id: "cly8zfl280001cqyftc5n7b7f",
   image:
     "https://images.unsplash.com/photo-1664575600850-c4b712e6e2bf?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   name: "Maria José",

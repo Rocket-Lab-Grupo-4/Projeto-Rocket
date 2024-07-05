@@ -9,9 +9,9 @@ import {
   fetchUserAssignmentByUserAndAssignment,
 } from "@/app/services/apiService";
 import BlocoFormulario from "./BlocoFormulario";
-import { useParams ,useSearchParams } from "next/navigation";
-import api from '@/utils/api';
-import { useSession } from 'next-auth/react';
+import { useParams, useSearchParams } from "next/navigation";
+import api from "@/utils/api";
+import { useSession } from "next-auth/react";
 
 const QuestionsPage: React.FC = () => {
   const [questions, setQuestions] = useState([]);
@@ -20,25 +20,22 @@ const QuestionsPage: React.FC = () => {
 
   //const [evaluatorId] = useState('clxtlggn60000cvzgissdxodd'); // id de colaborador
   // const [userAssignmentId] = useState<string>("clxtnd6ck0001pvd78ds4au1v"); // id do ciclo de avaliação para teste
-  
+
   const params = useParams(); // Para obter o userId da rota dinâmica
-  const searchParams = useSearchParams(); 
-  
+  const searchParams = useSearchParams();
+
   const userId = String(params.id);
-  const assignmentId = searchParams.get('assignmentId') ?? '';
+  const assignmentId = searchParams.get("assignmentId") ?? "";
 
   const { data: session } = useSession();
-  
+
   const [evaluatorId] = useState(session?.user?.id);
   const [evaluatedId] = useState(userId);
-  
+
   useEffect(() => {
     const initializePage = async () => {
       try {
-
-        console.log("user:", userId, 'assignmnet:', assignmentId)
-
-        const user = await fetchUserById(evaluatorId ?? '');
+        const user = await fetchUserById(evaluatorId ?? "");
         setIsManager(user.manager);
         const avaliationType = user.manager
           ? "avaliationByManager"
@@ -49,22 +46,41 @@ const QuestionsPage: React.FC = () => {
         if (!avaliationType) throw new Error("Invalid evaluation type");
 
         const existingAvaliation = await getAvaliation(
-          evaluatorId ?? '',
+          evaluatorId ?? "",
           evaluatedId
         );
 
-        if (existingAvaliation.length > 0) {
-            console.log("Avaliação já existe:", existingAvaliation[0].id);
-          setAvaliationId(existingAvaliation[0].id);
+        const response = await fetchUserAssignmentByUserAndAssignment(
+          String(userId),
+          assignmentId
+        );
+
+        const userAssignmentId = response.id;
+
+        console.log("existingAvaliation:", existingAvaliation);
+
+        if (existingAvaliation) {
+          console.log("Avaliação já existe:", existingAvaliation);
+          setAvaliationId(existingAvaliation.id);
+          // para funcionar a equalizaçao deve ver existingAvaliation[0].id
         } else {
           console.log("Avaliação não existe, criando...");
-          const response = await fetchUserAssignmentByUserAndAssignment(
-            String(userId),
-            assignmentId
-          )
-          const userAssignmentId = response.id;
+          
+          const avaliationType =
+            evaluatedId === evaluatorId
+              ? "autoavaliation "
+              : "avaliationbymanager";
 
-          const avaliationType = evaluatedId === evaluatorId ? 'autoavaliation ' : 'avaliationbymanager';
+          console.log(
+            "avaliationType:",
+            avaliationType,
+            "userAssignmentId:",
+            response.id,
+            "evaluatorId:",
+            evaluatorId,
+            "evaluatedId:",
+            evaluatedId
+          );
 
           const avaliation = await api.post(`/avaliation/${evaluatorId}/${evaluatedId}`, {
             avaliationType,
@@ -72,8 +88,9 @@ const QuestionsPage: React.FC = () => {
             media: 0,
           });
 
-          console.log('Avaliação criada com sucesso:');
-          setAvaliationId(avaliation.data.id);
+          console.log(avaliation)
+          console.log("Avaliação criada com sucesso:");
+          // setAvaliationId(avaliation.data.id);
         }
 
         const data = await fetchQuestions();
