@@ -15,6 +15,9 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
   const [existingAnswer, setExistingAnswer] = useState<any | null>(null)
   const [currentAvaliationId, setCurrentAvaliationId] = useState<string>('');
 
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupImage, setPopupImage] = useState('');
+
   const evaluatorId = 'clxtlh00m0001cvzgd7gq1tjl' // id de gestor
   // const evaluatorId = 'clxtlggn60000cvzgissdxodd'; // id de colaborador
   const evaluatedId = 'clxtlggn60000cvzgissdxodd'
@@ -57,6 +60,30 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
       } catch (error) {
         console.error('Failed to discard answers:', error);
       }
+  };
+
+
+
+  const closePopup = () => {
+    setShowPopup(false);
+  };
+
+
+  const handleSubmit = async () => {
+    const answers = await getAnswersByAvaliationId(currentAvaliationId);
+    if (answers.length < 9) {
+      setPopupImage('/assets/pop-upIncompleto.png'); 
+      setShowPopup(true);
+      setTimeout(closePopup, 2000);
+
+    } else {
+      setPopupImage('/assets/pop-upConcluido.png'); 
+      setShowPopup(true);
+      setTimeout(() => {
+        setShowPopup(false);
+        window.location.href = '/home'; 
+      }, 1500); 
+    }
   };
 
   useEffect(() => {
@@ -194,6 +221,12 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
     <div className={styles.blocoFormulario}>
       
 
+      {showPopup && (
+      <div className={styles.popup}>
+        <img src={popupImage} alt="Popup" />
+      </div>
+    )}
+
       <div className={styles.header}>
       <h3>{title}</h3>
       {hasAnswer ? (
@@ -259,9 +292,7 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
       />
             <div className={styles.footerButtons}>
                 <button className={styles.discardButton} onClick={handleDiscard}>Descartar</button>
-                <Link href='/home'>
-                  <button className={styles.submitButton}>Enviar</button>
-                </Link>
+                <button className={styles.submitButton} onClick={handleSubmit}>Enviar</button>
             </div>
         </>
       )}
