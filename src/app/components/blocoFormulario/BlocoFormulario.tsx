@@ -44,11 +44,19 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
         );
       } else {
         debugger
-        const data = await getAnswersByEvaluatedId({ questionId, avaliationId, evaluatedId });
-        console.log('data:', data)
-        const answers = await getAnswersByAvaliationId(data[0].avaliationId);
+        // const data = await getAnswersByEvaluatedId({ questionId, avaliationId, evaluatedId });
+        // console.log('data:', data)
+        // const answers = await getAnswersByAvaliationId(data[0].avaliationId);
 
-        console.log('answers:', answers)
+        // console.log('answers:', answers)
+
+          const previousAnswers = await getAnswersByEvaluatedId({ questionId, avaliationId, evaluatedId });      
+          answerData = previousAnswers.find((answer: Answer) => 
+            answer.questionId === questionId
+            && answer.avaliationId === avaliationId
+        );
+
+        // setAutoAnswer(previousAnswer ? previousAnswer.answer : null);
 
         // answerData = data.find((item: any) => item.questionId === questionId
         // && item.avaliationId === avaliationId
@@ -122,17 +130,16 @@ const BlocoFormulario: React.FC<BlocoFormularioProps> = ({ title, question, ques
   }
 
   useEffect(() => {
-    const fetchPreviousAnswer = async () => {
-      const previousAnswers = await getAnswersByEvaluatedId({ questionId, avaliationId, evaluatedId });      
-      console.log(">>>>>>",avaliationId, evaluatedId, questionId, previousAnswers)
-      const previousAnswer = previousAnswers.find((answer: Answer) => 
-        answer.questionId === questionId
-        && answer.avaliationId === avaliationId
-    );
-      setAutoAnswer(previousAnswer ? previousAnswer.answer : null);
-    };
+    // const fetchPreviousAnswer = async () => {
+    //   const previousAnswers = await getAnswersByEvaluatedId({ questionId, avaliationId, evaluatedId });      
+    //   const previousAnswer = previousAnswers.find((answer: Answer) => 
+    //     answer.questionId === questionId
+    //     && answer.avaliationId === avaliationId
+    // );
+    //   setAutoAnswer(previousAnswer ? previousAnswer.answer : null);
+    // };
   
-    if (isManager) fetchPreviousAnswer();
+    // if (isManager) fetchPreviousAnswer();
   }, [questionId, avaliationId, evaluatedId, isManager]);
 
     
